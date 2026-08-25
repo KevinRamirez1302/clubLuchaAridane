@@ -1,0 +1,34 @@
+[
+  {
+    "id": "socio",
+    "nombre": "Socio",
+    "precio": 60,
+    "beneficios": [
+      "Entrada gratuita a todos los partidos en casa",
+      "Carnet de socio digital y físico",
+      "10% de descuento en tienda oficial",
+      "Acceso a la app exclusiva del club",
+      "Voto en la Asamblea General",
+      "Newsletter mensual del club"
+    ],
+    "destacado": false,
+    "color": "club-green"
+  },
+  {
+    "id": "socio-premium",
+    "nombre": "Socio Premium",
+    "precio": 120,
+    "beneficios": [
+      "Todo lo incluido en el plan Socio",
+      "Acceso al área VIP del estadio",
+      "Invitaciones a eventos exclusivos del club",
+      "Asistencia a entrenamientos (1 vez al mes)",
+      "20% de descuento en tienda oficial",
+      "Contenido digital premium y behind-the-scenes",
+      "Prioridad en la compra de entradas para partidos especiales",
+      "Meet & greet con el equipo (2 veces por temporada)"
+    ],
+    "destacado": true,
+    "color": "club-orange"
+  }
+]

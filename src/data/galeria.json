@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&auto=format&fit=crop",
+    "titulo": "Final Copa Regional 2025",
+    "descripcion": "El equipo celebra la victoria en la Copa Regional 2024/25.",
+    "fecha": "2025-06-15"
+  },
+  {
+    "id": 2,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&auto=format&fit=crop",
+    "titulo": "Presentación de fichajes",
+    "descripcion": "Los nuevos jugadores en su presentación oficial en el estadio.",
+    "fecha": "2025-07-02"
+  },
+  {
+    "id": 3,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&auto=format&fit=crop",
+    "titulo": "Entrenamiento de pretemporada",
+    "descripcion": "Sesión de entrenamiento durante la concentración de verano.",
+    "fecha": "2025-07-25"
+  },
+  {
+    "id": 4,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1200&auto=format&fit=crop",
+    "titulo": "Inauguración de la escuela de fútbol",
+    "descripcion": "Acto de inauguración de las nuevas instalaciones de fútbol base.",
+    "fecha": "2025-07-20"
+  },
+  {
+    "id": 5,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1622561498916-0e7659fb4f01?w=1200&auto=format&fit=crop",
+    "titulo": "Equipo femenino, campeonas",
+    "descripcion": "El equipo femenino celebra su histórico ascenso a Primera Autonómica.",
+    "fecha": "2025-05-30"
+  },
+  {
+    "id": 6,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1529500009329-7f48db789e96?w=1200&auto=format&fit=crop",
+    "titulo": "Partido de liga en casa",
+    "descripcion": "Derbi regional en el estadio municipal ante una gran entrada.",
+    "fecha": "2025-04-12"
+  },
+  {
+    "id": 7,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1200&auto=format&fit=crop",
+    "titulo": "Estadio Municipal",
+    "descripcion": "Vista general del estadio municipal en día de partido.",
+    "fecha": "2025-03-08"
+  },
+  {
+    "id": 8,
+    "tipo": "foto",
+    "url": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&auto=format&fit=crop",
+    "titulo": "Acto de patrocinadores",
+    "descripcion": "Renovación del acuerdo de patrocinio con Grupo Atlántico.",
+    "fecha": "2025-06-05"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "esLocal": true,
+    "rival": "CL Unión Norte",
+    "logoRival": "https://placehold.co/60x60/ef4444/white?text=UN",
+    "competicion": "Liga Insular - Jornada 5",
+    "fecha": "2025-09-06T18:00:00Z",
+    "resultado": null,
+    "esProximo": true
+  },
+  {
+    "id": 2,
+    "esLocal": false,
+    "rival": "CL Rosario",
+    "logoRival": "https://placehold.co/60x60/3b82f6/white?text=R",
+    "competicion": "Copa Cabildo - Final",
+    "fecha": "2025-06-15T18:30:00Z",
+    "resultado": "11-12",
+    "esProximo": false
+  },
+  {
+    "id": 3,
+    "esLocal": true,
+    "rival": "CL Victoria",
+    "logoRival": "https://placehold.co/60x60/10b981/white?text=V",
+    "competicion": "Liga Insular - Jornada 4",
+    "fecha": "2025-06-08T19:00:00Z",
+    "resultado": "12-10",
+    "esProximo": false
+  },
+  {
+    "id": 4,
+    "esLocal": false,
+    "rival": "CL Tijarafe",
+    "logoRival": "https://placehold.co/60x60/f59e0b/white?text=T",
+    "competicion": "Liga Insular - Jornada 3",
+    "fecha": "2025-06-01T20:00:00Z",
+    "resultado": "12-12",
+    "esProximo": false
+  }
+]

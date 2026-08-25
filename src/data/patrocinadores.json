@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "nombre": "Grupo Atlántico",
+    "logo": "https://placehold.co/200x80/0B3D91/white?text=Grupo+Atlántico",
+    "url": "https://example.com",
+    "nivel": "principal"
+  },
+  {
+    "id": 2,
+    "nombre": "Talleres Rodríguez",
+    "logo": "https://placehold.co/200x80/E87722/white?text=Talleres+Rdz",
+    "url": "https://example.com",
+    "nivel": "oficial"
+  },
+  {
+    "id": 3,
+    "nombre": "Farmacia Central",
+    "logo": "https://placehold.co/200x80/2D8A4E/white?text=Farmacia+Central",
+    "url": "https://example.com",
+    "nivel": "oficial"
+  },
+  {
+    "id": 4,
+    "nombre": "Construcciones Herrera",
+    "logo": "https://placehold.co/200x80/1a1a2e/white?text=Const.+Herrera",
+    "url": "https://example.com",
+    "nivel": "colaborador"
+  },
+  {
+    "id": 5,
+    "nombre": "Restaurante El Puerto",
+    "logo": "https://placehold.co/200x80/6b7280/white?text=El+Puerto",
+    "url": "https://example.com",
+    "nivel": "colaborador"
+  },
+  {
+    "id": 6,
+    "nombre": "AutoMóviles Cuesta",
+    "logo": "https://placehold.co/200x80/374151/white?text=AutoCuesta",
+    "url": "https://example.com",
+    "nivel": "colaborador"
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "nombre": "Marcos Fontana",
+    "clasificacion": "Puntal A",
+    "procedencia": "CL Rosario",
+    "foto": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español",
+    "edad": 26,
+    "temporada": "2024/25",
+    "descripcion": "El flamante nuevo Puntal A del equipo. Aportará gran envergadura y técnica en la silla más alta."
+  },
+  {
+    "id": 2,
+    "nombre": "Samuel Ríos",
+    "clasificacion": "Destacado C",
+    "procedencia": "CL Maxorata",
+    "foto": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español",
+    "edad": 23,
+    "temporada": "2024/25",
+    "descripcion": "Joven Destacado C que viene para ser el revulsivo en la media cola del equipo."
+  },
+  {
+    "id": 3,
+    "nombre": "Laura Mesa",
+    "clasificacion": "Puntal B",
+    "procedencia": "CL Benchomo",
+    "foto": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español",
+    "edad": 24,
+    "temporada": "2024/25",
+    "descripcion": "Fichaje estelar para la categoría femenina. Campeona regional."
+  }
+]

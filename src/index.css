@@ -1,0 +1,190 @@
+/* =============================================================================
+   ESTILOS GLOBALES — Club Ariadne
+   Tailwind CSS v4 — @import base
+   ============================================================================= */
+
+@import "tailwindcss";
+
+/* ── Dark mode: activado por clase .dark en <html>, no por prefers-color-scheme ── */
+/* Tailwind v4 requiere esta declaración para usar dark: via clase en lugar de media query */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Fuentes de Google ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
+
+/* ── Tokens de color personalizados ── */
+@theme {
+  --color-club-blue:       #0B3D91;
+  --color-club-blue-dark:  #072d6e;
+  --color-club-blue-light: #1a56c4;
+  --color-club-green:      #2D8A4E;
+  --color-club-green-dark: #1e6337;
+  --color-club-green-light:#3aa862;
+  --color-club-orange:     #E87722;
+  --color-club-orange-dark:#c45e10;
+  --color-club-orange-light:#f0933d;
+  --color-club-white:      #FFFFFF;
+  --color-club-gray:       #6B7280;
+  --color-club-gray-light: #F3F4F6;
+  --color-club-gray-dark:  #374151;
+
+  /* Fuentes */
+  --font-heading: 'Bebas Neue', 'Oswald', sans-serif;
+  --font-subheading: 'Oswald', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ── Estilos base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-body);
+}
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode — el fondo oscuro se aplica cuando <html> tiene la clase .dark */
+body:where(.dark *) {
+  background-color: rgb(3 7 18); /* gray-950 */
+  color: rgb(243 244 246); /* gray-100 */
+}
+
+/* ── Tipografía ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-subheading);
+  letter-spacing: 0.02em;
+}
+
+.font-display {
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+}
+
+/* ── Scroll reveal animation ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Skeleton loader pulse ── */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  @apply bg-gray-200 dark:bg-gray-700 rounded;
+}
+
+/* ── Línea decorativa de sección ── */
+.section-line::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--color-club-orange);
+  margin-bottom: 1rem;
+  border-radius: 2px;
+}
+
+/* ── Scrollbar personalizada ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+:where(.dark) ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-club-blue);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-club-blue-dark);
+}
+
+/* ── Focus visible accesible ── */
+:focus-visible {
+  outline: 3px solid var(--color-club-orange);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Utilidades de gradiente ── */
+.gradient-hero {
+  background: linear-gradient(
+    135deg,
+    rgba(11, 61, 145, 0.85) 0%,
+    rgba(232, 119, 34, 0.6) 60%,
+    rgba(45, 138, 78, 0.5) 100%
+  );
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, var(--color-club-blue) 0%, var(--color-club-blue-light) 100%);
+}
+
+/* ── Transición de página ── */
+.page-enter {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Card hover lift ── */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(11, 61, 145, 0.15);
+}
+:where(.dark) .card-hover:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}

@@ -1,0 +1,10 @@
+[
+  { "posicion": 1, "equipo": "Club Ariadne", "luchadas": 15, "ganadas": 12, "empatadas": 1, "perdidas": 2, "puntosFavor": 180, "puntosContra": 140, "puntos": 37, "esClub": true },
+  { "posicion": 2, "equipo": "CL Unión Norte", "luchadas": 15, "ganadas": 11, "empatadas": 2, "perdidas": 2, "puntosFavor": 178, "puntosContra": 142, "puntos": 35, "esClub": false },
+  { "posicion": 3, "equipo": "CL Rosario", "luchadas": 15, "ganadas": 10, "empatadas": 1, "perdidas": 4, "puntosFavor": 175, "puntosContra": 150, "puntos": 31, "esClub": false },
+  { "posicion": 4, "equipo": "CL Victoria", "luchadas": 15, "ganadas": 9, "empatadas": 0, "perdidas": 6, "puntosFavor": 170, "puntosContra": 155, "puntos": 27, "esClub": false },
+  { "posicion": 5, "equipo": "CL Tijarafe", "luchadas": 15, "ganadas": 7, "empatadas": 3, "perdidas": 5, "puntosFavor": 165, "puntosContra": 160, "puntos": 24, "esClub": false },
+  { "posicion": 6, "equipo": "CL Maxorata", "luchadas": 15, "ganadas": 6, "empatadas": 1, "perdidas": 8, "puntosFavor": 160, "puntosContra": 165, "puntos": 19, "esClub": false },
+  { "posicion": 7, "equipo": "CL Guamasa", "luchadas": 15, "ganadas": 5, "empatadas": 2, "perdidas": 8, "puntosFavor": 155, "puntosContra": 170, "puntos": 17, "esClub": false },
+  { "posicion": 8, "equipo": "CL Tegueste", "luchadas": 15, "ganadas": 4, "empatadas": 1, "perdidas": 10, "puntosFavor": 150, "puntosContra": 175, "puntos": 13, "esClub": false }
+]

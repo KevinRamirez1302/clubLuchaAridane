@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1, "nombre": "Marcos Fontana", "clasificacion": "Puntal A", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 26, "peso": 125, "altura": 190, "luchadas": 15, "puntosFavor": 35, "puntosContra": 5,
+    "bio": "Puntal A del equipo. Fichaje estrella de esta temporada, especialista en la técnica del desvío."
+  },
+  {
+    "id": 2, "nombre": "Rui Almeida", "clasificacion": "Puntal C", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Portugués", "edad": 28, "peso": 110, "altura": 185, "luchadas": 14, "puntosFavor": 22, "puntosContra": 8,
+    "bio": "Luchador muy técnico y rápido. Aporta gran seguridad en la media cola del equipo."
+  },
+  {
+    "id": 3, "nombre": "Carlos Vega", "clasificacion": "Destacado A", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 30, "peso": 115, "altura": 182, "luchadas": 15, "puntosFavor": 18, "puntosContra": 10,
+    "bio": "Capitán del equipo y veterano curtido en mil batallas. Referente en el vestuario."
+  },
+  {
+    "id": 4, "nombre": "Diego Mora", "clasificacion": "Destacado B", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 25, "peso": 105, "altura": 178, "luchadas": 12, "puntosFavor": 12, "puntosContra": 7,
+    "bio": "Uno de los destacados más prometedores de la plantilla, dominador de la cogida de muslo."
+  },
+  {
+    "id": 5, "nombre": "Samuel Ríos", "clasificacion": "Destacado C", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 23, "peso": 98, "altura": 175, "luchadas": 15, "puntosFavor": 10, "puntosContra": 12,
+    "bio": "Joven destacado, muy ágil y difícil de tirar en los primeros compases de la luchada."
+  },
+  {
+    "id": 6, "nombre": "Alejandro Ruiz", "clasificacion": "No clasificado", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 21, "peso": 85, "altura": 172, "luchadas": 10, "puntosFavor": 5, "puntosContra": 10,
+    "bio": "Canterano que ha subido al primer equipo para reforzar las sillas delanteras."
+  },
+  {
+    "id": 7, "nombre": "Mamadou Diop", "clasificacion": "Destacado C", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Senegalés", "edad": 24, "peso": 108, "altura": 188, "luchadas": 14, "puntosFavor": 14, "puntosContra": 9,
+    "bio": "Fuerza física imponente y rápida adaptación a las técnicas de lucha de la isla."
+  },
+  {
+    "id": 8, "nombre": "Hugo Valdés", "clasificacion": "No clasificado", "equipo": "primera",
+    "foto": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 19, "peso": 88, "altura": 176, "luchadas": 8, "puntosFavor": 3, "puntosContra": 8,
+    "bio": "Promesa de la cantera con gran proyección."
+  },
+  {
+    "id": 9, "nombre": "Pablo Torres", "clasificacion": "Destacado B", "equipo": "segunda",
+    "foto": "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 27, "peso": 112, "altura": 180, "luchadas": 10, "puntosFavor": 15, "puntosContra": 4,
+    "bio": "Referente indiscutible del filial en Segunda Categoría."
+  },
+  {
+    "id": 10, "nombre": "Laura Mesa", "clasificacion": "Puntal B", "equipo": "femenina",
+    "foto": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 24, "peso": 82, "altura": 168, "luchadas": 12, "puntosFavor": 25, "puntosContra": 3,
+    "bio": "Actual campeona regional absoluta."
+  },
+  {
+    "id": 11, "nombre": "María Padrón", "clasificacion": "Destacado A", "equipo": "femenina",
+    "foto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+    "nacionalidad": "Español", "edad": 22, "peso": 75, "altura": 165, "luchadas": 10, "puntosFavor": 18, "puntosContra": 6,
+    "bio": "Gran agilidad y dominio de técnicas de piernas."
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "titulo": "Victoria épica en el derbi insular",
+    "resumen": "Nuestro Puntal A, Marcos Fontana, resolvió la luchada en el último enfrentamiento ante el CL Rosario (12-11).",
+    "contenido": "Fue una noche mágica en nuestro terrero. Con un ambiente espectacular y las gradas llenas, el equipo remontó una desventaja de 3 puntos. Destacó especialmente Carlos Vega (Destacado A), que tiró a cuatro contrarios antes de caer por amonestaciones.",
+    "imagen": "https://images.unsplash.com/photo-1544365558-35aa4af4154c?w=800&auto=format&fit=crop&q=80",
+    "fecha": "2025-06-16T10:00:00Z",
+    "categoria": "competicion",
+    "autor": "Departamento de Comunicación"
+  },
+  {
+    "id": 2,
+    "titulo": "Laura Mesa renueva por tres temporadas",
+    "resumen": "La actual campeona regional y Puntal B del equipo femenino amplía su vinculación con nuestro club.",
+    "contenido": "El Club Ariadne asegura su pilar principal para el equipo femenino. Laura Mesa ha firmado un acuerdo que la mantendrá en nuestra disciplina hasta 2028, liderando el proyecto de la sección femenina.",
+    "imagen": "https://images.unsplash.com/photo-1574629810360-7efbb980d5d4?w=800&auto=format&fit=crop&q=80",
+    "fecha": "2025-06-14T12:30:00Z",
+    "categoria": "fichaje",
+    "autor": "Dirección Deportiva"
+  },
+  {
+    "id": 3,
+    "titulo": "Mejoras en el terrero principal",
+    "resumen": "El club invierte en la modernización de la arena y las gradas para la próxima temporada.",
+    "contenido": "Con el objetivo de seguir siendo una referencia, se ha procedido al cambio integral de la arena del terrero, apostando por material de primera calidad para prevenir lesiones y mejorar el agarre. Además, se ampliará el aforo en 200 localidades.",
+    "imagen": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800&auto=format&fit=crop&q=80",
+    "fecha": "2025-06-12T09:15:00Z",
+    "categoria": "club",
+    "autor": "Presidencia"
+  }
+]

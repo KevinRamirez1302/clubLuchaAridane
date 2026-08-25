@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "pregunta": "¿Cómo renuevo mi membresía?",
+    "respuesta": "La renovación es automática cada año si tienes activo el pago recurrente. Si no, recibirás un correo de aviso 30 días antes del vencimiento con un enlace de renovación. También puedes hacerlo desde tu panel de socio."
+  },
+  {
+    "id": 2,
+    "pregunta": "¿Puedo cancelar mi membresía en cualquier momento?",
+    "respuesta": "Sí. Puedes cancelar tu membresía desde tu panel de socio o contactándonos por email. La cancelación será efectiva al final del período de facturación en curso y no se realizan reembolsos parciales."
+  },
+  {
+    "id": 3,
+    "pregunta": "¿Qué formas de pago aceptáis?",
+    "respuesta": "Aceptamos tarjeta de crédito/débito (Visa, Mastercard, Amex), transferencia bancaria y domiciliación bancaria (SEPA). El pago puede ser anual o mensual."
+  },
+  {
+    "id": 4,
+    "pregunta": "¿Cuál es la diferencia entre Socio y Socio Premium?",
+    "respuesta": "El plan Socio te da acceso a todos los partidos en casa, descuentos en tienda y carnet de socio. El plan Socio Premium incluye todo lo anterior más acceso al área VIP, invitaciones a eventos exclusivos, acceso a entrenamientos y contenido digital premium del club."
+  },
+  {
+    "id": 5,
+    "pregunta": "¿Los niños tienen descuento?",
+    "respuesta": "Sí. Los menores de 14 años tienen un 50% de descuento en cualquiera de los planes. Contacta con la secretaría del club para tramitar la membresía infantil."
+  },
+  {
+    "id": 6,
+    "pregunta": "¿Cuándo recibo mi carnet de socio?",
+    "respuesta": "El carnet digital está disponible en tu panel de socio inmediatamente tras confirmar el pago. El carnet físico se envía por correo en un plazo de 7-10 días laborables."
+  }
+]

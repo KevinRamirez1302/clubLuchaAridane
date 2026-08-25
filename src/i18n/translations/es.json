@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "inicio": "Inicio",
+    "quienesSomos": "Quiénes somos",
+    "hazteSocio": "Hazte socio",
+    "contacto": "Contacto",
+    "menuAbrir": "Abrir menú",
+    "menuCerrar": "Cerrar menú"
+  },
+  "home": {
+    "banner": {
+      "eslogan": "Pasión, esfuerzo y tradición",
+      "subtitulo": "El club de todos. Desde 1958.",
+      "cta": "Únete al club"
+    },
+    "proximoPartido": "Próxima luchada",
+    "ultimosResultados": "Últimos resultados",
+    "clasificacion": "Clasificación",
+    "ultimasNoticias": "Últimas noticias",
+    "verTodasNoticias": "Ver todas las noticias",
+    "fichajes": "Nuevos luchadores",
+    "fichajes_temporada": "Temporada 2024/25",
+    "plantilla": "Plantilla",
+    "filtrarPor": "Filtrar por",
+    "todos": "Todos",
+    "patrocinadores": "Nuestros patrocinadores",
+    "newsletter": {
+      "titulo": "Mantente al día",
+      "subtitulo": "Recibe noticias, convocatorias y ofertas exclusivas directamente en tu bandeja de entrada.",
+      "placeholder": "Tu correo electrónico",
+      "boton": "Suscribirme",
+      "aviso": "Sin spam. Puedes darte de baja cuando quieras.",
+      "exito": "¡Gracias! Te has suscrito correctamente."
+    }
+  },
+  "quienesSomos": {
+    "titulo": "Quiénes somos",
+    "historia": "Historia",
+    "mision": "Misión",
+    "valores": "Valores",
+    "galeria": "Galería",
+    "historiaTexto": "El Club Ariadne nació en 1958 en el corazón de la comunidad, con el espíritu de unir a la gente a través de nuestro deporte vernáculo. Desde sus humildes comienzos en un pequeño terrero de tierra hasta las modernas instalaciones de hoy, siempre hemos mantenido nuestra esencia: el trabajo en equipo, el respeto y la nobleza de la Lucha Canaria.",
+    "misionTexto": "Nuestra misión es preservar y promover la Lucha Canaria como vehículo de desarrollo personal y social, formando luchadores y ciudadanos íntegros, competitivos y comprometidos con nuestras tradiciones.",
+    "valoresTexto": "Nobleza, esfuerzo, respeto, trabajo en equipo y pasión por la lucha son los pilares sobre los que construimos cada día nuestra historia.",
+    "lineaTiempo": "Nuestra historia"
+  },
+  "membresia": {
+    "titulo": "Hazte socio",
+    "subtitulo": "Sé parte de la familia Ariadne",
+    "descripcion": "Como socio tendrás acceso a beneficios exclusivos, podrás seguir de cerca a tu equipo en el terrero y serás parte de una comunidad apasionada por nuestra lucha.",
+    "planesTitle": "Elige tu plan",
+    "suscribirme": "Suscribirme",
+    "muestraMas": "Ver todos los beneficios",
+    "miCuenta": "Mi cuenta",
+    "iniciarSesion": "Iniciar sesión",
+    "registrarse": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "nombre": "Nombre completo",
+    "panelSocio": "Panel de socio"
+  },
+  "contacto": {
+    "titulo": "Contáctanos",
+    "nombre": "Nombre",
+    "email": "Correo electrónico",
+    "mensaje": "Mensaje",
+    "enviar": "Enviar mensaje",
+    "exito": "¡Mensaje enviado! Nos pondremos en contacto pronto.",
+    "error": "Hay errores en el formulario. Por favor, revísalo.",
+    "direccion": "Dirección",
+    "telefono": "Teléfono",
+    "redesSociales": "Redes sociales"
+  },
+  "footer": {
+    "copyright": "© 2025 Club Ariadne. Todos los derechos reservados.",
+    "tienda": "Tienda oficial",
+    "privacidad": "Política de privacidad",
+    "aviso": "Aviso legal"
+  },
+  "comun": {
+    "cargando": "Cargando...",
+    "sinDatos": "No hay datos disponibles",
+    "verMas": "Ver más",
+    "volver": "Volver al inicio",
+    "cerrar": "Cerrar",
+    "local": "Local",
+    "visitante": "Visitante",
+    "vs": "vs",
+    "años": "años",
+    "clasificacion": "Clasificación",
+    "peso": "Peso",
+    "altura": "Altura",
+    "equipo": "Equipo"
+  },
+  "errores": {
+    "404titulo": "Página no encontrada",
+    "404descripcion": "Lo sentimos, la página que buscas no existe o ha sido movida.",
+    "404cta": "Volver al inicio",
+    "campoRequerido": "Este campo es obligatorio",
+    "emailInvalido": "Introduce un correo electrónico válido",
+    "mensajeCorto": "El mensaje debe tener al menos 10 caracteres"
+  }
+}

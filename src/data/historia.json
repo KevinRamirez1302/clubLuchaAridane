@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "año": 1958,
+    "titulo": "Fundación del Club",
+    "descripcion": "Un grupo de entusiastas de la lucha canaria funda el Club Ariadne en una asamblea histórica en la plaza del pueblo, compitiendo inicialmente en Tercera Categoría.",
+    "imagen": "https://images.unsplash.com/photo-1550269094-1a6c42ab0128?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    "id": 2,
+    "año": 1975,
+    "titulo": "Primer Título Regional",
+    "descripcion": "El equipo se proclama campeón del Torneo Regional tras vencer en una final agónica que pasó a la historia por el épico enfrentamiento entre los puntales.",
+    "imagen": "https://images.unsplash.com/photo-1563122870-6b0b48a0af09?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    "id": 3,
+    "año": 1998,
+    "titulo": "Inauguración del Nuevo Terrero",
+    "descripcion": "El club se muda a sus nuevas instalaciones, un terrero cubierto moderno con capacidad para 3.000 espectadores, abandonando la antigua arena al aire libre."
+  },
+  {
+    "id": 4,
+    "año": 2010,
+    "titulo": "Creación de la Sección Femenina",
+    "descripcion": "Pioneros en la integración, el club funda su equipo femenino oficial, que en apenas cinco años se convertiría en referente autonómico de nuestra lucha."
+  },
+  {
+    "id": 5,
+    "año": 2023,
+    "titulo": "El Doblete Histórico",
+    "descripcion": "Temporada perfecta donde el primer equipo gana la Liga Insular y la Copa Cabildo, manteniéndose invictos durante todo el campeonato gracias a una plantilla de ensueño.",
+    "imagen": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&auto=format&fit=crop&q=80"
+  }
+]
