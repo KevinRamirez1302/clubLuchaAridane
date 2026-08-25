@@ -8,8 +8,8 @@ interface SEOHeadProps {
   url?: string;
 }
 
-const SITE_NAME = 'Club Ariadne';
-const DEFAULT_DESCRIPTION = 'Club Ariadne — Pasión, esfuerzo y tradición desde 1958. Sigue los partidos, conoce nuestra plantilla y hazte socio.';
+const SITE_NAME = 'Club Aridane';
+const DEFAULT_DESCRIPTION = 'Club Aridane — Pasión, esfuerzo y tradición desde 1958. Sigue los partidos, conoce nuestra plantilla y hazte socio.';
 const DEFAULT_IMAGE = '/og-image.png';
 
 export default function SEOHead({
@@ -19,7 +19,7 @@ export default function SEOHead({
   url,
 }: SEOHeadProps) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
-  const canonicalUrl = url ? `https://clubariadne.es${url}` : 'https://clubariadne.es';
+  const canonicalUrl = url ? `https://clubaridane.es${url}` : 'https://clubaridane.es';
 
   return (
     <Helmet>

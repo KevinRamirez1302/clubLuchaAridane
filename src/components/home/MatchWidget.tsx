@@ -67,7 +67,7 @@ export default function MatchWidget() {
                     <div className="h-16 w-16 bg-club-blue rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
                       A
                     </div>
-                    <span className="text-gray-900 dark:text-white font-bold text-sm text-center">Club Ariadne</span>
+                    <span className="text-gray-900 dark:text-white font-bold text-sm text-center">Club Aridane</span>
                     <span className="text-club-green text-xs font-semibold uppercase">
                       {proximoPartido.esLocal ? t('comun.local') : t('comun.visitante')}
                     </span>
@@ -136,9 +136,9 @@ export default function MatchWidget() {
                   resultados.map((p) => {
                     const [gL, gV] = (p.resultado || '0-0').split('-').map(Number);
                     const esLocal = p.esLocal;
-                    const golesAriadne = esLocal ? gL : gV;
+                    const golesAridane = esLocal ? gL : gV;
                     const golesRival = esLocal ? gV : gL;
-                    const resultado = golesAriadne > golesRival ? 'V' : golesAriadne === golesRival ? 'E' : 'D';
+                    const resultado = golesAridane > golesRival ? 'V' : golesAridane === golesRival ? 'E' : 'D';
                     const colorResultado = resultado === 'V' ? 'text-club-green' : resultado === 'E' ? 'text-yellow-500' : 'text-red-500';
 
                     return (

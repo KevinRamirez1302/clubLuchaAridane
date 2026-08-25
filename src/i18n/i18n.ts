@@ -1,5 +1,5 @@
 // =============================================================================
-// CONFIGURACIÓN DE i18next — Club Ariadne
+// CONFIGURACIÓN DE i18next — Club Aridane
 // Para añadir un nuevo idioma: importar el JSON de traducciones y añadirlo
 // al objeto `resources` con su código de idioma (ej. 'en', 'fr').
 // =============================================================================

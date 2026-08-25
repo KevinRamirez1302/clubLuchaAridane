@@ -11,7 +11,7 @@ interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 export default function LazyImage({
   src,
   alt,
-  fallback = 'https://placehold.co/400x300/0B3D91/white?text=Club+Ariadne',
+  fallback = 'https://placehold.co/400x300/0B3D91/white?text=Club+Aridane',
   className = '',
   aspectRatio,
   ...props
@@ -21,7 +21,7 @@ export default function LazyImage({
 
   return (
     <div
-      className={`relative overflow-hidden ${aspectRatio ? `aspect-[${aspectRatio}]` : ''}`}
+      className={`relative overflow-hidden w-full h-full ${aspectRatio ? `aspect-[${aspectRatio}]` : ''}`}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
       {/* Placeholder mientras carga */}

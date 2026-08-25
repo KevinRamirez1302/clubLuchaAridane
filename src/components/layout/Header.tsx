@@ -1,5 +1,5 @@
 // =============================================================================
-// HEADER — Club Ariadne
+// HEADER — Club Aridane
 // Navegación principal con menú hamburguesa, dark mode toggle y CTA
 // Accesibilidad: roles ARIA, navegación por teclado, skip-to-content
 // =============================================================================
@@ -86,15 +86,15 @@ export default function Header() {
           <Link
             to="/"
             className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-club-orange rounded-lg"
-            aria-label="Club Ariadne — Ir al inicio"
+            aria-label="Club Aridane — Ir al inicio"
           >
             <img
               src={escudo}
-              alt="Escudo Club Ariadne"
+              alt="Escudo Club Aridane"
               className="h-10 w-auto lg:h-12 transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
             />
             <span className="font-display text-2xl lg:text-3xl text-white tracking-wider drop-shadow">
-              ARIADNE
+              ARIDANE
             </span>
           </Link>
 

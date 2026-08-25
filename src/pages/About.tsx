@@ -42,7 +42,7 @@ export default function About() {
     <>
       <SEOHead
         title="Quiénes somos"
-        description="Conoce la historia del Club Ariadne, nuestra misión, valores y la galería fotográfica de nuestra trayectoria desde 1958."
+        description="Conoce la historia del Club Aridane, nuestra misión, valores y la galería fotográfica de nuestra trayectoria desde 1958."
         url="/quienes-somos"
       />
 

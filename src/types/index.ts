@@ -1,5 +1,5 @@
 // =============================================================================
-// TIPOS GLOBALES DEL PROYECTO — Club Ariadne
+// TIPOS GLOBALES DEL PROYECTO — Club Aridane
 // Estos tipos reflejan la estructura de datos que vendrá del backend via API REST
 // Cuando se integre el backend, estos tipos serán la fuente de verdad para los
 // modelos de datos recibidos del servidor.
@@ -28,19 +28,24 @@ export interface Fichaje {
   descripcion?: string;
 }
 
-export type ClasificacionLuchador = 'Puntal A' | 'Puntal B' | 'Puntal C' | 'Destacado A' | 'Destacado B' | 'Destacado C' | 'No clasificado';
-export type CategoriaEquipo = 'primera' | 'segunda' | 'tercera' | 'femenina' | 'base';
+export type ClasificacionLuchador =
+  | 'Puntal A' | 'Puntal B' | 'Puntal C'
+  | 'Destacado A' | 'Destacado B' | 'Destacado C'
+  | 'No clasificado' | 'Juvenil' | 'Cadete' | 'Infantil'
+  | 'Técnico Medio' | 'Técnico Superior'
+  | 'Presidente' | 'Secretario' | 'Vocal';
+export type CategoriaEquipo = 'primera' | 'segunda' | 'tercera' | 'femenina' | 'base' | 'directiva' | 'cuerpo-tecnico';
 
 export interface Jugador {
   id: number;
   nombre: string;
-  clasificacion: ClasificacionLuchador;
-  equipo: CategoriaEquipo;
+  clasificaciones: ClasificacionLuchador[];
+  equipos: CategoriaEquipo[];
   foto: string;
   nacionalidad: string;
-  edad: number;
-  peso?: number; // kg
-  altura?: number; // cm
+  edad: number | null;
+  peso: number | null;
+  altura: number | null;
   luchadas?: number;
   puntosFavor?: number;
   puntosContra?: number;

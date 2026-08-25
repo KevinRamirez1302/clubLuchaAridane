@@ -1,25 +1,48 @@
-// Banner principal hero a pantalla completa
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-// Imagen de fondo del banner (Unsplash — estadio de fútbol)
-const BANNER_IMAGE =
-  'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1920&auto=format&fit=crop&q=80';
+import fondoPrincipal from '../../assets/fondoPrincipal.jpg';
+
+// Imagen de fondo del banner
+const BANNER_IMAGE = fondoPrincipal;
+
+const SLOGANS = [
+  "80 años en la brega",
+  "Nobleza, fuerza y tradición",
+  "La cuna de la lucha canaria",
+  "Orgullo de Los Llanos de Aridane",
+  "Fuerza, coraje y corazón"
+];
 
 export default function Banner() {
   const { t } = useTranslation();
+  const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentSloganIndex((prevIndex) => (prevIndex + 1) % SLOGANS.length);
+        setFade(true);
+      }, 400); // Duración del desvanecimiento
+    }, 3500); // Cada 3.5 segundos
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      aria-label="Banner principal Club Ariadne"
+      aria-label="Banner principal Club Aridane"
     >
       {/* Imagen de fondo con parallax visual */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
         style={{ backgroundImage: `url(${BANNER_IMAGE})` }}
         role="img"
-        aria-label="Terrero de lucha del Club Ariadne"
+        aria-label="Terrero de lucha del Club Aridane"
       />
 
       {/* Overlay con gradiente de colores del club */}
@@ -35,19 +58,22 @@ export default function Banner() {
       <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
         {/* Badge año */}
         <span className="inline-block bg-club-orange/90 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-6 backdrop-blur-sm">
-          Desde 1958
+          Desde 1946
         </span>
 
         {/* Título principal */}
         <h1 className="font-display text-6xl sm:text-8xl lg:text-9xl text-white leading-none mb-4 drop-shadow-2xl">
-          CLUB<br />
-          <span className="text-club-orange">ARIADNE</span>
+          CLUB DE LUCHA<br />
+          <span className="text-club-orange">ARIDANE</span>
         </h1>
 
-        {/* Eslogan */}
-        <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 font-light mb-3 drop-shadow">
-          {t('home.banner.eslogan')}
-        </p>
+        {/* Eslogan rotativo */}
+        <div className="h-10 sm:h-12 flex items-center justify-center mb-3">
+          <p className={`text-xl sm:text-2xl lg:text-3xl text-white/95 font-light drop-shadow transition-all duration-300 ${fade ? 'opacity-100 transform translate-y-0 scale-100' : 'opacity-0 transform -translate-y-2 scale-95'
+            }`}>
+            {SLOGANS[currentSloganIndex]}
+          </p>
+        </div>
         <p className="text-base sm:text-lg text-white/70 mb-10 drop-shadow">
           {t('home.banner.subtitulo')}
         </p>

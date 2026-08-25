@@ -1,6 +1,7 @@
 // Página de Inicio — compone todas las secciones
 import SEOHead from '../components/common/SEOHead';
 import Banner from '../components/home/Banner';
+import SponsorBar from '../components/home/SponsorBar';
 import MatchWidget from '../components/home/MatchWidget';
 import NewsGrid from '../components/home/NewsGrid';
 import Signings from '../components/home/Signings';
@@ -13,12 +14,15 @@ export default function Home() {
     <>
       <SEOHead
         title="Inicio"
-        description="Club Ariadne — Tu club de fútbol desde 1958. Sigue los partidos, conoce nuestra plantilla, los últimos fichajes y hazte socio."
+        description="Club Aridane — Tu club de lucha desde 1958. Sigue los partidos, conoce nuestra plantilla, los últimos fichajes y hazte socio."
         url="/"
       />
 
       {/* Banner principal — ocupa el 100vh */}
       <Banner />
+
+      {/* Barra de patrocinadores principales */}
+      <SponsorBar />
 
       {/* Widget de partidos y clasificación */}
       <MatchWidget />
