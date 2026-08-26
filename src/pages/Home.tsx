@@ -3,8 +3,8 @@ import SEOHead from '../components/common/SEOHead';
 import Banner from '../components/home/Banner';
 import SponsorBar from '../components/home/SponsorBar';
 import MatchWidget from '../components/home/MatchWidget';
+import CalendarSection from '../components/home/CalendarSection';
 import NewsGrid from '../components/home/NewsGrid';
-import Signings from '../components/home/Signings';
 import Squad from '../components/home/Squad';
 import Sponsors from '../components/home/Sponsors';
 import Newsletter from '../components/home/Newsletter';
@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <SEOHead
         title="Inicio"
-        description="Club Aridane — Tu club de lucha desde 1958. Sigue los partidos, conoce nuestra plantilla, los últimos fichajes y hazte socio."
+        description="Club Aridane — Tu club de lucha desde 1946. Sigue los partidos, conoce nuestra plantilla, los últimos fichajes y hazte socio."
         url="/"
       />
 
@@ -27,11 +27,11 @@ export default function Home() {
       {/* Widget de partidos y clasificación */}
       <MatchWidget />
 
+      {/* Calendario oficial del C.L. Aridane */}
+      <CalendarSection />
+
       {/* Últimas noticias */}
       <NewsGrid />
-
-      {/* Fichajes de la temporada */}
-      <Signings />
 
       {/* Plantilla actual con filtros */}
       <Squad />

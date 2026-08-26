@@ -100,7 +100,7 @@ export interface Partido {
   logoRival: string;
   competicion: string;
   fecha: string; // ISO 8601
-  resultado?: string; // "2-1" o null si es futuro
+  resultado?: string | null; // "12-10" o null si es futuro
   esProximo: boolean;
 }
 
