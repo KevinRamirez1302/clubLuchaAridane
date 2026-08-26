@@ -14,10 +14,6 @@ export default function SponsorBar() {
   return (
     <div className="bg-gray-50 dark:bg-gray-900/40 border-y border-gray-150 dark:border-gray-800/60 py-6 sm:py-8 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-6">
-          Patrocinadores Principales
-        </p>
-        
         <div className="relative overflow-hidden w-full">
           {/* Degradados de desvanecimiento en los bordes laterales */}
           <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-gray-50 dark:from-gray-900/40 to-transparent pointer-events-none z-10" />

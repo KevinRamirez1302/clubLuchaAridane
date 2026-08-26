@@ -19,7 +19,7 @@ export default function NotFound() {
             </span>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-24 h-24 bg-club-blue/10 dark:bg-club-blue/20 rounded-full flex items-center justify-center">
-                <span className="text-5xl">⚽</span>
+                <span className="text-5xl"></span>
               </div>
             </div>
           </div>
