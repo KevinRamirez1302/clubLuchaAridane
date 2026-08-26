@@ -29,7 +29,7 @@ export default function Membership() {
     <>
       <SEOHead
         title="Hazte socio"
-        description="Únete a la familia del Club Ariadne. Elige tu plan de membresía y disfruta de beneficios exclusivos como socio."
+        description="Únete a la familia del Club Aridane. Elige tu plan de membresía y disfruta de beneficios exclusivos como socio."
         url="/hazte-socio"
       />
 
@@ -105,7 +105,7 @@ export default function Membership() {
                 </h2>
                 <p className="text-gray-500 dark:text-gray-400 mt-3 text-lg">
                   Elige el plan que mejor se adapte a ti y forma parte de la
-                  familia Ariadne.
+                  familia Aridane.
                 </p>
               </div>
               <PricingTable onSelectPlan={setPlanSeleccionado} />

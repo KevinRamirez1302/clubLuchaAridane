@@ -14,6 +14,14 @@ const CLASIFICACION_COLOR: Record<string, string> = {
   'Destacado B': 'text-club-blue bg-club-blue/10',
   'Destacado C': 'text-cyan-600 bg-cyan-50 dark:bg-cyan-900/20',
   'No clasificado': 'text-gray-600 bg-gray-100 dark:bg-gray-800',
+  'Juvenil': 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20',
+  'Cadete': 'text-teal-600 bg-teal-50 dark:bg-teal-900/20',
+  'Infantil': 'text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20',
+  'Técnico Medio': 'text-purple-600 bg-purple-50 dark:bg-purple-900/20',
+  'Técnico Superior': 'text-fuchsia-600 bg-fuchsia-50 dark:bg-fuchsia-900/20',
+  'Presidente': 'text-rose-600 bg-rose-50 dark:bg-rose-900/20',
+  'Secretario': 'text-pink-600 bg-pink-50 dark:bg-pink-900/20',
+  'Vocal': 'text-slate-600 bg-slate-100 dark:bg-slate-800',
 };
 
 const CATEGORIA_LABEL: Record<string, string> = {
@@ -22,6 +30,8 @@ const CATEGORIA_LABEL: Record<string, string> = {
   tercera: 'Tercera Categoría',
   femenina: 'Equipo Femenino',
   base: 'Equipos Base',
+  'cuerpo-tecnico': 'Cuerpo Técnico',
+  directiva: 'Directiva',
 };
 
 export default function PlayerDetail() {
@@ -57,7 +67,7 @@ export default function PlayerDetail() {
     <>
       <SEOHead
         title={luchador.nombre}
-        description={`Ficha de ${luchador.nombre} — ${luchador.clasificacion} del ${CATEGORIA_LABEL[luchador.equipo] ?? luchador.equipo} del Club Ariadne.`}
+        description={`Ficha de ${luchador.nombre} — ${luchador.clasificaciones.join(' / ')} del ${luchador.equipos.map(eq => CATEGORIA_LABEL[eq] ?? eq).join(' / ')} del Club Aridane.`}
         image={luchador.foto}
         url={`/jugador/${luchador.id}`}
       />
@@ -78,20 +88,24 @@ export default function PlayerDetail() {
             <div className="relative">
               {/* Fondo decorativo */}
               <div className="absolute inset-0 bg-gradient-to-br from-club-blue/10 to-club-orange/10 rounded-3xl" />
-              <div className="relative h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl bg-gray-50 dark:bg-gray-900/30 flex items-center justify-center">
                 <LazyImage
                   src={luchador.foto}
                   alt={`Foto de ${luchador.nombre}`}
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-contain p-6"
                 />
               </div>
             </div>
 
             {/* Información */}
             <div className="flex flex-col justify-center">
-              {/* Clasificación */}
-              <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold capitalize mb-4 w-fit ${CLASIFICACION_COLOR[luchador.clasificacion] ?? 'text-gray-600 bg-gray-100'}`}>
-                {luchador.clasificacion}
+              {/* Clasificaciones */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {luchador.clasificaciones.map(clas => (
+                  <div key={clas} className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold capitalize w-fit ${CLASIFICACION_COLOR[clas] ?? 'text-gray-600 bg-gray-100'}`}>
+                    {clas}
+                  </div>
+                ))}
               </div>
 
               <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-2">
@@ -99,29 +113,39 @@ export default function PlayerDetail() {
               </h1>
 
               <div className="flex flex-wrap items-center gap-3 mb-8">
-                <Badge variant="blue">{CATEGORIA_LABEL[luchador.equipo] ?? luchador.equipo}</Badge>
+                {luchador.equipos.map(eq => (
+                  <Badge key={eq} variant="blue">{CATEGORIA_LABEL[eq] ?? eq}</Badge>
+                ))}
                 <span className="text-gray-400 text-sm">{luchador.nacionalidad}</span>
               </div>
 
               {/* Estadísticas */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-                {stats.map(({ label, valor }) => (
-                  <div
-                    key={label}
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center border border-gray-100 dark:border-gray-700"
-                  >
-                    <p className="text-2xl sm:text-3xl font-black text-club-blue dark:text-club-blue-light">
-                      {valor}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-1 leading-tight">{label}</p>
-                  </div>
-                ))}
-              </div>
+              {!luchador.equipos.every(eq => eq === 'directiva' || eq === 'cuerpo-tecnico') && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+                  {stats.map(({ label, valor }) => (
+                    <div
+                      key={label}
+                      className="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center border border-gray-100 dark:border-gray-700"
+                    >
+                      <p className="text-2xl sm:text-3xl font-black text-club-blue dark:text-club-blue-light">
+                        {valor}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1 leading-tight">{label}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Biografía */}
               {luchador.bio && (
                 <div>
-                  <h2 className="font-bold text-gray-900 dark:text-white mb-3">Sobre el luchador</h2>
+                  <h2 className="font-bold text-gray-900 dark:text-white mb-3">
+                    {luchador.equipos.includes('primera') || luchador.equipos.includes('base')
+                      ? 'Sobre el luchador'
+                      : luchador.equipos.includes('cuerpo-tecnico')
+                        ? 'Sobre el técnico'
+                        : 'Sobre el directivo'}
+                  </h2>
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{luchador.bio}</p>
                 </div>
               )}

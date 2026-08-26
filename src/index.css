@@ -1,16 +1,14 @@
 /* =============================================================================
-   ESTILOS GLOBALES — Club Ariadne
+   ESTILOS GLOBALES — Club Aridane
    Tailwind CSS v4 — @import base
    ============================================================================= */
 
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
 
 /* ── Dark mode: activado por clase .dark en <html>, no por prefers-color-scheme ── */
 /* Tailwind v4 requiere esta declaración para usar dark: via clase en lugar de media query */
 @custom-variant dark (&:where(.dark, .dark *));
-
-/* ── Fuentes de Google ── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
 
 /* ── Tokens de color personalizados ── */
 @theme {
@@ -188,3 +186,20 @@ h1, h2, h3, h4, h5, h6 {
 :where(.dark) .card-hover:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
+
+/* ── Marquee / Carrusel de Patrocinadores ── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+

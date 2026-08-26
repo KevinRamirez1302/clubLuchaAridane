@@ -1,5 +1,5 @@
 // =============================================================================
-// APP.TSX — Enrutador principal del Club Ariadne
+// APP.TSX — Enrutador principal del Club Aridane
 // React Router v7 con lazy loading de páginas para optimizar el bundle inicial
 // =============================================================================
 import { Suspense, lazy } from 'react';

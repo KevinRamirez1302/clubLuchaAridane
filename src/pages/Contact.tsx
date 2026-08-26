@@ -31,7 +31,7 @@ const DATOS_CONTACTO = [
       </svg>
     ),
     titulo: 'Email',
-    valor: 'info@clubariadne.es',
+    valor: 'info@clubaridane.es',
   },
   {
     icon: (
@@ -52,7 +52,7 @@ export default function Contact() {
     <>
       <SEOHead
         title="Contacto"
-        description="Ponte en contacto con el Club Ariadne. Estamos aquí para ayudarte con cualquier consulta sobre membresías, partidos o el club."
+        description="Ponte en contacto con el Club Aridane. Estamos aquí para ayudarte con cualquier consulta sobre membresías, partidos o el club."
         url="/contacto"
       />
 
@@ -117,7 +117,7 @@ export default function Contact() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Ubicación del Club Ariadne en Google Maps"
+                  title="Ubicación del Club Aridane en Google Maps"
                 />
               </div>
             </div>

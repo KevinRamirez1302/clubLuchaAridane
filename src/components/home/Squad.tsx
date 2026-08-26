@@ -17,6 +17,14 @@ const CLASIFICACIONES: { key: ClasificacionLuchador | 'todos'; label: string }[]
   { key: 'Destacado B', label: 'Destacado B' },
   { key: 'Destacado C', label: 'Destacado C' },
   { key: 'No clasificado', label: 'No clasificados' },
+  { key: 'Juvenil', label: 'Juvenil' },
+  { key: 'Cadete', label: 'Cadete' },
+  { key: 'Infantil', label: 'Infantil' },
+  { key: 'Técnico Medio', label: 'Técnico Medio' },
+  { key: 'Técnico Superior', label: 'Técnico Superior' },
+  { key: 'Presidente', label: 'Presidente' },
+  { key: 'Secretario', label: 'Secretario' },
+  { key: 'Vocal', label: 'Vocal' },
 ];
 
 const EQUIPOS: { key: CategoriaEquipo | 'todos'; label: string }[] = [
@@ -26,6 +34,8 @@ const EQUIPOS: { key: CategoriaEquipo | 'todos'; label: string }[] = [
   { key: 'tercera', label: 'Tercera Categoría' },
   { key: 'femenina', label: 'Equipo Femenino' },
   { key: 'base', label: 'Equipos Base' },
+  { key: 'cuerpo-tecnico', label: 'Cuerpo Técnico' },
+  { key: 'directiva', label: 'Directiva' },
 ];
 
 const CLASIFICACION_COLOR: Record<ClasificacionLuchador, string> = {
@@ -36,6 +46,23 @@ const CLASIFICACION_COLOR: Record<ClasificacionLuchador, string> = {
   'Destacado B': 'bg-club-blue-light',
   'Destacado C': 'bg-cyan-500',
   'No clasificado': 'bg-gray-400',
+  'Juvenil': 'bg-emerald-500',
+  'Cadete': 'bg-teal-500',
+  'Infantil': 'bg-indigo-500',
+  'Técnico Medio': 'bg-purple-500',
+  'Técnico Superior': 'bg-fuchsia-500',
+  'Presidente': 'bg-rose-500',
+  'Secretario': 'bg-pink-500',
+  'Vocal': 'bg-slate-500',
+};
+
+// Obtiene el primer nombre y el primer apellido de un nombre completo
+const getShortName = (fullName: string) => {
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length <= 2) return fullName;
+  if (parts.length === 3) return `${parts[0]} ${parts[1]}`;
+  // Para 4 o más palabras, asumimos que el primer nombre es parts[0] y el primer apellido es el penúltimo.
+  return `${parts[0]} ${parts[parts.length - 2]}`;
 };
 
 export default function Squad() {
@@ -43,13 +70,39 @@ export default function Squad() {
   const { plantilla, cargando } = useApp();
   const [clasificacion, setClasificacion] = useState<ClasificacionLuchador | 'todos'>('todos');
   const [equipo, setEquipo] = useState<CategoriaEquipo | 'todos'>('todos');
+  const [mostrarTodos, setMostrarTodos] = useState(false);
   const ref = useScrollReveal<HTMLElement>();
 
+  const handleEquipoChange = (key: CategoriaEquipo | 'todos') => {
+    setEquipo(key);
+    setClasificacion('todos');
+    setMostrarTodos(false);
+  };
+
+  const handleClasificacionChange = (key: ClasificacionLuchador | 'todos') => {
+    setClasificacion(key);
+    setMostrarTodos(false);
+  };
+
   const filtrados = plantilla.filter((j) => {
-    const matchClas = clasificacion === 'todos' || j.clasificacion === clasificacion;
-    const matchEq = equipo === 'todos' || j.equipo === equipo;
+    const matchClas = clasificacion === 'todos' || j.clasificaciones.includes(clasificacion as ClasificacionLuchador);
+    const matchEq = equipo === 'todos' || j.equipos.includes(equipo as CategoriaEquipo);
     return matchClas && matchEq;
   });
+
+  // Calculate available filter buttons dynamically
+  const availableEquiposSet = new Set(plantilla.flatMap((j) => j.equipos));
+  const equiposVisibles = EQUIPOS.filter(
+    (e) => e.key === 'todos' || availableEquiposSet.has(e.key as CategoriaEquipo)
+  );
+
+  const plantillaFiltradaPorEquipo = plantilla.filter(
+    (j) => equipo === 'todos' || j.equipos.includes(equipo as CategoriaEquipo)
+  );
+  const availableClasSet = new Set(plantillaFiltradaPorEquipo.flatMap((j) => j.clasificaciones));
+  const clasificacionesVisibles = CLASIFICACIONES.filter(
+    (c) => c.key === 'todos' || availableClasSet.has(c.key as ClasificacionLuchador)
+  );
 
   return (
     <section
@@ -73,10 +126,10 @@ export default function Squad() {
         <div className="flex flex-col gap-4 mb-10">
           {/* Filtro equipo */}
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por equipo">
-            {EQUIPOS.map(({ key, label }) => (
+            {equiposVisibles.map(({ key, label }) => (
               <button
                 key={key}
-                onClick={() => setEquipo(key as CategoriaEquipo | 'todos')}
+                onClick={() => handleEquipoChange(key as CategoriaEquipo | 'todos')}
                 className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                   equipo === key
                     ? 'bg-club-blue text-white shadow-md'
@@ -90,11 +143,12 @@ export default function Squad() {
           </div>
 
           {/* Filtro clasificación */}
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por clasificación">
-            {CLASIFICACIONES.map(({ key, label }) => (
-              <button
+          {clasificacionesVisibles.length > 1 && (
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por clasificación">
+              {clasificacionesVisibles.map(({ key, label }) => (
+                <button
                 key={key}
-                onClick={() => setClasificacion(key as ClasificacionLuchador | 'todos')}
+                onClick={() => handleClasificacionChange(key as ClasificacionLuchador | 'todos')}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide transition-all duration-200 ${
                   clasificacion === key
                     ? 'bg-club-orange text-white shadow-md'
@@ -103,9 +157,10 @@ export default function Squad() {
                 aria-pressed={clasificacion === key}
               >
                 {label}
-              </button>
-            ))}
-          </div>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Grid de jugadores */}
@@ -115,7 +170,7 @@ export default function Squad() {
               <PlayerCardSkeleton />
             </SkeletonGrid>
           ) : filtrados.length > 0 ? (
-            filtrados.map((jugador) => (
+            (mostrarTodos ? filtrados : filtrados.slice(0, 10)).map((jugador) => (
               <Link
                 key={jugador.id}
                 to={`/jugador/${jugador.id}`}
@@ -123,23 +178,23 @@ export default function Squad() {
                 aria-label={`Ver ficha de ${jugador.nombre}`}
               >
                 {/* Foto */}
-                <div className="relative h-44 overflow-hidden">
+                <div className="relative h-32 overflow-hidden bg-gray-50 dark:bg-gray-900/30 flex items-center justify-center">
                   <LazyImage
                     src={jugador.foto}
                     alt={`Foto de ${jugador.nombre}`}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Clasificación color */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 ${CLASIFICACION_COLOR[jugador.clasificacion]}`} />
+                  <div className={`absolute bottom-0 left-0 right-0 h-1 ${CLASIFICACION_COLOR[jugador.clasificaciones[0]] || 'bg-gray-400'}`} />
                 </div>
 
                 {/* Info */}
                 <div className="p-3 text-center">
                   <p className="font-bold text-gray-900 dark:text-white text-sm leading-tight truncate">
-                    {jugador.nombre}
+                    {getShortName(jugador.nombre)}
                   </p>
                   <p className="text-xs text-gray-400 dark:text-gray-500 capitalize mt-0.5">
-                    {jugador.clasificacion}
+                    {jugador.clasificaciones.join(' / ')}
                   </p>
                 </div>
               </Link>
@@ -151,10 +206,22 @@ export default function Squad() {
           )}
         </div>
 
+        {/* Botón Ver más */}
+        {!cargando && filtrados.length > 10 && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setMostrarTodos(!mostrarTodos)}
+              className="px-6 py-3 bg-club-blue text-white font-semibold rounded-full hover:bg-club-blue-light transition-colors shadow-md active:scale-95 cursor-pointer"
+            >
+              {mostrarTodos ? 'Ver menos' : 'Ver más'}
+            </button>
+          </div>
+        )}
+
         {/* Contador */}
         {!cargando && filtrados.length > 0 && (
           <p className="text-center text-gray-400 dark:text-gray-500 text-sm mt-8">
-            Mostrando {filtrados.length} luchador{filtrados.length !== 1 ? 'es' : ''}
+            Mostrando {mostrarTodos ? filtrados.length : Math.min(10, filtrados.length)} de {filtrados.length} miembro{filtrados.length !== 1 ? 's' : ''}
           </p>
         )}
       </div>

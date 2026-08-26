@@ -1,4 +1,4 @@
-// Footer del Club Ariadne
+// Footer del Club Aridane
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import escudo from '../../assets/escudo.png';
@@ -56,8 +56,8 @@ export default function Footer() {
           {/* Columna 1: Logo + descripción */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-4 group">
-              <img src={escudo} alt="Escudo Club Ariadne" className="h-12 w-auto" />
-              <span className="font-display text-2xl tracking-wider">ARIADNE</span>
+              <img src={escudo} alt="Escudo Club Aridane" className="h-12 w-auto" />
+              <span className="font-display text-2xl tracking-wider">ARIDANE</span>
             </Link>
             <p className="text-white/70 text-sm leading-relaxed">
               Club deportivo fundado en 1958. Pasión, esfuerzo y tradición al servicio del deporte y la comunidad.
@@ -122,7 +122,7 @@ export default function Footer() {
                 <svg className="w-4 h-4 text-club-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                info@clubariadne.es
+                info@clubaridane.es
               </li>
             </ul>
           </div>
@@ -134,7 +134,7 @@ export default function Footer() {
               {/* FUTURO: Enlace a tienda oficial — integrar con plataforma de e-commerce */}
               <li>
                 <a
-                  href="https://tienda.clubariadne.es"
+                  href="https://tienda.clubaridane.es"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/70 hover:text-club-orange transition-colors flex items-center gap-1"

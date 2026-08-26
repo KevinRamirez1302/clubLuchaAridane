@@ -19,7 +19,7 @@ const ThemeContext = createContext<ThemeContextType | null>(null);
  */
 function getInitialDark(): boolean {
   try {
-    const saved = localStorage.getItem('ariadne-theme');
+    const saved = localStorage.getItem('aridane-theme');
     if (saved === 'dark') return true;
     if (saved === 'light') return false;
     // Sin preferencia guardada → usar preferencia del sistema
@@ -40,7 +40,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.remove('dark');
     }
     try {
-      localStorage.setItem('ariadne-theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('aridane-theme', isDark ? 'dark' : 'light');
     } catch {
       // localStorage no disponible (modo privado estricto, etc.)
     }
