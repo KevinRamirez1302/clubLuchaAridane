@@ -1,32 +1,32 @@
 [
   {
     "id": 1,
-    "titulo": "Victoria épica en el derbi insular",
-    "resumen": "Nuestro Puntal A, Marcos Fontana, resolvió la luchada en el último enfrentamiento ante el CL Rosario (12-11).",
-    "contenido": "Fue una noche mágica en nuestro terrero. Con un ambiente espectacular y las gradas llenas, el equipo remontó una desventaja de 3 puntos. Destacó especialmente Carlos Vega (Destacado A), que tiró a cuatro contrarios antes de caer por amonestaciones.",
-    "imagen": "https://images.unsplash.com/photo-1544365558-35aa4af4154c?w=800&auto=format&fit=crop&q=80",
-    "fecha": "2025-06-16T10:00:00Z",
+    "titulo": "El CL Aridane disputa los cuartos de la Liga DISA ante el CL Tegueste en el Camilo León",
+    "resumen": "El terrero de Los Llanos acogió la gran eliminatoria regional con destacada actuación del tridente Raúl Peñate, Carlos Matoso y Carlos Jiménez.",
+    "contenido": "El terrero Camilo León de Los Llanos de Aridane vibró con el duelo de cuartos de final de la Liga DISA – Gobierno de Canarias entre el CL Aridane y el CL Tegueste de Tenerife, retransmitido en directo por el programa 'Terrero y Gloria' de Televisión Canaria. Bajo la dirección del mandador Juan Carlos Lorenzo, el equipo palmero liderado por el Puntal B Raúl Peñate 'Pollo Camareta II' y los puntales C Carlos Matoso y Carlos Jiménez 'Palmerito' ofreció una luchada de máximo nivel ante una afición volcada.",
+    "imagen": "/images/noticias/tegueste.jpg",
+    "fecha": "2026-06-18T20:30:00Z",
     "categoria": "competicion",
-    "autor": "Departamento de Comunicación"
+    "autor": "Departamento de Prensa"
   },
   {
     "id": 2,
-    "titulo": "Laura Mesa renueva por tres temporadas",
-    "resumen": "La actual campeona regional y Puntal B del equipo femenino amplía su vinculación con nuestro club.",
-    "contenido": "El Club Aridane asegura su pilar principal para el equipo femenino. Laura Mesa ha firmado un acuerdo que la mantendrá en nuestra disciplina hasta 2028, liderando el proyecto de la sección femenina.",
-    "imagen": "https://images.unsplash.com/photo-1574629810360-7efbb980d5d4?w=800&auto=format&fit=crop&q=80",
-    "fecha": "2025-06-14T12:30:00Z",
-    "categoria": "fichaje",
-    "autor": "Dirección Deportiva"
+    "titulo": "Presentación oficial de la temporada 2025/2026 en el Camilo León con luchada ante el CL Almogarén",
+    "resumen": "El club presentó todas sus categorías, desde la Escuela de Lucha Llanoresa hasta la Primera Categoría, ante un terrero abarrotado.",
+    "contenido": "El Club de Lucha Aridane celebró su presentación oficial de la temporada 2025-2026 en el terrero Camilo León. El acto reunió a las futuras promesas de la cantera de la Escuela C.L. Llanoresa, a las categorías base y al equipo sénior de Primera Categoría. La jornada festiva culminó con una emocionante luchada amistosa frente al histórico CL Almogarén de Gran Canaria, afianzando la ilusión para afrontar los títulos de la temporada.",
+    "imagen": "/images/noticias/presentacion.jpg",
+    "fecha": "2025-09-20T19:00:00Z",
+    "categoria": "club",
+    "autor": "Junta Directiva"
   },
   {
     "id": 3,
-    "titulo": "Mejoras en el terrero principal",
-    "resumen": "El club invierte en la modernización de la arena y las gradas para la próxima temporada.",
-    "contenido": "Con el objetivo de seguir siendo una referencia, se ha procedido al cambio integral de la arena del terrero, apostando por material de primera calidad para prevenir lesiones y mejorar el agarre. Además, se ampliará el aforo en 200 localidades.",
-    "imagen": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800&auto=format&fit=crop&q=80",
-    "fecha": "2025-06-12T09:15:00Z",
-    "categoria": "club",
-    "autor": "Presidencia"
+    "titulo": "Emocionante derbi insular del Valle de Aridane frente al CL Tamanca-Las Manchas",
+    "resumen": "Gran ambiente en las gradas y duelos de alto voltaje en el enfrentamiento de la competición insular de La Palma.",
+    "contenido": "Una vez más, el derbi insular entre el CL Aridane y el CL Tamanca-Las Manchas demostró la grandeza y tradición de la lucha canaria en La Palma. Con gradas repletas de aficionados, el conjunto llanero desplegó toda su fuerza y técnica sobre la arena, protagonizando cruces decisivos en los compases finales que levantaron el aplauso unánime del público.",
+    "imagen": "/images/noticias/derbi.jpg",
+    "fecha": "2026-04-12T21:00:00Z",
+    "categoria": "competicion",
+    "autor": "Redacción Deportiva"
   }
 ]

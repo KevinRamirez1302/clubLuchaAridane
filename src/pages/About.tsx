@@ -1,34 +1,32 @@
 // Página "Quiénes somos"
 import { useTranslation } from 'react-i18next';
 import SEOHead from '../components/common/SEOHead';
-import Timeline from '../components/about/Timeline';
-import MediaGallery from '../components/about/MediaGallery';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const VALORES = [
   {
-    icon: '',
-    titulo: 'Excelencia',
+    icon: '🤝',
+    titulo: 'Nobleza',
     texto:
-      'Buscamos la mejora continua en todo lo que hacemos, dentro y fuera del campo.',
+      'Luchamos con honor en la arena, respetando siempre las reglas y al adversario.',
   },
   {
-    icon: '',
+    icon: '🤝',
     titulo: 'Respeto',
     texto:
       'Tratamos a rivales, árbitros, aficionados y compañeros con la máxima consideración.',
   },
   {
-    icon: '',
-    titulo: 'Pasión',
+    icon: '💪',
+    titulo: 'Esfuerzo',
     texto:
-      'El amor por el fútbol y por nuestra comunidad es la fuerza que nos impulsa cada día.',
+      'El compromiso diario con el entrenamiento y la superación personal en cada luchada.',
   },
   {
-    icon: '',
+    icon: '👥',
     titulo: 'Equipo',
     texto:
-      'El colectivo siempre por delante del individuo. Ganamos y perdemos juntos.',
+      'El colectivo siempre por delante del individuo. Apoyo constante en el terrero.',
   },
 ];
 
@@ -36,13 +34,12 @@ export default function About() {
   const { t } = useTranslation();
   const refHero = useScrollReveal<HTMLElement>();
   const refValores = useScrollReveal<HTMLElement>();
-  const refGaleria = useScrollReveal<HTMLElement>();
 
   return (
     <>
       <SEOHead
         title="Quiénes somos"
-        description="Conoce la historia del Club Aridane, nuestra misión, valores y la galería fotográfica de nuestra trayectoria desde 1958."
+        description="Conoce la misión, valores y la identidad del Club de Lucha Aridane."
         url="/quienes-somos"
       />
 
@@ -54,7 +51,7 @@ export default function About() {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <span className="inline-block bg-club-orange/15 text-club-orange border border-club-orange/30 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-6">
-            Desde 1958
+            Sobre nosotros
           </span>
           <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl text-gray-900 dark:text-white mb-6">
             {t('quienesSomos.titulo')}
@@ -66,39 +63,30 @@ export default function About() {
         </div>
       </section>
 
-      {/* Historia, Misión y Valores */}
+      {/* Misión y Valores */}
       <section className="py-16 lg:py-24 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            {/* Historia */}
+            {/* Misión */}
             <div>
               <div className="section-line" />
               <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                {t('quienesSomos.historia')}
+                {t('quienesSomos.mision')}
               </h2>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
-                {t('quienesSomos.historiaTexto')}
+                {t('quienesSomos.misionTexto')}
               </p>
             </div>
 
-            {/* Misión y Valores */}
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                  {t('quienesSomos.mision')}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {t('quienesSomos.misionTexto')}
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                  {t('quienesSomos.valores')}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {t('quienesSomos.valoresTexto')}
-                </p>
-              </div>
+            {/* Valores principales */}
+            <div>
+              <div className="section-line" />
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                {t('quienesSomos.valores')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
+                {t('quienesSomos.valoresTexto')}
+              </p>
             </div>
           </div>
 
@@ -123,36 +111,6 @@ export default function About() {
               </div>
             ))}
           </section>
-        </div>
-      </section>
-
-      {/* Línea de tiempo */}
-      <section className="py-16 lg:py-24 bg-white dark:bg-gray-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Timeline />
-        </div>
-      </section>
-
-      {/* Galería multimedia */}
-      <section
-        ref={refGaleria}
-        className="reveal py-16 lg:py-24 bg-white dark:bg-gray-950"
-        aria-labelledby="galeria-titulo"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <div className="section-line" />
-            <h2
-              id="galeria-titulo"
-              className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white"
-            >
-              {t('quienesSomos.galeria')}
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 mt-2">
-              Fotos y momentos recientes del club. Haz clic para ampliar.
-            </p>
-          </div>
-          <MediaGallery />
         </div>
       </section>
     </>

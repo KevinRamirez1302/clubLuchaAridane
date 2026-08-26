@@ -4,7 +4,7 @@
 // Accesibilidad: roles ARIA, navegación por teclado, skip-to-content
 // =============================================================================
 import { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../context/ThemeContext';
 import escudo from '../../assets/escudo.png';
@@ -12,7 +12,8 @@ import escudo from '../../assets/escudo.png';
 const NAV_LINKS = [
   { to: '/', label: 'nav.inicio' },
   { to: '/quienes-somos', label: 'nav.quienesSomos' },
-  { to: '/hazte-socio', label: 'nav.hazteSocio' },
+  { to: '/nuestra-historia', label: 'nav.nuestraHistoria' },
+  { to: '/#calendario', label: 'nav.calendario' },
   { to: '/contacto', label: 'nav.contacto' },
 ] as const;
 
@@ -55,20 +56,31 @@ export default function Header() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `relative px-1 py-2 text-sm font-semibold transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-club-orange after:transition-all after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-club-orange rounded ${
-      isActive
+  const isLinkActive = (to: string) => {
+    if (to === '/#calendario') {
+      return location.hash === '#calendario';
+    }
+    if (to === '/') {
+      return location.pathname === '/' && location.hash !== '#calendario';
+    }
+    return location.pathname === to;
+  };
+
+  const getNavLinkClass = (to: string) => {
+    const active = isLinkActive(to);
+    return `relative px-1 py-2 text-sm font-semibold transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-club-orange after:transition-all after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-club-orange rounded ${
+      active
         ? 'text-club-orange after:w-full'
         : 'text-white/90 hover:text-white after:w-0 hover:after:w-full'
     }`;
+  };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
           ? 'bg-club-blue shadow-2xl backdrop-blur-md'
           : 'bg-club-blue/95'
-      }`}
+        }`}
       role="banner"
     >
       {/* Skip to main content — accesibilidad */}
@@ -94,7 +106,7 @@ export default function Header() {
               className="h-10 w-auto lg:h-12 transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
             />
             <span className="font-display text-2xl lg:text-3xl text-white tracking-wider drop-shadow">
-              ARIDANE
+              C.L ARIDANE
             </span>
           </Link>
 
@@ -104,9 +116,9 @@ export default function Header() {
             aria-label="Navegación principal"
           >
             {NAV_LINKS.map(({ to, label }) => (
-              <NavLink key={to} to={to} end={to === '/'} className={navLinkClass}>
+              <Link key={to} to={to} className={getNavLinkClass(to)}>
                 {t(label)}
-              </NavLink>
+              </Link>
             ))}
           </nav>
 
@@ -182,26 +194,22 @@ export default function Header() {
         ref={mobileMenuRef}
         role="navigation"
         aria-label="Menú móvil"
-        className={`lg:hidden bg-club-blue-dark border-t border-white/10 transition-all duration-300 overflow-hidden ${
-          menuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`lg:hidden bg-club-blue-dark border-t border-white/10 transition-all duration-300 overflow-hidden ${menuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <nav className="px-4 py-4 space-y-1">
           {NAV_LINKS.map(({ to, label }) => (
-            <NavLink
+            <Link
               key={to}
               to={to}
-              end={to === '/'}
-              className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
-                  isActive
-                    ? 'bg-club-orange text-white'
-                    : 'text-white/90 hover:bg-white/10 hover:text-white'
-                }`
-              }
+              className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
+                isLinkActive(to)
+                  ? 'bg-club-orange text-white'
+                  : 'text-white/90 hover:bg-white/10 hover:text-white'
+              }`}
             >
               {t(label)}
-            </NavLink>
+            </Link>
           ))}
           <div className="pt-3 border-t border-white/10">
             <Link

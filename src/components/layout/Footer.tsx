@@ -57,10 +57,10 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-4 group">
               <img src={escudo} alt="Escudo Club Aridane" className="h-12 w-auto" />
-              <span className="font-display text-2xl tracking-wider">ARIDANE</span>
+              <span className="font-display text-2xl tracking-wider">C.L. ARIDANE</span>
             </Link>
             <p className="text-white/70 text-sm leading-relaxed">
-              Club deportivo fundado en 1958. Pasión, esfuerzo y tradición al servicio del deporte y la comunidad.
+              Club deportivo fundado en 1946. Pasión, esfuerzo y tradición al servicio del deporte y la comunidad.
             </p>
             {/* Redes sociales */}
             <div className="flex items-center gap-3 mt-5">
@@ -86,7 +86,8 @@ export default function Footer() {
               {[
                 { to: '/', label: 'Inicio' },
                 { to: '/quienes-somos', label: 'Quiénes somos' },
-                { to: '/hazte-socio', label: 'Hazte socio' },
+                { to: '/nuestra-historia', label: 'Nuestra historia' },
+                { to: '/#calendario', label: 'Calendario' },
                 { to: '/contacto', label: 'Contacto' },
               ].map(({ to, label }) => (
                 <li key={to}>
@@ -160,7 +161,7 @@ export default function Footer() {
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-white/50">
           <p>{t('footer.copyright')}</p>
           <p>
-            Diseñado con ❤️ para el deporte
+            Diseñado por RGV tech
           </p>
         </div>
       </div>

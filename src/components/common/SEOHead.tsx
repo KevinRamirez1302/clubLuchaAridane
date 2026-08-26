@@ -9,7 +9,7 @@ interface SEOHeadProps {
 }
 
 const SITE_NAME = 'Club Aridane';
-const DEFAULT_DESCRIPTION = 'Club Aridane — Pasión, esfuerzo y tradición desde 1958. Sigue los partidos, conoce nuestra plantilla y hazte socio.';
+const DEFAULT_DESCRIPTION = 'Club Aridane — Pasión, esfuerzo y tradición desde 1946. Sigue los partidos, conoce nuestra plantilla y hazte socio.';
 const DEFAULT_IMAGE = '/og-image.png';
 
 export default function SEOHead({
