@@ -3,7 +3,7 @@
 // React Router v7 con lazy loading de páginas para optimizar el bundle inicial
 // =============================================================================
 import { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './context/ThemeContext';
 import { AppProvider } from './context/AppContext';
@@ -20,6 +20,16 @@ const Contact = lazy(() => import('./pages/Contact'));
 const NewsDetail = lazy(() => import('./pages/NewsDetail'));
 const PlayerDetail = lazy(() => import('./pages/PlayerDetail'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+
+// Admin Pages
+const AdminLogin = lazy(() => import('./pages/admin/Login'));
+const AdminLayout = lazy(() => import('./components/layout/AdminLayout'));
+const AuthGuard = lazy(() => import('./components/auth/AuthGuard'));
+const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
+const AdminNews = lazy(() => import('./pages/admin/AdminNews'));
+const AdminSquad = lazy(() => import('./pages/admin/AdminSquad'));
+const AdminStandings = lazy(() => import('./pages/admin/AdminStandings'));
+const AdminNextMatch = lazy(() => import('./pages/admin/AdminNextMatch'));
 
 // Fallback de carga durante el lazy loading
 function PageLoader() {
@@ -44,6 +54,21 @@ export default function App() {
             <ScrollToHash />
             <Suspense fallback={<PageLoader />}>
               <Routes>
+                {/* Rutas Públicas - Login de Admin */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+
+                {/* Rutas Privadas - Panel de Administrador */}
+                <Route element={<AuthGuard />}>
+                  <Route element={<AdminLayout />}>
+                    <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                    <Route path="/admin/news" element={<AdminNews />} />
+                    <Route path="/admin/squad" element={<AdminSquad />} />
+                    <Route path="/admin/standings" element={<AdminStandings />} />
+                    <Route path="/admin/next-match" element={<AdminNextMatch />} />
+                  </Route>
+                </Route>
+
                 <Route element={<Layout />}>
                   {/* Rutas principales */}
                   <Route path="/" element={<Home />} />

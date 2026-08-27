@@ -10,14 +10,12 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import type { Noticia, Fichaje, Jugador, Patrocinador, HitoHistorico, ElementoGaleria, Partido, PosicionClasificacion } from '../types';
 
 // ── Mock data imports (reemplazar por fetch al integrar backend) ──
-import noticiasMock from '../data/noticias.json';
 import fichajesMock from '../data/fichajes.json';
-import plantillaMock from '../data/plantilla.json';
 import patrocinadorMock from '../data/patrocinadores.json';
 import historiaMock from '../data/historia.json';
 import galeriaMock from '../data/galeria.json';
-import partidosMock from '../data/partidos.json';
-import clasificacionMock from '../data/clasificacion.json';
+
+import { useDataStore } from '../store/useDataStore';
 
 interface AppState {
   noticias: Noticia[];
@@ -39,17 +37,30 @@ interface AppContextType extends AppState {
 const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
+  const storeData = useDataStore();
+
   const [estado, setEstado] = useState<AppState>({
-    noticias: [],
+    noticias: storeData.noticias,
     fichajes: [],
-    plantilla: [],
+    plantilla: storeData.plantilla,
     patrocinadores: [],
     historia: [],
     galeria: [],
-    partidos: [],
-    clasificacion: [],
+    partidos: storeData.partidos,
+    clasificacion: storeData.clasificacion,
     cargando: true,
   });
+
+  // Efecto para sincronizar los cambios de Zustand en tiempo real con este contexto
+  useEffect(() => {
+    setEstado(prev => ({
+      ...prev,
+      noticias: storeData.noticias,
+      plantilla: storeData.plantilla,
+      partidos: storeData.partidos,
+      clasificacion: storeData.clasificacion,
+    }));
+  }, [storeData]);
 
   useEffect(() => {
     // ── INTEGRACIÓN BACKEND: reemplazar este bloque por llamadas reales ──
@@ -62,17 +73,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     // Simulamos latencia de red para probar skeleton loaders
     const timer = setTimeout(() => {
-      setEstado({
-        noticias: noticiasMock as Noticia[],
+      setEstado(prev => ({
+        ...prev,
         fichajes: fichajesMock as Fichaje[],
-        plantilla: plantillaMock as Jugador[],
         patrocinadores: patrocinadorMock as Patrocinador[],
         historia: historiaMock as HitoHistorico[],
         galeria: galeriaMock as ElementoGaleria[],
-        partidos: partidosMock as Partido[],
-        clasificacion: clasificacionMock as PosicionClasificacion[],
         cargando: false,
-      });
+      }));
     }, 800); // Simula 800ms de carga de red
 
     return () => clearTimeout(timer);

@@ -3,8 +3,8 @@
    Tailwind CSS v4 — @import base
    ============================================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
 
 /* ── Dark mode: activado por clase .dark en <html>, no por prefers-color-scheme ── */
 /* Tailwind v4 requiere esta declaración para usar dark: via clase en lugar de media query */
@@ -28,8 +28,8 @@
 
   /* Fuentes */
   --font-heading: 'Bebas Neue', 'Oswald', sans-serif;
-  --font-subheading: 'Oswald', 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-subheading: 'Oswald', 'Roboto', sans-serif;
+  --font-body: 'Roboto', sans-serif;
 }
 
 /* ── Estilos base ── */
