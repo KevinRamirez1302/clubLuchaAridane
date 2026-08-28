@@ -1,25 +1,23 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
-// import { useTranslation } from 'react-i18next';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const login = useAuthStore((state) => state.login);
+  const { login, isLoading } = useAuthStore();
   const navigate = useNavigate();
-  // const { t } = useTranslation();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
-    const success = login(username, password);
+
+    const success = await login(username, password);
     if (success) {
       navigate('/admin/dashboard');
     } else {
-      setError('Credenciales incorrectas');
+      setError('Credenciales incorrectas o servidor no disponible');
     }
   };
 
@@ -43,6 +41,7 @@ export default function Login() {
                 name="username"
                 type="text"
                 required
+                disabled={isLoading}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-zinc-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                 placeholder="Usuario (admin)"
                 value={username}
@@ -56,6 +55,7 @@ export default function Login() {
                 name="password"
                 type="password"
                 required
+                disabled={isLoading}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-zinc-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                 placeholder="Contraseña (123456)"
                 value={password}
@@ -65,7 +65,7 @@ export default function Login() {
           </div>
 
           {error && (
-            <div className="text-red-500 text-sm text-center">
+            <div className="text-red-500 text-sm text-center font-medium">
               {error}
             </div>
           )}
@@ -73,9 +73,10 @@ export default function Login() {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              disabled={isLoading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-50"
             >
-              Iniciar Sesión
+              {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
           </div>
         </form>

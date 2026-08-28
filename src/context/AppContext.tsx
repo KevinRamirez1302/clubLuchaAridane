@@ -1,21 +1,20 @@
 // =============================================================================
 // CONTEXTO GLOBAL — AppContext
-// Gestiona el estado de los datos del club (noticias, fichajes, plantilla, etc.)
-// ----------------------------------------------------------------------------
-// INTEGRACIÓN BACKEND: sustituir los imports de datos mock por llamadas fetch/axios
-// a los endpoints correspondientes dentro del useEffect de AppProvider.
-// Ejemplo: GET /api/noticias → setNoticias(data)
+// Gestiona el estado de los datos del club (noticias, plantilla, patrocinadores, etc.)
+// Conectado con la API REST de Node.js + Express
 // =============================================================================
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { Noticia, Fichaje, Jugador, Patrocinador, HitoHistorico, ElementoGaleria, Partido, PosicionClasificacion } from '../types';
+import { apiFetch } from '../services/api';
 
-// ── Mock data imports (reemplazar por fetch al integrar backend) ──
+// Mock data fallbacks en caso de desconexión
 import fichajesMock from '../data/fichajes.json';
 import patrocinadorMock from '../data/patrocinadores.json';
 import historiaMock from '../data/historia.json';
 import galeriaMock from '../data/galeria.json';
 
 import { useDataStore } from '../store/useDataStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface AppState {
   noticias: Noticia[];
@@ -30,14 +29,14 @@ interface AppState {
 }
 
 interface AppContextType extends AppState {
-  // Métodos futuros para CRUD cuando el admin panel esté listo
-  // FUTURO: recargarNoticias: () => Promise<void>;
+  recargarDatos: () => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const storeData = useDataStore();
+  const checkAuth = useAuthStore((state) => state.checkAuth);
 
   const [estado, setEstado] = useState<AppState>({
     noticias: storeData.noticias,
@@ -51,29 +50,24 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     cargando: true,
   });
 
-  // Efecto para sincronizar los cambios de Zustand en tiempo real con este contexto
-  useEffect(() => {
-    setEstado(prev => ({
-      ...prev,
-      noticias: storeData.noticias,
-      plantilla: storeData.plantilla,
-      partidos: storeData.partidos,
-      clasificacion: storeData.clasificacion,
-    }));
-  }, [storeData]);
+  const cargarDatosAuxiliares = async () => {
+    try {
+      const [patrosRes, historiaRes, galeriaRes] = await Promise.allSettled([
+        apiFetch<Patrocinador[]>('/patrocinadores'),
+        apiFetch<HitoHistorico[]>('/historia'),
+        apiFetch<ElementoGaleria[]>('/galeria'),
+      ]);
 
-  useEffect(() => {
-    // ── INTEGRACIÓN BACKEND: reemplazar este bloque por llamadas reales ──
-    // Ejemplo con fetch:
-    // const [noticias, fichajes] = await Promise.all([
-    //   fetch('/api/noticias').then(r => r.json()),
-    //   fetch('/api/fichajes').then(r => r.json()),
-    // ]);
-    // ──────────────────────────────────────────────────────────────────────
-
-    // Simulamos latencia de red para probar skeleton loaders
-    const timer = setTimeout(() => {
-      setEstado(prev => ({
+      setEstado((prev) => ({
+        ...prev,
+        fichajes: fichajesMock as Fichaje[],
+        patrocinadores: patrosRes.status === 'fulfilled' ? patrosRes.value.data : (patrocinadorMock as Patrocinador[]),
+        historia: historiaRes.status === 'fulfilled' ? historiaRes.value.data : (historiaMock as HitoHistorico[]),
+        galeria: galeriaRes.status === 'fulfilled' ? galeriaRes.value.data : (galeriaMock as ElementoGaleria[]),
+        cargando: false,
+      }));
+    } catch {
+      setEstado((prev) => ({
         ...prev,
         fichajes: fichajesMock as Fichaje[],
         patrocinadores: patrocinadorMock as Patrocinador[],
@@ -81,19 +75,39 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         galeria: galeriaMock as ElementoGaleria[],
         cargando: false,
       }));
-    }, 800); // Simula 800ms de carga de red
+    }
+  };
 
-    return () => clearTimeout(timer);
+  // Carga inicial y comprobación de sesión al arrancar la app
+  useEffect(() => {
+    checkAuth();
+    storeData.fetchInitialData();
+    cargarDatosAuxiliares();
   }, []);
 
+  // Sincronizar Zustand en tiempo real con este contexto
+  useEffect(() => {
+    setEstado((prev) => ({
+      ...prev,
+      noticias: storeData.noticias,
+      plantilla: storeData.plantilla,
+      partidos: storeData.partidos,
+      clasificacion: storeData.clasificacion,
+    }));
+  }, [storeData.noticias, storeData.plantilla, storeData.partidos, storeData.clasificacion]);
+
+  const recargarDatos = async () => {
+    await storeData.fetchInitialData();
+    await cargarDatosAuxiliares();
+  };
+
   return (
-    <AppContext.Provider value={estado}>
+    <AppContext.Provider value={{ ...estado, recargarDatos }}>
       {children}
     </AppContext.Provider>
   );
 }
 
-// Hook personalizado con comprobación de contexto
 export function useApp(): AppContextType {
   const ctx = useContext(AppContext);
   if (!ctx) throw new Error('useApp debe usarse dentro de <AppProvider>');
