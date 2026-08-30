@@ -5,25 +5,41 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const VALORES = [
   {
-    icon: '🤝',
+    icon: (
+      <svg className="w-8 h-8 text-club-orange mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
     titulo: 'Nobleza',
     texto:
       'Luchamos con honor en la arena, respetando siempre las reglas y al adversario.',
   },
   {
-    icon: '🤝',
+    icon: (
+      <svg className="w-8 h-8 text-club-blue mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+      </svg>
+    ),
     titulo: 'Respeto',
     texto:
       'Tratamos a rivales, árbitros, aficionados y compañeros con la máxima consideración.',
   },
   {
-    icon: '💪',
+    icon: (
+      <svg className="w-8 h-8 text-club-orange mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
     titulo: 'Esfuerzo',
     texto:
       'El compromiso diario con el entrenamiento y la superación personal en cada luchada.',
   },
   {
-    icon: '👥',
+    icon: (
+      <svg className="w-8 h-8 text-club-blue mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5-3.512M9 20H4v-2a3 3 0 015-3.512M12 14a4 4 0 100-8 4 4 0 000 8z" />
+      </svg>
+    ),
     titulo: 'Equipo',
     texto:
       'El colectivo siempre por delante del individuo. Apoyo constante en el terrero.',
@@ -101,7 +117,7 @@ export default function About() {
                 key={titulo}
                 className="bg-white dark:bg-gray-800 rounded-2xl p-6 text-center shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow"
               >
-                <span className="text-4xl block mb-3">{icon}</span>
+                {icon}
                 <h4 className="font-bold text-gray-900 dark:text-white mb-2">
                   {titulo}
                 </h4>

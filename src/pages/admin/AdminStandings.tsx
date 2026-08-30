@@ -143,7 +143,10 @@ export default function AdminStandings() {
             onClick={ordenarAutomatico}
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-700 font-medium text-sm transition"
           >
-            🔃 Ordenar por puntos
+            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+            Ordenar por puntos
           </button>
           <button
             id="btn-guardar-clasificacion"
@@ -160,7 +163,12 @@ export default function AdminStandings() {
                 Guardando...
               </>
             ) : (
-              '💾 Guardar y publicar'
+              <>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+                Guardar y publicar
+              </>
             )}
           </button>
         </div>
@@ -175,14 +183,25 @@ export default function AdminStandings() {
               : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
           }`}
         >
-          <span>{feedback.tipo === 'ok' ? '✅' : '❌'}</span>
+          {feedback.tipo === 'ok' ? (
+            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          )}
           {feedback.msg}
         </div>
       )}
 
       {/* ── Info ── */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/40 rounded-xl px-4 py-3 text-sm text-blue-700 dark:text-blue-300">
-        💡 <strong>Consejo:</strong> Los campos <em>Luchadas</em> y <em>Puntos</em> se recalculan automáticamente al editar G/E/P. Pulsa "Guardar" cuando hayas terminado para publicar los cambios en la web.
+      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/40 rounded-xl px-4 py-3 text-sm text-blue-700 dark:text-blue-300 flex items-start gap-2">
+        <svg className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span><strong>Consejo:</strong> Los campos <em>Luchadas</em> y <em>Puntos</em> se recalculan automáticamente al editar G/E/P. Pulsa "Guardar" cuando hayas terminado para publicar los cambios en la web.</span>
       </div>
 
       {/* ── Tabla editable ── */}
@@ -273,14 +292,16 @@ export default function AdminStandings() {
                     <button
                       type="button"
                       onClick={() => updateFila(idx, 'esClub', !fila.esClub)}
-                      className={`w-8 h-8 rounded-lg transition-colors ${
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors mx-auto ${
                         fila.esClub
                           ? 'bg-club-blue text-white'
                           : 'bg-gray-100 dark:bg-zinc-700 text-gray-400 hover:bg-gray-200 dark:hover:bg-zinc-600'
                       }`}
                       title="Marcar como nuestro club"
                     >
-                      🏆
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
                     </button>
                   </td>
 
@@ -331,7 +352,9 @@ export default function AdminStandings() {
                         className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition"
                         title="Eliminar equipo"
                       >
-                        🗑️
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                       </button>
                     )}
                   </td>
@@ -360,7 +383,16 @@ export default function AdminStandings() {
           disabled={guardando}
           className="inline-flex items-center gap-2 bg-club-blue hover:bg-club-blue-dark text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {guardando ? 'Guardando...' : '💾 Guardar y publicar cambios'}
+          {guardando ? (
+            'Guardando...'
+          ) : (
+            <>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
+              Guardar y publicar cambios
+            </>
+          )}
         </button>
       </div>
     </div>

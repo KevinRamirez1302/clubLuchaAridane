@@ -153,7 +153,15 @@ export default function AdminNextMatch() {
               : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
           }`}
         >
-          <span>{feedback.tipo === 'ok' ? '✅' : '❌'}</span>
+          {feedback.tipo === 'ok' ? (
+            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          )}
           {feedback.msg}
         </div>
       )}
@@ -162,8 +170,11 @@ export default function AdminNextMatch() {
       {proximoPartido ? (
         <div className="bg-gradient-to-r from-club-blue to-club-blue-light text-white rounded-2xl p-6 shadow-lg">
           <div className="flex items-center gap-2 mb-4">
-            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-              ⚡ Próxima Luchada
+            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Próxima Luchada
             </span>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -174,22 +185,30 @@ export default function AdminNextMatch() {
                 <span className="text-white/60 font-normal mx-3">vs</span>
                 {proximoPartido.esLocal ? proximoPartido.rival : 'Club Aridane'}
               </p>
-              <p className="text-white/70 mt-2 text-sm">🗓️ {formatFecha(proximoPartido.fecha)}</p>
+              <p className="text-white/70 mt-2 text-sm flex items-center gap-1.5">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {formatFecha(proximoPartido.fecha)}
+              </p>
               <p className="text-white/70 text-sm">
-                {proximoPartido.esLocal ? '🏠 Local — Terrero Camilo León' : '✈️ Visitante'}
+                {proximoPartido.esLocal ? 'Local — Terrero Camilo León' : 'Visitante'}
               </p>
             </div>
             <button
               onClick={() => abrirEditar(proximoPartido)}
-              className="self-start sm:self-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl text-sm font-medium transition"
+              className="self-start sm:self-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl text-sm font-medium transition flex items-center gap-1.5"
             >
-              ✏️ Editar
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+              Editar
             </button>
           </div>
         </div>
       ) : (
         <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40 rounded-xl px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
-          ⚠️ No hay ninguna luchada marcada como "próxima". Pulsa el botón ⚡ en la tabla para destacar una.
+          No hay ninguna luchada marcada como "próxima". Pulsa el botón de destacar en la tabla para fijar una.
         </div>
       )}
 
@@ -197,7 +216,9 @@ export default function AdminNextMatch() {
       <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-sm overflow-hidden border border-gray-100 dark:border-zinc-700">
         {partidosOrdenados.length === 0 ? (
           <div className="p-12 text-center text-gray-400 dark:text-gray-500">
-            <p className="text-4xl mb-3">🗓️</p>
+            <svg className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
             <p className="text-lg font-medium">No hay luchadas en el calendario</p>
             <button onClick={abrirCrear} className="mt-4 text-club-blue dark:text-blue-400 underline text-sm">
               Añadir la primera luchada
@@ -237,8 +258,10 @@ export default function AdminNextMatch() {
                             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                           />
                         ) : (
-                          <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-zinc-700 flex items-center justify-center flex-shrink-0 text-lg">
-                            ⚔️
+                          <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-zinc-700 flex items-center justify-center flex-shrink-0 text-gray-400">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
                           </div>
                         )}
                         <div className="min-w-0">
@@ -261,7 +284,7 @@ export default function AdminNextMatch() {
                           ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
                           : 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300'
                       }`}>
-                        {p.esLocal ? '🏠 Local' : '✈️ Visitante'}
+                        {p.esLocal ? 'Local' : 'Visitante'}
                       </span>
                     </td>
                     {/* Resultado */}
@@ -286,7 +309,9 @@ export default function AdminNextMatch() {
                         }`}
                         title={p.esProximo ? 'Es la próxima luchada' : 'Marcar como próxima'}
                       >
-                        ⚡
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
                       </button>
                     </td>
                     {/* Acciones */}
@@ -297,7 +322,9 @@ export default function AdminNextMatch() {
                           onClick={() => abrirEditar(p)}
                           className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
                         >
-                          ✏️
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
                         </button>
                         {confirmDeleteId === p.id ? (
                           <div className="flex items-center gap-1">
@@ -320,7 +347,9 @@ export default function AdminNextMatch() {
                             onClick={() => setConfirmDeleteId(p.id)}
                             className="p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                           >
-                            🗑️
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
                           </button>
                         )}
                       </div>
@@ -342,13 +371,16 @@ export default function AdminNextMatch() {
           <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between p-6 border-b dark:border-zinc-700">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                {editandoId !== null ? '✏️ Editar Luchada' : '➕ Nueva Luchada'}
+                {editandoId !== null ? 'Editar Luchada' : 'Nueva Luchada'}
               </h2>
               <button
                 onClick={cerrarModal}
                 className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 rounded-lg transition"
+                title="Cerrar"
               >
-                ✕
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
@@ -436,7 +468,7 @@ export default function AdminNextMatch() {
                         : 'bg-white dark:bg-zinc-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-zinc-700'
                     }`}
                   >
-                    🏠 Local
+                    Local
                   </button>
                   <button
                     type="button"
@@ -447,7 +479,7 @@ export default function AdminNextMatch() {
                         : 'bg-white dark:bg-zinc-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-zinc-700'
                     }`}
                   >
-                    ✈️ Visitante
+                    Visitante
                   </button>
                 </div>
               </div>
@@ -471,7 +503,7 @@ export default function AdminNextMatch() {
               {/* Toggle: Próxima luchada */}
               <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-zinc-700">
                 <div>
-                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">⚡ Marcar como próxima luchada</p>
+                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Marcar como próxima luchada</p>
                   <p className="text-xs text-gray-400 mt-0.5">Se mostrará destacada en la web principal</p>
                 </div>
                 <button

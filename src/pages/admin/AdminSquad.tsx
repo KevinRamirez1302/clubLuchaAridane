@@ -209,7 +209,15 @@ export default function AdminSquad() {
               : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
           }`}
         >
-          <span>{feedback.tipo === 'ok' ? '✅' : '❌'}</span>
+          {feedback.tipo === 'ok' ? (
+            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          )}
           {feedback.msg}
         </div>
       )}
@@ -217,7 +225,9 @@ export default function AdminSquad() {
       {/* ── Filtros ── */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+          <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
           <input
             id="buscar-jugadores"
             type="text"
@@ -244,7 +254,9 @@ export default function AdminSquad() {
       <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-sm overflow-hidden border border-gray-100 dark:border-zinc-700">
         {jugadoresFiltrados.length === 0 ? (
           <div className="p-12 text-center text-gray-400 dark:text-gray-500">
-            <p className="text-4xl mb-3">👥</p>
+            <svg className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5-3.512M9 20H4v-2a3 3 0 015-3.512M12 14a4 4 0 100-8 4 4 0 000 8z" />
+            </svg>
             <p className="text-lg font-medium">
               {busqueda || filtroEquipo !== 'todos' ? 'Sin resultados' : 'La plantilla está vacía'}
             </p>
@@ -325,7 +337,9 @@ export default function AdminSquad() {
                           className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
                           title="Editar jugador"
                         >
-                          ✏️
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
                         </button>
                         {confirmDelete === j.id ? (
                           <div className="flex items-center gap-1">
@@ -350,7 +364,9 @@ export default function AdminSquad() {
                             className="p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                             title="Eliminar jugador"
                           >
-                            🗑️
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
                           </button>
                         )}
                       </div>
@@ -373,13 +389,16 @@ export default function AdminSquad() {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b dark:border-zinc-700">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                {jugadorEditando ? '✏️ Editar Jugador' : '➕ Añadir Jugador'}
+                {jugadorEditando ? 'Editar Jugador' : 'Añadir Jugador'}
               </h2>
               <button
                 onClick={cerrarModal}
                 className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 rounded-lg transition-colors"
+                title="Cerrar"
               >
-                ✕
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
@@ -390,20 +409,25 @@ export default function AdminSquad() {
                   Foto del jugador
                 </label>
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 rounded-xl bg-gray-100 dark:bg-zinc-800 border-2 border-dashed border-gray-300 dark:border-zinc-600 flex items-center justify-center overflow-hidden flex-shrink-0">
+                  <div className="w-20 h-20 rounded-xl bg-gray-100 dark:bg-zinc-800 border-2 border-dashed border-gray-300 dark:border-zinc-600 flex items-center justify-center overflow-hidden flex-shrink-0 text-gray-400">
                     {form.foto ? (
                       <img src={form.foto} alt="preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = ''; }} />
                     ) : (
-                      <span className="text-3xl text-gray-300">👤</span>
+                      <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
                     )}
                   </div>
                   <div className="flex-1 space-y-2">
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-full px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-xl text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-700 transition"
+                      className="w-full px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-xl text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-700 transition flex items-center justify-center gap-2"
                     >
-                      📁 Subir imagen desde archivo
+                      <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      </svg>
+                      Subir imagen desde archivo
                     </button>
                     <input
                       id="input-foto-url"

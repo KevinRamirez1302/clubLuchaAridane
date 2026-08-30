@@ -139,14 +139,24 @@ export default function AdminNews() {
               : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
           }`}
         >
-          <span>{feedback.tipo === 'ok' ? '✅' : '❌'}</span>
+          {feedback.tipo === 'ok' ? (
+            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          )}
           {feedback.msg}
         </div>
       )}
 
       {/* ── Buscador ── */}
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+        <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
         <input
           id="buscar-noticias"
           type="text"
@@ -161,7 +171,9 @@ export default function AdminNews() {
       <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-sm overflow-hidden border border-gray-100 dark:border-zinc-700">
         {noticiasFiltradas.length === 0 ? (
           <div className="p-12 text-center text-gray-400 dark:text-gray-500">
-            <p className="text-4xl mb-3">📰</p>
+            <svg className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+            </svg>
             <p className="text-lg font-medium">
               {busqueda ? 'Sin resultados para tu búsqueda' : 'No hay noticias todavía'}
             </p>
@@ -222,7 +234,9 @@ export default function AdminNews() {
                           className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
                           title="Editar noticia"
                         >
-                          ✏️
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
                         </button>
                         {confirmDelete === n.id ? (
                           <div className="flex items-center gap-1">
@@ -247,7 +261,9 @@ export default function AdminNews() {
                             className="p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                             title="Eliminar noticia"
                           >
-                            🗑️
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
                           </button>
                         )}
                       </div>
@@ -270,13 +286,16 @@ export default function AdminNews() {
             {/* Header del modal */}
             <div className="flex items-center justify-between p-6 border-b dark:border-zinc-700">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                {modoForm === 'crear' ? '➕ Nueva Noticia' : '✏️ Editar Noticia'}
+                {modoForm === 'crear' ? 'Nueva Noticia' : 'Editar Noticia'}
               </h2>
               <button
                 onClick={cerrarModal}
                 className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 rounded-lg transition-colors"
+                title="Cerrar"
               >
-                ✕
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 

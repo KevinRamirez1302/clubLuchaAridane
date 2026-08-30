@@ -81,7 +81,7 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
     // Simulación: esperar 1.5s y mostrar éxito
     await new Promise((r) => setTimeout(r, 1500));
     setCargando(false);
-    alert(`✅ ¡Gracias, ${form.nombre}! Tu solicitud de membresía "${plan.nombre}" ha sido registrada. En breve recibirás un email con los pasos para completar el pago.`);
+    alert(`¡Gracias, ${form.nombre}! Tu solicitud de membresía "${plan.nombre}" ha sido registrada. En breve recibirás un email con los pasos para completar el pago.`);
     onClose();
     setForm(initialForm);
     setPaso('datos');
@@ -210,7 +210,16 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
               {cargando && (
                 <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               )}
-              {cargando ? 'Procesando...' : '🔒 Proceder al pago'}
+              {cargando ? (
+                'Procesando...'
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  Proceder al pago
+                </>
+              )}
             </button>
           </div>
         </div>

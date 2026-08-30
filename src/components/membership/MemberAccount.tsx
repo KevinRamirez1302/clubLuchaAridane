@@ -61,13 +61,45 @@ export default function MemberAccount() {
         {/* Datos del carnet */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           {[
-            { label: 'Número de socio', value: usuarioMock.numeroSocio, icon: '🎫' },
-            { label: 'Plan activo', value: usuarioMock.plan, icon: '⭐' },
-            { label: 'Vence el', value: usuarioMock.vencimiento, icon: '📅' },
-            { label: 'Estado', value: 'Activo', icon: '✅' },
+            {
+              label: 'Número de socio',
+              value: usuarioMock.numeroSocio,
+              icon: (
+                <svg className="w-4 h-4 text-club-blue inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
+                </svg>
+              ),
+            },
+            {
+              label: 'Plan activo',
+              value: usuarioMock.plan,
+              icon: (
+                <svg className="w-4 h-4 text-club-orange inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+              ),
+            },
+            {
+              label: 'Vence el',
+              value: usuarioMock.vencimiento,
+              icon: (
+                <svg className="w-4 h-4 text-club-blue inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              ),
+            },
+            {
+              label: 'Estado',
+              value: 'Activo',
+              icon: (
+                <svg className="w-4 h-4 text-club-green inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ),
+            },
           ].map(({ label, value, icon }) => (
             <div key={label} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
-              <p className="text-xs text-gray-400 uppercase tracking-wide">{icon} {label}</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wide flex items-center">{icon} {label}</p>
               <p className="font-bold text-gray-900 dark:text-white mt-1">{value}</p>
             </div>
           ))}
@@ -76,7 +108,10 @@ export default function MemberAccount() {
         {/* Contenido exclusivo — placeholder para futuros beneficios por plan */}
         <div className="bg-gradient-to-br from-club-orange/10 to-club-green/10 border border-club-orange/20 rounded-2xl p-6 mb-4">
           <h3 className="font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-            <span>🔒</span> Contenido exclusivo Premium
+            <svg className="w-5 h-5 text-club-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            Contenido exclusivo Premium
           </h3>
           {/* INTEGRACIÓN BACKEND: renderizar contenido según usuarioMock.plan */}
           <p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -84,13 +119,22 @@ export default function MemberAccount() {
           </p>
           <ul className="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <li className="flex items-center gap-2">
-              <span className="text-club-green">✓</span> Videos behind-the-scenes del equipo
+              <svg className="w-4 h-4 text-club-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Videos behind-the-scenes del equipo
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-club-green">✓</span> Entrevistas exclusivas con jugadores
+              <svg className="w-4 h-4 text-club-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Entrevistas exclusivas con jugadores
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-club-green">✓</span> Acceso anticipado a venta de entradas
+              <svg className="w-4 h-4 text-club-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Acceso anticipado a venta de entradas
             </li>
           </ul>
           <button className="mt-4 text-club-blue dark:text-club-blue-light font-semibold text-sm hover:underline">
