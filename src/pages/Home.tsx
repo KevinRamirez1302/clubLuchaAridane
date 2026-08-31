@@ -6,7 +6,6 @@ import MatchWidget from '../components/home/MatchWidget';
 import CalendarSection from '../components/home/CalendarSection';
 import NewsGrid from '../components/home/NewsGrid';
 import Squad from '../components/home/Squad';
-import Sponsors from '../components/home/Sponsors';
 import Newsletter from '../components/home/Newsletter';
 
 export default function Home() {
@@ -36,8 +35,6 @@ export default function Home() {
       {/* Plantilla actual con filtros */}
       <Squad />
 
-      {/* Patrocinadores */}
-      <Sponsors />
 
       {/* Suscripción al boletín */}
       <Newsletter />

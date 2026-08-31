@@ -64,7 +64,7 @@ export default function NewsDetail() {
           <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
             <Link to="/" className="hover:text-club-blue transition-colors">Inicio</Link>
             <span>/</span>
-            <Link to="/" className="hover:text-club-blue transition-colors">Noticias</Link>
+            <Link to="/#noticias" className="hover:text-club-blue transition-colors">Noticias</Link>
             <span>/</span>
             <span className="text-gray-600 dark:text-gray-300 truncate">{noticia.titulo}</span>
           </nav>
