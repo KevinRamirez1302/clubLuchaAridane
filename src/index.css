@@ -1,9 +1,4 @@
-/* =============================================================================
-   ESTILOS GLOBALES — Club Aridane
-   Tailwind CSS v4 — @import base
-   ============================================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 /* ── Dark mode: activado por clase .dark en <html>, no por prefers-color-scheme ── */
@@ -12,28 +7,30 @@
 
 /* ── Tokens de color personalizados ── */
 @theme {
-  --color-club-blue:       #0B3D91;
-  --color-club-blue-dark:  #072d6e;
+  --color-club-blue: #0B3D91;
+  --color-club-blue-dark: #072d6e;
   --color-club-blue-light: #1a56c4;
-  --color-club-green:      #2D8A4E;
+  --color-club-green: #2D8A4E;
   --color-club-green-dark: #1e6337;
-  --color-club-green-light:#3aa862;
-  --color-club-orange:     #E87722;
-  --color-club-orange-dark:#c45e10;
-  --color-club-orange-light:#f0933d;
-  --color-club-white:      #FFFFFF;
-  --color-club-gray:       #6B7280;
+  --color-club-green-light: #3aa862;
+  --color-club-orange: #E87722;
+  --color-club-orange-dark: #c45e10;
+  --color-club-orange-light: #f0933d;
+  --color-club-white: #FFFFFF;
+  --color-club-gray: #6B7280;
   --color-club-gray-light: #F3F4F6;
-  --color-club-gray-dark:  #374151;
+  --color-club-gray-dark: #374151;
 
   /* Fuentes */
-  --font-heading: 'Bebas Neue', 'Oswald', sans-serif;
-  --font-subheading: 'Oswald', 'Roboto', sans-serif;
-  --font-body: 'Roboto', sans-serif;
+  --font-heading: 'Work Sans', sans-serif;
+  --font-subheading: 'Work Sans', sans-serif;
+  --font-body: 'Work Sans', sans-serif;
 }
 
 /* ── Estilos base ── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -49,12 +46,19 @@ body {
 
 /* Dark mode — el fondo oscuro se aplica cuando <html> tiene la clase .dark */
 body:where(.dark *) {
-  background-color: rgb(3 7 18); /* gray-950 */
-  color: rgb(243 244 246); /* gray-100 */
+  background-color: rgb(3 7 18);
+  /* gray-950 */
+  color: rgb(243 244 246);
+  /* gray-100 */
 }
 
 /* ── Tipografía ── */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-subheading);
   letter-spacing: 0.02em;
 }
@@ -100,8 +104,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Skeleton loader pulse ── */
 @keyframes skeleton-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .skeleton {
@@ -124,16 +135,20 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 :where(.dark) ::-webkit-scrollbar-track {
   background: #1f2937;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-club-blue);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-club-blue-dark);
 }
@@ -147,12 +162,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Utilidades de gradiente ── */
 .gradient-hero {
-  background: linear-gradient(
-    135deg,
-    rgba(11, 61, 145, 0.85) 0%,
-    rgba(232, 119, 34, 0.6) 60%,
-    rgba(45, 138, 78, 0.5) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(11, 61, 145, 0.85) 0%,
+      rgba(232, 119, 34, 0.6) 60%,
+      rgba(45, 138, 78, 0.5) 100%);
 }
 
 .gradient-blue {
@@ -169,6 +182,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translateY(16px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -179,18 +193,25 @@ h1, h2, h3, h4, h5, h6 {
 .card-hover {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 .card-hover:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(11, 61, 145, 0.15);
 }
+
 :where(.dark) .card-hover:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Marquee / Carrusel de Patrocinadores ── */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
@@ -203,3 +224,56 @@ h1, h2, h3, h4, h5, h6 {
   animation-play-state: paused;
 }
 
+/* ── Player card — estilo deportivo ── */
+.player-card {
+  display: block;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.player-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.player-card-inner {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.player-card:hover .player-card-inner {
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(232, 119, 34, 0.25);
+  border-color: rgba(232, 119, 34, 0.3);
+}
+
+/* Número de dorsal en marca de agua */
+.player-number {
+  color: rgba(255, 255, 255, 0.08);
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1;
+  transition: color 0.3s ease;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.player-card:hover .player-number {
+  color: rgba(232, 119, 34, 0.2);
+}
+
+/* Badge de clasificación — texto coloreado usando el color de fondo como text */
+.player-badge {
+  background: transparent !important;
+  /* Extrae el color de la clase bg-* como color de texto con opacidad */
+  -webkit-background-clip: unset !important;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.3s ease;
+}
+
+.player-card:hover .player-badge {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Efecto de brillo en hover */
+.player-hover-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(232, 119, 34, 0.08) 0%, transparent 70%);
+  border-radius: inherit;
+}

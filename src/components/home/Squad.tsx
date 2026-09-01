@@ -107,7 +107,8 @@ export default function Squad() {
   return (
     <section
       ref={ref}
-      className="reveal py-16 lg:py-24 bg-white dark:bg-gray-950"
+      id="plantilla"
+      className="reveal py-16 lg:py-24 bg-white dark:bg-gray-950 scroll-mt-20 lg:scroll-mt-24"
       aria-labelledby="plantilla-titulo"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -174,28 +175,42 @@ export default function Squad() {
               <Link
                 key={jugador.id}
                 to={`/jugador/${jugador.id}`}
-                className="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl card-hover block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-club-orange"
+                className="group player-card block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-club-orange"
                 aria-label={`Ver ficha de ${jugador.nombre}`}
               >
-                {/* Foto */}
-                <div className="relative h-32 overflow-hidden bg-gray-50 dark:bg-gray-900/30 flex items-center justify-center">
-                  <LazyImage
-                    src={jugador.foto}
-                    alt={`Foto de ${jugador.nombre}`}
-                    className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Clasificación color */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 ${CLASIFICACION_COLOR[jugador.clasificaciones[0]] || 'bg-gray-400'}`} />
-                </div>
+                {/* Contenedor principal */}
+                <div className="relative rounded-2xl overflow-hidden bg-gray-900 dark:bg-gray-950 shadow-lg player-card-inner">
+                  {/* Banda de color de clasificación en la parte superior */}
+                  <div className={`absolute top-0 left-0 right-0 h-1 z-20 ${CLASIFICACION_COLOR[jugador.clasificaciones[0]] || 'bg-gray-400'}`} />
 
-                {/* Info */}
-                <div className="p-3 text-center">
-                  <p className="font-bold text-gray-900 dark:text-white text-sm leading-tight truncate">
-                    {getShortName(jugador.nombre)}
-                  </p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 capitalize mt-0.5">
-                    {jugador.clasificaciones.join(' / ')}
-                  </p>
+
+                  {/* Zona de foto */}
+                  <div className="relative h-40 overflow-hidden flex items-end justify-center bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950">
+                    {/* Círculo decorativo de fondo */}
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full bg-white/5 blur-xl" />
+                    <LazyImage
+                      src={jugador.foto}
+                      alt={`Foto de ${jugador.nombre}`}
+                      className="relative z-10 w-full h-full object-contain object-bottom p-3 transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1"
+                    />
+                    {/* Gradiente inferior que fusiona con el panel de info */}
+                    <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-gray-900 to-transparent z-10" />
+                  </div>
+
+                  {/* Panel de info inferior */}
+                  <div className="relative px-3 pb-3 pt-2 bg-gray-900 dark:bg-gray-950 text-center">
+                    {/* Línea decorativa de acento */}
+                    <div className={`absolute top-0 left-3 right-3 h-px opacity-40 ${CLASIFICACION_COLOR[jugador.clasificaciones[0]] || 'bg-gray-400'}`} />
+                    <p className="font-black text-white text-sm leading-tight truncate tracking-wide uppercase mt-1">
+                      {getShortName(jugador.nombre)}
+                    </p>
+                    <p className="text-xs font-bold uppercase tracking-widest mt-1 truncate player-badge">
+                      {jugador.clasificaciones[0]}
+                    </p>
+                  </div>
+
+                  {/* Overlay de hover con efecto de brillo */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none player-hover-glow" />
                 </div>
               </Link>
             ))

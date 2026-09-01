@@ -68,18 +68,17 @@ export default function Header() {
 
   const getNavLinkClass = (to: string) => {
     const active = isLinkActive(to);
-    return `relative px-1 py-2 text-sm font-semibold transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-club-orange after:transition-all after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-club-orange rounded ${
-      active
-        ? 'text-club-orange after:w-full'
-        : 'text-white/90 hover:text-white after:w-0 hover:after:w-full'
-    }`;
+    return `relative px-1 py-2 text-sm font-semibold transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-club-orange after:transition-all after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-club-orange rounded ${active
+      ? 'text-club-orange after:w-full'
+      : 'text-white/90 hover:text-white after:w-0 hover:after:w-full'
+      }`;
   };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
-          ? 'bg-club-blue shadow-2xl backdrop-blur-md'
-          : 'bg-club-blue/95'
+        ? 'bg-club-blue shadow-2xl backdrop-blur-md'
+        : 'bg-club-blue/95'
         }`}
       role="banner"
     >
@@ -202,11 +201,10 @@ export default function Header() {
             <Link
               key={to}
               to={to}
-              className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
-                isLinkActive(to)
-                  ? 'bg-club-orange text-white'
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
-              }`}
+              className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${isLinkActive(to)
+                ? 'bg-club-orange text-white'
+                : 'text-white/90 hover:bg-white/10 hover:text-white'
+                }`}
             >
               {t(label)}
             </Link>

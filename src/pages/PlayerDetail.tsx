@@ -151,7 +151,7 @@ export default function PlayerDetail() {
               )}
 
               <Link
-                to="/"
+                to="/#plantilla"
                 className="mt-8 inline-flex items-center gap-2 text-club-blue dark:text-club-blue-light font-semibold hover:gap-3 transition-all"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

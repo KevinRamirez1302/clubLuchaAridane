@@ -81,7 +81,8 @@ export default function NewsGrid() {
   return (
     <section
       ref={ref}
-      className="reveal py-16 lg:py-24 bg-white dark:bg-gray-950"
+      id="noticias"
+      className="reveal py-16 lg:py-24 bg-white dark:bg-gray-950 scroll-mt-20 lg:scroll-mt-24"
       aria-labelledby="noticias-titulo"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
