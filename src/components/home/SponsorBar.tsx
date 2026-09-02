@@ -1,6 +1,6 @@
 import sparLogo from '../../assets/Spar-Emblem.png';
 import cabildoLogo from '../../assets/cabildo-Emblem.png';
-import aytoLogo from '../../assets/aytoLlanos.jpg';
+import aytoLogo from '../../assets/aytoLlanos.png';
 import trocaderoLogo from '../../assets/trocadero-Emblem.png';
 
 export default function SponsorBar() {
@@ -33,7 +33,11 @@ export default function SponsorBar() {
                 <img
                   src={sponsor.logo}
                   alt={`Logo de ${sponsor.name}`}
-                  className="h-10 sm:h-12 md:h-14 object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-110 dark:contrast-105 dark:group-hover:brightness-100 transition-all duration-300"
+                  className={`${
+                    sponsor.name.includes('Ayuntamiento')
+                      ? 'h-14 sm:h-16 md:h-20 scale-110'
+                      : 'h-10 sm:h-12 md:h-14'
+                  } object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-110 dark:contrast-105 dark:group-hover:brightness-100 transition-all duration-300`}
                 />
               </a>
             ))}
@@ -49,7 +53,11 @@ export default function SponsorBar() {
                 <img
                   src={sponsor.logo}
                   alt={`Logo de ${sponsor.name}`}
-                  className="h-10 sm:h-12 md:h-14 object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-110 dark:contrast-105 dark:group-hover:brightness-100 transition-all duration-300"
+                  className={`${
+                    sponsor.name.includes('Ayuntamiento')
+                      ? 'h-14 sm:h-16 md:h-20 scale-110'
+                      : 'h-10 sm:h-12 md:h-14'
+                  } object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-110 dark:contrast-105 dark:group-hover:brightness-100 transition-all duration-300`}
                 />
               </a>
             ))}

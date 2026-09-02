@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import escudo from '../../assets/escudo.png';
 
+const COOKIE_KEY = 'club_aridane_cookie_consent';
+
 const SOCIAL_LINKS = [
   {
     name: 'Instagram',
@@ -44,6 +46,11 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   const { t } = useTranslation();
+
+  const handleOpenCookies = () => {
+    localStorage.removeItem(COOKIE_KEY);
+    window.location.reload();
+  };
 
   return (
     <footer
@@ -139,7 +146,7 @@ export default function Footer() {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                Calle del Estadio, 1 · 00000 Ciudad
+                Polideportivo Camilo León, 38760 Los Llanos de Aridane, Santa Cruz de Tenerife
               </li>
               <li className="flex items-center gap-2">
                 <svg
@@ -182,17 +189,6 @@ export default function Footer() {
               Más
             </h3>
             <ul className="space-y-2 text-sm">
-              {/* FUTURO: Enlace a tienda oficial — integrar con plataforma de e-commerce */}
-              <li>
-                <a
-                  href="https://tienda.clubaridane.es"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/70 hover:text-club-orange transition-colors flex items-center gap-1"
-                >
-                  {t('footer.tienda')}
-                </a>
-              </li>
               <li>
                 <a
                   href="#"
@@ -208,6 +204,15 @@ export default function Footer() {
                 >
                   {t('footer.aviso')}
                 </a>
+              </li>
+              <li>
+                <button
+                  id="footer-cookies-btn"
+                  onClick={handleOpenCookies}
+                  className="text-white/70 hover:text-club-orange transition-colors cursor-pointer text-sm"
+                >
+                  Política de cookies
+                </button>
               </li>
             </ul>
           </div>
