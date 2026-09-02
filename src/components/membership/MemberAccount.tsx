@@ -3,56 +3,48 @@
 // El token JWT se almacenará en localStorage/cookie y se usará para las rutas protegidas
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-type Vista = 'login' | 'registro' | 'panel';
+import { useMembershipStore } from '../../store/useMembershipStore';
 
 export default function MemberAccount() {
   const { t } = useTranslation();
-  const [vista, setVista] = useState<Vista>('login');
   const [cargando, setCargando] = useState(false);
-
-  // Estado simulado de usuario autenticado
-  const [usuarioMock] = useState({
-    nombre: 'María Rodríguez',
-    email: 'maria@example.com',
-    plan: 'Socio Premium',
-    vencimiento: '31 de agosto de 2026',
-    dorsal: 'N/A',
-    numeroSocio: 'ARD-2024-0042',
-  });
+  const [loginError, setLoginError] = useState('');
+  
+  const { socioAutenticado, loginSocio, logoutSocio } = useMembershipStore();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setCargando(true);
-    // ── INTEGRACIÓN BACKEND: POST /api/auth/login ──
-    await new Promise((r) => setTimeout(r, 800));
+    setLoginError('');
+    
+    const form = e.target as HTMLFormElement;
+    const dni = (form.elements.namedItem('dni') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+    
+    // Simulate network delay is no longer needed manually if loginSocio is async, but we can keep it or remove it.
+    // I'll just await loginSocio directly.
+    const success = await loginSocio(dni, password);
+    if (!success) {
+      setLoginError('DNI o contraseña incorrectos, o solicitud no aceptada aún.');
+    }
+    
     setCargando(false);
-    setVista('panel');
   };
 
-  const handleRegistro = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setCargando(true);
-    // ── INTEGRACIÓN BACKEND: POST /api/auth/registro ──
-    await new Promise((r) => setTimeout(r, 800));
-    setCargando(false);
-    setVista('panel');
-  };
-
-  if (vista === 'panel') {
+  if (socioAutenticado) {
     return (
       <div className="max-w-2xl mx-auto">
         {/* Header panel */}
         <div className="bg-gradient-to-br from-club-blue to-club-blue-dark rounded-2xl p-6 text-white mb-6">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-2xl font-black">
-              {usuarioMock.nombre[0]}
+              {socioAutenticado.nombre[0]}
             </div>
             <div>
-              <p className="font-bold text-xl">{usuarioMock.nombre}</p>
-              <p className="text-white/70 text-sm">{usuarioMock.email}</p>
+              <p className="font-bold text-xl">{socioAutenticado.nombre}</p>
+              <p className="text-white/70 text-sm">{socioAutenticado.email}</p>
               <span className="inline-block mt-1 bg-club-orange text-white text-xs font-bold px-3 py-1 rounded-full">
-                {usuarioMock.plan}
+                {socioAutenticado.plan}
               </span>
             </div>
           </div>
@@ -63,7 +55,7 @@ export default function MemberAccount() {
           {[
             {
               label: 'Número de socio',
-              value: usuarioMock.numeroSocio,
+              value: socioAutenticado.numeroSocio,
               icon: (
                 <svg className="w-4 h-4 text-club-blue inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
@@ -72,7 +64,7 @@ export default function MemberAccount() {
             },
             {
               label: 'Plan activo',
-              value: usuarioMock.plan,
+              value: socioAutenticado.plan,
               icon: (
                 <svg className="w-4 h-4 text-club-orange inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -81,7 +73,7 @@ export default function MemberAccount() {
             },
             {
               label: 'Vence el',
-              value: usuarioMock.vencimiento,
+              value: new Date(socioAutenticado.vencimiento).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }),
               icon: (
                 <svg className="w-4 h-4 text-club-blue inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -111,11 +103,10 @@ export default function MemberAccount() {
             <svg className="w-5 h-5 text-club-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            Contenido exclusivo Premium
+            Contenido exclusivo
           </h3>
-          {/* INTEGRACIÓN BACKEND: renderizar contenido según usuarioMock.plan */}
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Como <strong>Socio Premium</strong> tienes acceso a:
+            Como <strong>{socioAutenticado.plan}</strong> tienes acceso a:
           </p>
           <ul className="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <li className="flex items-center gap-2">
@@ -142,8 +133,21 @@ export default function MemberAccount() {
           </button>
         </div>
 
+        {/* Botón Descargar Carné */}
+        <div className="mb-6">
+          <button
+            onClick={() => alert('Generando PDF del carné de socio...')}
+            className="w-full bg-club-blue hover:bg-club-blue-dark text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Descargar Carné de Socio (PDF)
+          </button>
+        </div>
+
         <button
-          onClick={() => setVista('login')}
+          onClick={logoutSocio}
           className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
         >
           Cerrar sesión
@@ -152,68 +156,46 @@ export default function MemberAccount() {
     );
   }
 
-  const isLogin = vista === 'login';
-
   return (
     <div className="max-w-md mx-auto">
-      {/* Tabs login/registro */}
-      <div className="flex bg-gray-100 dark:bg-gray-800 rounded-xl p-1 mb-8">
-        {(['login', 'registro'] as Vista[]).map((v) => (
-          <button
-            key={v}
-            onClick={() => setVista(v)}
-            className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all capitalize ${
-              vista === v
-                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow'
-                : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}
-          >
-            {v === 'login' ? t('membresia.iniciarSesion') : t('membresia.registrarse')}
-          </button>
-        ))}
+      <div className="text-center mb-8">
+        <p className="text-gray-500 dark:text-gray-400">
+          Inicia sesión para acceder a tu panel de socio y descargar tu carné.
+        </p>
       </div>
 
-      <form onSubmit={isLogin ? handleLogin : handleRegistro} className="space-y-4">
-        {!isLogin && (
-          <div>
-            <label htmlFor="cuenta-nombre" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
-              {t('membresia.nombre')}
-            </label>
-            <input
-              id="cuenta-nombre"
-              type="text"
-              required
-              placeholder="Tu nombre completo"
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-club-blue transition-colors"
-            />
-          </div>
-        )}
-
+      <form onSubmit={handleLogin} className="space-y-4">
         <div>
-          <label htmlFor="cuenta-email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
-            {t('membresia.email')}
+          <label htmlFor="dni" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+            DNI / NIE
           </label>
           <input
-            id="cuenta-email"
-            type="email"
+            id="dni"
+            name="dni"
+            type="text"
             required
-            placeholder="tu@email.com"
+            placeholder="12345678A"
             className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-club-blue transition-colors"
           />
         </div>
 
         <div>
-          <label htmlFor="cuenta-password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+          <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
             {t('membresia.password')}
           </label>
           <input
-            id="cuenta-password"
+            id="password"
+            name="password"
             type="password"
             required
             placeholder="••••••••"
             className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-club-blue transition-colors"
           />
         </div>
+
+        {loginError && (
+          <p className="text-red-500 text-sm font-medium text-center">{loginError}</p>
+        )}
 
         <button
           type="submit"
@@ -223,13 +205,13 @@ export default function MemberAccount() {
           {cargando && (
             <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
           )}
-          {isLogin ? t('membresia.iniciarSesion') : t('membresia.registrarse')}
+          {t('membresia.iniciarSesion')}
         </button>
       </form>
 
       {/* Demo note */}
       <div className="mt-6 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl text-xs text-amber-700 dark:text-amber-400">
-        <strong>Demo:</strong> cualquier credencial abre el panel de socio. La autenticación real se conectará al backend.
+        <strong>Nota:</strong> Para tener una cuenta de socio debes solicitarla primero en la pestaña de Planes. Una vez aceptada, usa tu DNI y la contraseña '123456' para acceder.
       </div>
     </div>
   );

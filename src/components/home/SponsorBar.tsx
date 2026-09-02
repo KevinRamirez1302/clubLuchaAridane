@@ -8,7 +8,7 @@ export default function SponsorBar() {
     { name: 'SPAR', logo: sparLogo, url: 'https://www.spar.es' },
     { name: 'Cabildo de La Palma', logo: cabildoLogo, url: 'https://www.cabildodelapalma.es' },
     { name: 'Ayuntamiento de Los Llanos de Aridane', logo: aytoLogo, url: 'https://www.aridane.org' },
-    { name: 'Trocadero', logo: trocaderoLogo, url: 'https://www.trocadero.es' },
+    { name: 'Trocadero', logo: trocaderoLogo, url: 'https://www.cctrocadero.com/' },
   ];
 
   return (

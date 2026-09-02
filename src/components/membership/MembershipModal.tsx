@@ -3,6 +3,7 @@
 // y el endpoint POST /api/socios/nueva-membresia
 import { useState } from 'react';
 import Modal from '../common/Modal';
+import { useMembershipStore } from '../../store/useMembershipStore';
 import type { PlanMembresia } from '../../types';
 
 interface MembershipModalProps {
@@ -34,6 +35,8 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
   const [paso, setPaso] = useState<'datos' | 'confirmacion'>('datos');
   const [cargando, setCargando] = useState(false);
 
+  const addSolicitud = useMembershipStore((state) => state.addSolicitud);
+
   if (!plan) return null;
 
   const validar = (): boolean => {
@@ -58,30 +61,16 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
     if (validar()) setPaso('confirmacion');
   };
 
-  const handlePago = async () => {
+  const handleEnviarSolicitud = async () => {
     setCargando(true);
+    
+    await addSolicitud({
+      ...form,
+      plan: plan.id
+    });
 
-    // ════════════════════════════════════════════════════════════════════
-    // INTEGRACIÓN BACKEND — PASARELA DE PAGO
-    // Aquí se debe:
-    // 1. Enviar los datos del socio al backend: POST /api/socios/nueva-membresia
-    // 2. Recibir la URL de la pasarela de pago (Stripe, PayPal, Redsys, etc.)
-    // 3. Redirigir al usuario: window.location.href = data.checkout_url
-    //
-    // Ejemplo:
-    // const res = await fetch('/api/socios/nueva-membresia', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ ...form, planId: plan.id }),
-    // });
-    // const data = await res.json();
-    // window.location.href = data.checkout_url;
-    // ════════════════════════════════════════════════════════════════════
-
-    // Simulación: esperar 1.5s y mostrar éxito
-    await new Promise((r) => setTimeout(r, 1500));
     setCargando(false);
-    alert(`¡Gracias, ${form.nombre}! Tu solicitud de membresía "${plan.nombre}" ha sido registrada. En breve recibirás un email con los pasos para completar el pago.`);
+    alert(`¡Gracias, ${form.nombre}! Tu solicitud de membresía "${plan.nombre}" ha sido registrada y está en revisión. El club se pondrá en contacto contigo pronto.`);
     onClose();
     setForm(initialForm);
     setPaso('datos');
@@ -193,7 +182,7 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
           </div>
 
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 text-sm text-blue-700 dark:text-blue-300">
-            Al hacer clic en "Proceder al pago" serás redirigido a nuestra pasarela de pago segura para completar la suscripción.
+            Al hacer clic en "Enviar Solicitud", enviaremos tus datos al club para revisión. Una vez aceptada, te asignaremos un usuario para acceder al panel de socio.
           </div>
 
           <div className="flex justify-end gap-3">
@@ -201,7 +190,7 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
               ← Volver
             </button>
             <button
-              onClick={handlePago}
+              onClick={handleEnviarSolicitud}
               disabled={cargando}
               className={`px-6 py-2.5 rounded-xl font-bold text-white transition-all active:scale-95 flex items-center gap-2 disabled:opacity-70 ${
                 plan.destacado ? 'bg-club-orange hover:bg-club-orange-dark' : 'bg-club-blue hover:bg-club-blue-dark'
@@ -215,9 +204,9 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
               ) : (
                 <>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
-                  Proceder al pago
+                  Enviar Solicitud
                 </>
               )}
             </button>
