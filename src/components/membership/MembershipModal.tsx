@@ -66,7 +66,7 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
     
     await addSolicitud({
       ...form,
-      plan: plan.id
+      plan: plan
     });
 
     setCargando(false);

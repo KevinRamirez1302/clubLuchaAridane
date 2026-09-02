@@ -200,7 +200,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
       // Fallback local simulado
       const state = get();
       const socio = state.socios.find(
-        (s) => s.dni.toUpperCase() === dni.toUpperCase() && s.password === password
+        (s) => s.dni?.toUpperCase() === dni.toUpperCase() && s.password === password
       );
       if (socio) {
         set({ socioAutenticado: socio });
