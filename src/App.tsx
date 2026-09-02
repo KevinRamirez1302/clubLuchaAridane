@@ -31,6 +31,8 @@ const AdminNews = lazy(() => import('./pages/admin/AdminNews'));
 const AdminSquad = lazy(() => import('./pages/admin/AdminSquad'));
 const AdminStandings = lazy(() => import('./pages/admin/AdminStandings'));
 const AdminNextMatch = lazy(() => import('./pages/admin/AdminNextMatch'));
+const AdminMemberships = lazy(() => import('./pages/admin/AdminMemberships'));
+const AdminSocios = lazy(() => import('./pages/admin/AdminSocios'));
 
 // Fallback de carga durante el lazy loading
 function PageLoader() {
@@ -68,6 +70,8 @@ export default function App() {
                     <Route path="/admin/squad" element={<AdminSquad />} />
                     <Route path="/admin/standings" element={<AdminStandings />} />
                     <Route path="/admin/next-match" element={<AdminNextMatch />} />
+                    <Route path="/admin/memberships" element={<AdminMemberships />} />
+                    <Route path="/admin/socios" element={<AdminSocios />} />
                   </Route>
                 </Route>
 

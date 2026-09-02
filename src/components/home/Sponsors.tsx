@@ -18,7 +18,7 @@ export default function Sponsors() {
   ];
 
   const colaborador = [
-    { id: 4, nombre: 'Trocadero', logo: trocaderoLogo, url: 'https://www.trocadero.es' }
+    { id: 4, nombre: 'Trocadero', logo: trocaderoLogo, url: 'https://www.cctrocadero.com/' }
   ];
 
   return (
