@@ -276,4 +276,44 @@ h6 {
 .player-hover-glow {
   background: radial-gradient(circle at 50% 0%, rgba(232, 119, 34, 0.08) 0%, transparent 70%);
   border-radius: inherit;
-}
+}
+
+/* ── Animación 3D flip de tarjetas de jugadores ── */
+
+/* Contenedor con perspectiva 3D */
+.squad-grid {
+  perspective: 1200px;
+}
+
+/* Flip-in: la tarjeta aparece girando desde atrás (rotateY -90° → 0°) */
+@keyframes flipIn {
+  0% {
+    opacity: 0;
+    transform: rotateY(-90deg) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: rotateY(8deg) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+.card-flip-in {
+  opacity: 0;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: flipIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Efecto tilt 3D al hacer hover (CSS puro, sin JS) */
+.player-card {
+  transform-style: preserve-3d;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.player-card:hover {
+  transform: translateY(-8px) rotateY(4deg) rotateX(3deg) scale(1.03);
+}

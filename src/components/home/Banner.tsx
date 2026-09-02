@@ -56,11 +56,6 @@ export default function Banner() {
 
       {/* Contenido */}
       <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
-        {/* Badge año */}
-        <span className="inline-block bg-club-orange/90 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-6 backdrop-blur-sm">
-          Desde 1946
-        </span>
-
         {/* Título principal */}
         <h1 className="font-display text-6xl sm:text-8xl lg:text-9xl text-white leading-none mb-4 drop-shadow-2xl">
           CLUB DE LUCHA<br />

@@ -28,7 +28,7 @@ const DATOS_CONTACTO = [
       </svg>
     ),
     titulo: 'Dirección',
-    valor: 'Calle del Estadio, 1\n00000 Ciudad, España',
+    valor: 'Polideportivo Camilo León\n38760 Los Llanos de Aridane\nSanta Cruz de Tenerife',
   },
   {
     icon: (
@@ -160,7 +160,7 @@ export default function Contact() {
               <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 h-64">
                 {/* INTEGRACIÓN: sustituir src con la URL real del mapa del club */}
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.369!2d-3.70325!3d40.41650!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI0JzU5LjQiTiAzwrA0MScxMS43Ilc!5e0!3m2!1ses!2ses!4v1234567890"
+                  src="https://maps.google.com/maps?q=Polideportivo%20Camilo%20Le%C3%B3n%2C%20Los%20Llanos%20de%20Aridane&t=&z=16&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

@@ -2,7 +2,7 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import sparLogo from '../../assets/Spar-Emblem.png';
 import cabildoLogo from '../../assets/cabildo-Emblem.png';
-import aytoLogo from '../../assets/aytoLlanos.jpg';
+import aytoLogo from '../../assets/aytoLlanos.png';
 import trocaderoLogo from '../../assets/trocadero-Emblem.png';
 
 export default function Sponsors() {
@@ -79,7 +79,11 @@ export default function Sponsors() {
                     <img
                       src={p.logo}
                       alt={p.nombre}
-                      className="h-12 md:h-16 object-contain dark:brightness-110"
+                      className={`${
+                        p.nombre.includes('Ayuntamiento')
+                          ? 'h-16 md:h-22 scale-110'
+                          : 'h-12 md:h-16'
+                      } object-contain dark:brightness-110`}
                       loading="lazy"
                     />
                   </a>

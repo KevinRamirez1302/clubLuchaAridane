@@ -10,6 +10,7 @@ import { AppProvider } from './context/AppContext';
 import Layout from './components/layout/Layout';
 import { Skeleton } from './components/common/Skeleton';
 import ScrollToHash from './components/common/ScrollToHash';
+import CookieBanner from './components/common/CookieBanner';
 
 // Lazy loading de páginas para mejorar el tiempo de carga inicial
 const Home = lazy(() => import('./pages/Home'));
@@ -50,6 +51,7 @@ export default function App() {
     <HelmetProvider>
       <ThemeProvider>
         <AppProvider>
+          <CookieBanner />
           <BrowserRouter>
             <ScrollToHash />
             <Suspense fallback={<PageLoader />}>
