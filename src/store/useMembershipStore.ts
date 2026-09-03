@@ -19,7 +19,7 @@ export interface Socio {
   nombre: string;
   apellidos?: string;
   email: string;
-  dni?: string; // Se usará como usuario
+  dni?: string; // Se usara como usuario
   password?: string; // Por defecto '123456'
   plan: string;
   vencimiento?: string;
@@ -44,7 +44,6 @@ interface MembershipState {
   addSolicitud: (datos: Omit<Solicitud, 'id' | 'estado' | 'fechaSolicitud'>) => Promise<void>;
   acceptSolicitud: (id: string) => Promise<Socio | undefined>;
   rejectSolicitud: (id: string) => Promise<void>;
-  loginSocio: (dni: string, password: string) => Promise<boolean>;
   logoutSocio: () => void;
 }
 
@@ -63,7 +62,6 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al cargar solicitudes';
       set({ isLoading: false, error: message });
-      // Fallback local: no se hace nada para no borrar las peticiones locales (si aplicara)
     }
   },
 
@@ -78,39 +76,25 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
     }
   },
 
+  // Solo actualizar la UI si la API confirma el cambio - sin fallback silencioso
   toggleEstadoSocio: async (id, activo) => {
-    try {
-      await apiFetch(`/socios/${id}/estado`, {
-        method: 'PATCH',
-        body: JSON.stringify({ activo }),
-      });
-      set((state) => ({
-        socios: state.socios.map((s) => (s.id === id ? { ...s, activo } : s)),
-      }));
-    } catch (err: unknown) {
-      console.error('Error al cambiar estado:', err);
-      // Fallback local visual
-      set((state) => ({
-        socios: state.socios.map((s) => (s.id === id ? { ...s, activo } : s)),
-      }));
-    }
+    await apiFetch(`/socios/${id}/estado`, {
+      method: 'PATCH',
+      body: JSON.stringify({ activo }),
+    });
+    set((state) => ({
+      socios: state.socios.map((s) => (s.id === id ? { ...s, activo } : s)),
+    }));
   },
 
+  // Solo eliminar de la UI si la API confirma la baja - sin fallback silencioso
   deleteSocio: async (id) => {
-    try {
-      await apiFetch(`/socios/${id}`, {
-        method: 'DELETE',
-      });
-      set((state) => ({
-        socios: state.socios.filter((s) => s.id !== id),
-      }));
-    } catch (err: unknown) {
-      console.error('Error al eliminar socio:', err);
-      // Fallback local visual
-      set((state) => ({
-        socios: state.socios.filter((s) => s.id !== id),
-      }));
-    }
+    await apiFetch(`/socios/${id}`, {
+      method: 'DELETE',
+    });
+    set((state) => ({
+      socios: state.socios.filter((s) => s.id !== id),
+    }));
   },
 
   addSolicitud: async (datos) => {
@@ -132,7 +116,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
       }));
       return res.data.socio;
     } catch {
-      // Fallback local: actualiza visualmente el estado de la solicitud
+      // Fallback local: actualiza visualmente cuando la API no esta disponible
       const state = get();
       const solicitud = state.solicitudes.find((s) => s.id === id);
 
@@ -143,7 +127,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
           apellidos: solicitud.apellidos,
           email: solicitud.email,
           dni: solicitud.dni,
-          plan: solicitud.plan, // string: 'socio' | 'socio_premium'
+          plan: solicitud.plan,
           vencimiento: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
           numeroSocio: `ARD-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(4, '0')}`,
         };
@@ -174,30 +158,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
     }
   },
 
-  loginSocio: async (dni, password) => {
-    try {
-      const res = await apiFetch<{ token: string; socio: Socio }>('/auth/socio-login', {
-        method: 'POST',
-        body: JSON.stringify({ dni, password }),
-      });
-      set({ socioAutenticado: res.data.socio });
-      return true;
-    } catch {
-      // Fallback local simulado
-      const state = get();
-      const socio = state.socios.find(
-        (s) => s.dni?.toUpperCase() === dni.toUpperCase() && s.password === password
-      );
-      if (socio) {
-        set({ socioAutenticado: socio });
-        return true;
-      }
-      return false;
-    }
-  },
-
   logoutSocio: () => {
-    // Si hubiese token, lo borraríamos aquí o llamando a api.ts: setAccessToken(null)
     set({ socioAutenticado: null });
   },
 }));

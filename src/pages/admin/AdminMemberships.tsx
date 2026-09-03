@@ -4,11 +4,12 @@ import type { Solicitud, Socio } from '../../store/useMembershipStore';
 import Modal from '../../components/common/Modal';
 
 export default function AdminMemberships() {
-  const { solicitudes, fetchSolicitudes, fetchSocios, acceptSolicitud, rejectSolicitud, socios } = useMembershipStore();
+  const { solicitudes, fetchSolicitudes, fetchSocios, acceptSolicitud, rejectSolicitud, socios, isLoading, error } = useMembershipStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSolicitud, setSelectedSolicitud] = useState<Solicitud | null>(null);
   const [createdSocio, setCreatedSocio] = useState<Socio | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchSolicitudes();
@@ -31,24 +32,35 @@ export default function AdminMemberships() {
 
   const handleAccept = async (id: string) => {
     setIsProcessing(true);
-    const targetSolicitud = solicitudes.find(s => s.id === id);
-    const socio = await acceptSolicitud(id);
-    
-    // Fallback por si la recarga en caliente (HMR) mantuvo la versión antigua que no retornaba el socio
-    const newSocio = socio || useMembershipStore.getState().socios.find(s => s.dni === targetSolicitud?.dni);
-
-    setSelectedSolicitud(null);
-    setIsProcessing(false);
-    if (newSocio) {
-      setCreatedSocio(newSocio);
+    setActionError(null);
+    try {
+      const targetSolicitud = solicitudes.find(s => s.id === id);
+      const socio = await acceptSolicitud(id);
+      const newSocio = socio || useMembershipStore.getState().socios.find(s => s.dni === targetSolicitud?.dni);
+      setSelectedSolicitud(null);
+      if (newSocio) {
+        setCreatedSocio(newSocio);
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al aceptar la solicitud';
+      setActionError(msg);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   const handleReject = async (id: string) => {
     setIsProcessing(true);
-    await rejectSolicitud(id);
-    setSelectedSolicitud(null);
-    setIsProcessing(false);
+    setActionError(null);
+    try {
+      await rejectSolicitud(id);
+      setSelectedSolicitud(null);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al rechazar la solicitud';
+      setActionError(msg);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -63,6 +75,35 @@ export default function AdminMemberships() {
           </p>
         </div>
       </div>
+
+      {/* Banner de error de carga */}
+      {error && (
+        <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
+          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="text-sm font-medium">{error}</span>
+          <button
+            onClick={() => { fetchSolicitudes(); fetchSocios(); }}
+            className="ml-auto text-sm font-semibold underline hover:no-underline"
+          >
+            Reintentar
+          </button>
+        </div>
+      )}
+
+      {/* Banner de error de acción (accept/reject) */}
+      {actionError && (
+        <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
+          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="text-sm font-medium">{actionError}</span>
+          <button onClick={() => setActionError(null)} className="ml-auto text-sm font-semibold underline hover:no-underline">
+            Cerrar
+          </button>
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
@@ -129,7 +170,16 @@ export default function AdminMemberships() {
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-zinc-800 divide-y divide-gray-200 dark:divide-zinc-700">
-              {pendientes.length > 0 ? (
+              {isLoading ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="h-5 w-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
+                      Cargando solicitudes...
+                    </div>
+                  </td>
+                </tr>
+              ) : pendientes.length > 0 ? (
                 pendientes.map((solicitud) => (
                   <tr key={solicitud.id} className="hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">

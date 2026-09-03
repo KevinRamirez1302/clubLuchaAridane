@@ -2,9 +2,10 @@ import { useState, useMemo, useEffect } from 'react';
 import { useMembershipStore } from '../../store/useMembershipStore';
 
 export default function AdminSocios() {
-  const { socios, fetchSocios, toggleEstadoSocio, deleteSocio } = useMembershipStore();
+  const { socios, fetchSocios, toggleEstadoSocio, deleteSocio, isLoading, error } = useMembershipStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [isProcessing, setIsProcessing] = useState<string | number | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchSocios();
@@ -25,15 +26,29 @@ export default function AdminSocios() {
 
   const handleToggleEstado = async (id: string | number, currentStatus: boolean) => {
     setIsProcessing(id);
-    await toggleEstadoSocio(id, !currentStatus);
-    setIsProcessing(null);
+    setActionError(null);
+    try {
+      await toggleEstadoSocio(id, !currentStatus);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al cambiar el estado del socio';
+      setActionError(msg);
+    } finally {
+      setIsProcessing(null);
+    }
   };
 
   const handleDelete = async (id: string | number) => {
-    if (window.confirm('¿Estás seguro de que deseas anular la suscripción de este socio? Esta acción lo dará de baja.')) {
+    if (window.confirm('¿Estas seguro de que deseas anular la suscripcion de este socio? Esta accion lo dara de baja.')) {
       setIsProcessing(id);
-      await deleteSocio(id);
-      setIsProcessing(null);
+      setActionError(null);
+      try {
+        await deleteSocio(id);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Error al dar de baja al socio';
+        setActionError(msg);
+      } finally {
+        setIsProcessing(null);
+      }
     }
   };
 
@@ -50,22 +65,43 @@ export default function AdminSocios() {
         </div>
       </div>
 
+      {/* Banner de error de carga */}
+      {error && (
+        <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
+          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="text-sm font-medium">{error}</span>
+          <button onClick={() => fetchSocios()} className="ml-auto text-sm font-semibold underline hover:no-underline">
+            Reintentar
+          </button>
+        </div>
+      )}
+
+      {/* Banner de error de accion */}
+      {actionError && (
+        <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
+          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="text-sm font-medium">{actionError}</span>
+          <button onClick={() => setActionError(null)} className="ml-auto text-sm font-semibold underline hover:no-underline">
+            Cerrar
+          </button>
+        </div>
+      )}
+
       {/* Filters */}
       <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-zinc-700">
         <div className="relative max-w-md">
           <input
             type="text"
-            placeholder="Buscar por nombre, apellidos, DNI o nº socio..."
+            placeholder="Buscar por nombre, apellidos, DNI o no socio..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
           />
-          <svg
-            className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -77,25 +113,24 @@ export default function AdminSocios() {
           <table className="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
             <thead className="bg-gray-50 dark:bg-zinc-900/50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Socio
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Nº Socio / DNI
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Plan
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Estado
-                </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Acciones
-                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Socio</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">No Socio / DNI</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Plan</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</th>
+                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-zinc-800 divide-y divide-gray-200 dark:divide-zinc-700">
-              {filteredSocios.length > 0 ? (
+              {isLoading ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="h-5 w-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
+                      Cargando socios...
+                    </div>
+                  </td>
+                </tr>
+              ) : filteredSocios.length > 0 ? (
                 filteredSocios.map((socio) => (
                   <tr key={socio.id} className="hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -104,12 +139,8 @@ export default function AdminSocios() {
                           {socio.nombre[0]}
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">
-                            {socio.nombre} {socio.apellidos || ''}
-                          </div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">
-                            {socio.email}
-                          </div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">{socio.nombre} {socio.apellidos || ''}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{socio.email}</div>
                         </div>
                       </div>
                     </td>
@@ -124,8 +155,8 @@ export default function AdminSocios() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        socio.activo ?? true 
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
+                        socio.activo ?? true
+                          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
                           : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
                       }`}>
                         {socio.activo ?? true ? 'Activo' : 'Suspendido'}
@@ -141,7 +172,7 @@ export default function AdminSocios() {
                             : 'text-green-600 hover:text-green-900 dark:text-green-500 dark:hover:text-green-400'
                         } disabled:opacity-50 transition-colors`}
                       >
-                        {socio.activo ?? true ? 'Suspender' : 'Activar'}
+                        {isProcessing === socio.id ? '...' : (socio.activo ?? true ? 'Suspender' : 'Activar')}
                       </button>
                       <button
                         onClick={() => handleDelete(socio.id)}
