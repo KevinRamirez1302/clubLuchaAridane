@@ -85,7 +85,7 @@ export interface FAQ {
 }
 
 export interface PlanMembresia {
-  id: 'socio' | 'socio-premium';
+  id: 'socio' | 'socio_premium';
   nombre: string;
   precio: number; // €/año
   beneficios: string[];
@@ -125,4 +125,5 @@ export interface EquipoRival {
   isla: string;          // Isla canaria, ej: "La Palma"
   terrero: string;       // Nombre del terrero donde juegan de local
   categoria: string;     // Categoría competitiva, ej: "Primera Categoría"
+  logo?: string;         // URL del logo del equipo (opcional)
 }

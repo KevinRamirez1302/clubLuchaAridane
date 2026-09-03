@@ -86,6 +86,20 @@ export default function Squad() {
     setFilterKey((k) => k + 1);
   };
 
+  const handleToggleMostrar = () => {
+    if (mostrarTodos) {
+      setMostrarTodos(false);
+      setTimeout(() => {
+        const el = document.getElementById('plantilla');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 50);
+    } else {
+      setMostrarTodos(true);
+    }
+  };
+
   const filtrados = plantilla.filter((j) => {
     const matchClas = clasificacion === 'todos' || j.clasificaciones.includes(clasificacion as ClasificacionLuchador);
     const matchEq   = equipo === 'todos' || j.equipos.includes(equipo as CategoriaEquipo);
@@ -247,7 +261,7 @@ export default function Squad() {
           <div className="flex justify-center mt-10">
             <button
               id="squad-ver-mas-btn"
-              onClick={() => setMostrarTodos(!mostrarTodos)}
+              onClick={handleToggleMostrar}
               className="px-8 py-3 bg-club-blue text-white font-semibold rounded-full hover:bg-club-blue-light transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
             >
               {mostrarTodos ? 'Ver menos' : 'Ver más'}

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useDataStore } from '../../store/useDataStore';
 
 export default function AdminLayout() {
   const logout = useAuthStore((state) => state.logout);
+  const { fetchInitialData, isLoading } = useDataStore();
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -101,7 +103,19 @@ export default function AdminLayout() {
       >
         {/* Cabecera del sidebar */}
         <div className="flex items-center justify-between p-4 border-b dark:border-zinc-700">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white">Admin Panel</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-white">Admin Panel</h2>
+            <button
+              onClick={() => fetchInitialData()}
+              disabled={isLoading}
+              title="Actualizar base de datos"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-club-blue hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors disabled:opacity-50"
+            >
+              <svg className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+          </div>
           {/* Botón cerrar solo en móvil */}
           <button
             onClick={() => setSidebarOpen(false)}
@@ -164,7 +178,19 @@ export default function AdminLayout() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <h1 className="font-bold text-gray-800 dark:text-white text-lg">Admin Panel</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="font-bold text-gray-800 dark:text-white text-lg">Admin Panel</h1>
+            <button
+              onClick={() => fetchInitialData()}
+              disabled={isLoading}
+              title="Actualizar base de datos"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-club-blue hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors disabled:opacity-50"
+            >
+              <svg className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+          </div>
         </header>
 
         {/* Contenido con scroll */}
