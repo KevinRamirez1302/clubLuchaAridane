@@ -1,0 +1,10 @@
+[
+  { "id": 1, "nombre": "CL Tamanca-Las Manchas", "municipio": "Las Manchas", "isla": "La Palma", "terrero": "Terrero Las Manchas", "categoria": "Primera Categoría" },
+  { "id": 2, "nombre": "CL Auarita Tedote", "municipio": "Mazo", "isla": "La Palma", "terrero": "", "categoria": "Primera Categoría" },
+  { "id": 3, "nombre": "CL Bediesta", "municipio": "San Andrés y Sauces", "isla": "La Palma", "terrero": "Terrero de San Andrés y Sauces", "categoria": "Primera Categoría" },
+  { "id": 4, "nombre": "CL Tijarafe Candelaria", "municipio": "Tijarafe", "isla": "La Palma", "terrero": "", "categoria": "Primera Categoría" },
+  { "id": 5, "nombre": "CL Candelaria de Mirca", "municipio": "Mirca", "isla": "La Palma", "terrero": "Terrero Ramón Méndez (Mirca)", "categoria": "Primera Categoría" },
+  { "id": 6, "nombre": "CL Chimbesque", "municipio": "La Palma", "isla": "La Palma", "terrero": "", "categoria": "Primera Categoría" },
+  { "id": 7, "nombre": "CL Tegueste", "municipio": "Tegueste", "isla": "Tenerife", "terrero": "", "categoria": "Primera Categoría" },
+  { "id": 8, "nombre": "CL Antigua", "municipio": "Antigua", "isla": "Fuerteventura", "terrero": "Terrero Municipal de Antigua", "categoria": "Primera Categoría" }
+]

@@ -116,3 +116,13 @@ export interface PosicionClasificacion {
   puntos: number;
   esClub: boolean; // para destacar la fila del club
 }
+
+// Equipo rival — usado en calendario, luchadas y clasificación
+export interface EquipoRival {
+  id: number;
+  nombre: string;        // Nombre oficial del club, ej: "CL Tamanca-Las Manchas"
+  municipio: string;     // Municipio donde está ubicado
+  isla: string;          // Isla canaria, ej: "La Palma"
+  terrero: string;       // Nombre del terrero donde juegan de local
+  categoria: string;     // Categoría competitiva, ej: "Primera Categoría"
+}
