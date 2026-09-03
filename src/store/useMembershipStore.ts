@@ -202,7 +202,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
 
   loginSocio: async (dni, password) => {
     try {
-      const res = await apiFetch<{ token: string; socio: Socio }>('/auth/socio-login', {
+      const res = await apiFetch<{ accessToken: string; token: string; socio: Socio }>('/auth/socio-login', {
         method: 'POST',
         body: JSON.stringify({ dni, password }),
       });
