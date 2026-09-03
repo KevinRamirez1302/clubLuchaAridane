@@ -47,7 +47,7 @@ const DATOS_CONTACTO = [
       </svg>
     ),
     titulo: 'Teléfono',
-    valor: '+34 900 000 000',
+    valor: '+34 922 401 655',
   },
   {
     icon: (

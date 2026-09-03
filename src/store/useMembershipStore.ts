@@ -39,6 +39,7 @@ interface MembershipState {
 
   fetchSolicitudes: () => Promise<void>;
   fetchSocios: () => Promise<void>;
+  updateSocio: (id: string | number, datos: Partial<Socio>) => Promise<void>;
   toggleEstadoSocio: (id: string | number, activo: boolean) => Promise<void>;
   deleteSocio: (id: string | number) => Promise<void>;
   addSolicitud: (datos: Omit<Solicitud, 'id' | 'estado' | 'fechaSolicitud'>) => Promise<void>;
@@ -75,6 +76,31 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al cargar socios';
       set({ isLoading: false, error: message });
+    }
+  },
+
+  updateSocio: async (id, datos) => {
+    try {
+      const res = await apiFetch<Socio>(`/socios/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(datos),
+      });
+      set((state) => ({
+        socios: state.socios.map((s) => (s.id === id ? { ...s, ...res.data } : s)),
+        socioAutenticado:
+          state.socioAutenticado?.id === id
+            ? { ...state.socioAutenticado, ...res.data }
+            : state.socioAutenticado,
+      }));
+    } catch {
+      // Fallback local visual
+      set((state) => ({
+        socios: state.socios.map((s) => (s.id === id ? { ...s, ...datos } : s)),
+        socioAutenticado:
+          state.socioAutenticado?.id === id
+            ? { ...state.socioAutenticado, ...datos }
+            : state.socioAutenticado,
+      }));
     }
   },
 

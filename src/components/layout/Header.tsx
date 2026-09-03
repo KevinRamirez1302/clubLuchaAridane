@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { to: '/nuestra-historia', label: 'nav.nuestraHistoria' },
   { to: '/#calendario', label: 'nav.calendario' },
   { to: '/contacto', label: 'nav.contacto' },
+  { to: '/panel-socios', label: 'nav.panelSocios' },
 ] as const;
 
 export default function Header() {
@@ -62,6 +63,9 @@ export default function Header() {
     }
     if (to === '/') {
       return location.pathname === '/' && location.hash !== '#calendario';
+    }
+    if (to === '/panel-socios') {
+      return location.pathname === '/panel-socios' || location.pathname === '/panel-socio';
     }
     return location.pathname === to;
   };
