@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthState>()(
         } catch {
           // Si falla, intentamos como Socio (asumiendo username como email)
           try {
-            const res = await apiFetch<{ accessToken: string; user: User }>('/auth/socio/login', {
+            const res = await apiFetch<{ accessToken: string; user: User }>('/auth/socio-login', {
               method: 'POST',
               body: JSON.stringify({ email: username, password }),
             });

@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import type { PlanMembresia } from '../types';
 import { apiFetch } from '../services/api';
 
 export interface Solicitud {
@@ -10,7 +9,7 @@ export interface Solicitud {
   telefono: string;
   dni: string;
   fechaNacimiento: string;
-  plan: PlanMembresia;
+  plan: string; // 'socio' | 'socio_premium'
   estado: 'pendiente' | 'aceptada' | 'rechazada';
   fechaSolicitud: string;
 }
@@ -115,24 +114,11 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
   },
 
   addSolicitud: async (datos) => {
-    try {
-      const res = await apiFetch<Solicitud>('/solicitudes', {
-        method: 'POST',
-        body: JSON.stringify(datos),
-      });
-      set((state) => ({ solicitudes: [res.data, ...state.solicitudes] }));
-    } catch {
-      // Fallback local simulado
-      const nuevaSolicitud: Solicitud = {
-        ...datos,
-        id: Math.random().toString(36).substr(2, 9),
-        estado: 'pendiente',
-        fechaSolicitud: new Date().toISOString(),
-      };
-      set((state) => ({
-        solicitudes: [nuevaSolicitud, ...state.solicitudes],
-      }));
-    }
+    const res = await apiFetch<Solicitud>('/solicitudes', {
+      method: 'POST',
+      body: JSON.stringify(datos),
+    });
+    set((state) => ({ solicitudes: [res.data, ...state.solicitudes] }));
   },
 
   acceptSolicitud: async (id) => {
@@ -146,18 +132,18 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
       }));
       return res.data.socio;
     } catch {
-      // Fallback local simulado
+      // Fallback local: actualiza visualmente el estado de la solicitud
       const state = get();
       const solicitud = state.solicitudes.find((s) => s.id === id);
 
       if (solicitud && solicitud.estado === 'pendiente') {
         const nuevoSocio: Socio = {
           id: Math.random().toString(36).substr(2, 9),
-          nombre: `${solicitud.nombre} ${solicitud.apellidos}`,
+          nombre: solicitud.nombre,
+          apellidos: solicitud.apellidos,
           email: solicitud.email,
           dni: solicitud.dni,
-          password: '123456',
-          plan: solicitud.plan.nombre,
+          plan: solicitud.plan, // string: 'socio' | 'socio_premium'
           vencimiento: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
           numeroSocio: `ARD-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(4, '0')}`,
         };

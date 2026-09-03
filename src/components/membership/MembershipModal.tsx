@@ -64,16 +64,20 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
   const handleEnviarSolicitud = async () => {
     setCargando(true);
     
-    await addSolicitud({
-      ...form,
-      plan: plan
-    });
-
-    setCargando(false);
-    alert(`¡Gracias, ${form.nombre}! Tu solicitud de membresía "${plan.nombre}" ha sido registrada y está en revisión. El club se pondrá en contacto contigo pronto.`);
-    onClose();
-    setForm(initialForm);
-    setPaso('datos');
+    try {
+      await addSolicitud({
+        ...form,
+        plan: plan.id, // ✅ string: 'socio' | 'socio_premium'
+      });
+      setCargando(false);
+      alert(`¡Gracias, ${form.nombre}! Tu solicitud de membresía "${plan.nombre}" ha sido registrada y está en revisión. El club se pondrá en contacto contigo pronto.`);
+      onClose();
+      setForm(initialForm);
+      setPaso('datos');
+    } catch {
+      setCargando(false);
+      alert('Ha ocurrido un error al enviar tu solicitud. Por favor, inténtalo de nuevo o contacta con el club.');
+    }
   };
 
   const inputClass = (campo: keyof FormData) =>
