@@ -25,9 +25,6 @@ export default function History() {
         aria-label="Nuestra historia — encabezado"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <span className="inline-block bg-club-orange/15 text-club-orange border border-club-orange/30 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-6">
-            Nuestra historia
-          </span>
           <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl text-gray-900 dark:text-white mb-6">
             Desde 1946
           </h1>

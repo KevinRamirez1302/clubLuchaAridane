@@ -211,7 +211,7 @@ export default function MemberAccount() {
 
       {/* Demo note */}
       <div className="mt-6 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl text-xs text-amber-700 dark:text-amber-400">
-        <strong>Nota:</strong> Para tener una cuenta de socio debes solicitarla primero en la pestaña de Planes. Una vez aceptada, usa tu DNI y la contraseña '123456' para acceder.
+        <strong>Nota:</strong> Para tener una cuenta de socio debes solicitarla primero en la pestaña de Planes. Una vez aceptada, usa las credenciales que te proporcionaron mediante correo electrónico. Intenta también revisar la carpeta de spam de tu correo.
       </div>
     </div>
   );

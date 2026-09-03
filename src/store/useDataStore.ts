@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Noticia, Jugador, PosicionClasificacion, Partido } from '../types';
+import type { Noticia, Jugador, PosicionClasificacion, Partido, EquipoRival } from '../types';
 import { apiFetch } from '../services/api';
 
 // Fallbacks de datos iniciales en caso de fallo de red
@@ -7,12 +7,14 @@ import initialNoticias from '../data/noticias.json';
 import initialPlantilla from '../data/plantilla.json';
 import initialClasificacion from '../data/clasificacion.json';
 import initialPartidos from '../data/partidos.json';
+import initialEquipos from '../data/equipos.json';
 
 interface DataState {
   noticias: Noticia[];
   plantilla: Jugador[];
   clasificacion: PosicionClasificacion[];
   partidos: Partido[];
+  equipos: EquipoRival[];
   isLoading: boolean;
   error: string | null;
 
@@ -35,6 +37,11 @@ interface DataState {
   // Acciones para Partidos
   updatePartido: (id: number, data: Partial<Partido>) => Promise<void>;
   addPartido: (partido: Omit<Partido, 'id'>) => Promise<void>;
+
+  // Acciones para Equipos Rivales
+  addEquipo: (equipo: Omit<EquipoRival, 'id'>) => Promise<void>;
+  updateEquipo: (id: number, data: Partial<EquipoRival>) => Promise<void>;
+  deleteEquipo: (id: number) => Promise<void>;
 }
 
 export const useDataStore = create<DataState>((set, get) => ({
@@ -42,6 +49,7 @@ export const useDataStore = create<DataState>((set, get) => ({
   plantilla: initialPlantilla as unknown as Jugador[],
   clasificacion: initialClasificacion as PosicionClasificacion[],
   partidos: initialPartidos as Partido[],
+  equipos: initialEquipos as EquipoRival[],
   isLoading: false,
   error: null,
 
@@ -193,6 +201,48 @@ export const useDataStore = create<DataState>((set, get) => ({
     } catch {
       const newId = get().partidos.length > 0 ? Math.max(...get().partidos.map((p) => p.id)) + 1 : 1;
       set((state) => ({ partidos: [...state.partidos, { ...partido, id: newId }] }));
+    }
+  },
+
+  // ── Equipos Rivales ──────────────────────────────────────────────────────
+  addEquipo: async (equipo) => {
+    try {
+      const res = await apiFetch<EquipoRival>('/equipos', {
+        method: 'POST',
+        body: JSON.stringify(equipo),
+      });
+      set((state) => ({ equipos: [...state.equipos, res.data] }));
+    } catch {
+      const newId = get().equipos.length > 0 ? Math.max(...get().equipos.map((e) => e.id)) + 1 : 1;
+      set((state) => ({ equipos: [...state.equipos, { ...equipo, id: newId }] }));
+    }
+  },
+
+  updateEquipo: async (id, data) => {
+    try {
+      const res = await apiFetch<EquipoRival>(`/equipos/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      });
+      set((state) => ({
+        equipos: state.equipos.map((e) => (e.id === id ? res.data : e)),
+      }));
+    } catch {
+      set((state) => ({
+        equipos: state.equipos.map((e) => (e.id === id ? { ...e, ...data } : e)),
+      }));
+    }
+  },
+
+  deleteEquipo: async (id) => {
+    try {
+      await apiFetch(`/equipos/${id}`, { method: 'DELETE' });
+    } catch {
+      // continuar con borrado en UI
+    } finally {
+      set((state) => ({
+        equipos: state.equipos.filter((e) => e.id !== id),
+      }));
     }
   },
 }));

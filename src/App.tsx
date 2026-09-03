@@ -21,6 +21,8 @@ const Contact = lazy(() => import('./pages/Contact'));
 const NewsDetail = lazy(() => import('./pages/NewsDetail'));
 const PlayerDetail = lazy(() => import('./pages/PlayerDetail'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const PoliticaPrivacidad = lazy(() => import('./pages/PoliticaPrivacidad'));
+const AvisoLegal = lazy(() => import('./pages/AvisoLegal'));
 
 // Admin Pages
 const AdminLogin = lazy(() => import('./pages/admin/Login'));
@@ -81,6 +83,8 @@ export default function App() {
                   <Route path="/quienes-somos" element={<About />} />
                   <Route path="/nuestra-historia" element={<History />} />
                   <Route path="/hazte-socio" element={<Membership />} />
+                  <Route path="/panel-socios" element={<Membership initialTab="cuenta" />} />
+                  <Route path="/panel-socio" element={<Membership initialTab="cuenta" />} />
                   <Route path="/contacto" element={<Contact />} />
 
                   {/* Rutas de detalle */}
@@ -88,6 +92,10 @@ export default function App() {
                   <Route path="/noticias/:id" element={<NewsDetail />} />
                   {/* FUTURO: GET /api/plantilla/:id */}
                   <Route path="/jugador/:id" element={<PlayerDetail />} />
+
+                  {/* Páginas legales */}
+                  <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+                  <Route path="/aviso-legal" element={<AvisoLegal />} />
 
                   {/* 404 */}
                   <Route path="/404" element={<NotFound />} />

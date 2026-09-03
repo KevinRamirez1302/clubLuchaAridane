@@ -1,5 +1,4 @@
-// Hook para animaciones de entrada al hacer scroll (Intersection Observer)
-import { useEffect, useRef } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 
 interface ScrollRevealOptions {
   threshold?: number;
@@ -9,30 +8,42 @@ interface ScrollRevealOptions {
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   options: ScrollRevealOptions = {}
 ) {
-  const ref = useRef<T>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target); // Solo animar una vez
-          }
-        });
-      },
-      {
-        threshold: options.threshold ?? 0.15,
-        rootMargin: options.rootMargin ?? '0px',
+  const ref = useCallback(
+    (node: T | null) => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
       }
-    );
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [options.threshold, options.rootMargin]);
+      if (!node) return;
+
+      if (typeof IntersectionObserver === 'undefined') {
+        node.classList.add('visible');
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target); // Solo animar una vez
+            }
+          });
+        },
+        {
+          threshold: options.threshold ?? 0.15,
+          rootMargin: options.rootMargin ?? '0px',
+        }
+      );
+
+      observer.observe(node);
+      observerRef.current = observer;
+    },
+    [options.threshold, options.rootMargin]
+  );
 
   return ref;
 }
