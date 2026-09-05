@@ -9,6 +9,7 @@ const equipoVacio = (): Omit<EquipoRival, 'id'> => ({
   isla: 'La Palma',
   terrero: '',
   categoria: 'Primera Categoría',
+  logo: '',
 });
 
 const CATEGORIAS = ['Primera Categoría', 'Segunda Categoría', 'Juvenil', 'Infantil', 'Benjamín'];
@@ -109,6 +110,20 @@ function FormEquipo({ initial, onSave, onCancel, cargando, titulo }: FormEquipoP
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
+        </div>
+
+        {/* Logo URL */}
+        <div className="sm:col-span-2">
+          <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">
+            URL del logo (opcional)
+          </label>
+          <input
+            name="logo"
+            value={form.logo || ''}
+            onChange={handleChange}
+            placeholder="https://ejemplo.com/logo.png"
+            className={inputClass}
+          />
         </div>
       </div>
 
@@ -271,7 +286,7 @@ export default function AdminEquipos() {
                 {editandoId === equipo.id ? (
                   <FormEquipo
                     titulo={`Editando: ${equipo.nombre}`}
-                    initial={{ nombre: equipo.nombre, municipio: equipo.municipio, isla: equipo.isla, terrero: equipo.terrero, categoria: equipo.categoria }}
+                    initial={{ nombre: equipo.nombre, municipio: equipo.municipio, isla: equipo.isla, terrero: equipo.terrero, categoria: equipo.categoria, logo: equipo.logo }}
                     onSave={(data) => handleActualizarEquipo(equipo.id, data)}
                     onCancel={() => setEditandoId(null)}
                     cargando={cargando}
@@ -299,10 +314,14 @@ export default function AdminEquipos() {
                   </div>
                 ) : (
                   <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 dark:bg-zinc-800/50 border border-gray-100 dark:border-zinc-700 rounded-xl hover:border-club-blue/30 dark:hover:border-club-blue/30 transition-colors group">
-                    {/* Avatar inicial */}
-                    <div className="w-9 h-9 rounded-full bg-club-blue/10 dark:bg-club-blue/20 text-club-blue dark:text-blue-400 font-black text-sm flex items-center justify-center flex-shrink-0">
-                      {equipo.nombre.charAt(0)}
-                    </div>
+                    {/* Avatar inicial / Logo */}
+                    {equipo.logo ? (
+                      <img src={equipo.logo} alt={`Logo ${equipo.nombre}`} className="w-9 h-9 rounded-full object-cover flex-shrink-0 border border-gray-200 dark:border-zinc-700 bg-white" />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-club-blue/10 dark:bg-club-blue/20 text-club-blue dark:text-blue-400 font-black text-sm flex items-center justify-center flex-shrink-0">
+                        {equipo.nombre.charAt(0)}
+                      </div>
+                    )}
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
