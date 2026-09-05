@@ -33,6 +33,7 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
   const [errores, setErrores] = useState<Partial<FormData>>({});
   const [paso, setPaso] = useState<'datos' | 'exito'>('datos');
   const [cargando, setCargando] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const addSolicitud = useMembershipStore((state) => state.addSolicitud);
 
@@ -61,15 +62,18 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
 
     try {
       setCargando(true);
+      setApiError(null);
       await addSolicitud({
         ...form,
         plan: plan.id as any,
       });
       setPaso('exito');
     } catch (err) {
-      console.error('Error al registrar solicitud:', err);
-      // Fallback: mostrar la pantalla de éxito
-      setPaso('exito');
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Error al enviar la solicitud. Por favor, inténtalo de nuevo.';
+      setApiError(message);
     } finally {
       setCargando(false);
     }
@@ -80,6 +84,7 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
     setTimeout(() => {
       setForm(initialForm);
       setErrores({});
+      setApiError(null);
       setPaso('datos');
     }, 300);
   };
@@ -238,6 +243,16 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
             ))}
           </div>
 
+          {/* Banner de error de API */}
+          {apiError && (
+            <div className="flex items-start gap-3 p-3.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
+              <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-sm font-medium">{apiError}</p>
+            </div>
+          )}
+
           {/* Botones de acción */}
           <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5 sm:gap-3 pt-2 sm:pt-4">
             <button
@@ -262,6 +277,7 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
               <span>{cargando ? 'Enviando...' : 'Continuar →'}</span>
             </button>
           </div>
+
         </form>
       )}
     </Modal>

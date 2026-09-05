@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useMembershipStore } from '../../store/useMembershipStore';
 import type { Solicitud, Socio } from '../../store/useMembershipStore';
 import Modal from '../../components/common/Modal';
@@ -11,9 +11,21 @@ export default function AdminMemberships() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
+  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   useEffect(() => {
+    // Carga inicial al montar el componente
     fetchSolicitudes();
     fetchSocios();
+
+    // Polling cada 30 segundos para recibir nuevas solicitudes automáticamente
+    pollingRef.current = setInterval(() => {
+      fetchSolicitudes();
+    }, 30_000);
+
+    return () => {
+      if (pollingRef.current) clearInterval(pollingRef.current);
+    };
   }, [fetchSolicitudes, fetchSocios]);
 
   const pendientes = useMemo(() => {
