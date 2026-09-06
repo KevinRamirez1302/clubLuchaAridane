@@ -56,11 +56,12 @@ export const useDataStore = create<DataState>((set, get) => ({
   fetchInitialData: async () => {
     set({ isLoading: true, error: null });
     try {
-      const [noticiasRes, plantillaRes, clasifRes, partidosRes] = await Promise.allSettled([
+      const [noticiasRes, plantillaRes, clasifRes, partidosRes, equiposRes] = await Promise.allSettled([
         apiFetch<Noticia[]>('/noticias?limit=100'),
         apiFetch<Jugador[]>('/plantilla?limit=100'),
         apiFetch<PosicionClasificacion[]>('/clasificacion'),
         apiFetch<Partido[]>('/partidos'),
+        apiFetch<EquipoRival[]>('/equipos'),
       ]);
 
       set({
@@ -68,6 +69,7 @@ export const useDataStore = create<DataState>((set, get) => ({
         plantilla: plantillaRes.status === 'fulfilled' ? plantillaRes.value.data : (initialPlantilla as unknown as Jugador[]),
         clasificacion: clasifRes.status === 'fulfilled' ? clasifRes.value.data : (initialClasificacion as PosicionClasificacion[]),
         partidos: partidosRes.status === 'fulfilled' ? partidosRes.value.data : (initialPartidos as Partido[]),
+        equipos: equiposRes.status === 'fulfilled' ? equiposRes.value.data : (initialEquipos as EquipoRival[]),
         isLoading: false,
       });
     } catch (err: unknown) {
