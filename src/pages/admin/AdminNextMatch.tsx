@@ -69,12 +69,15 @@ export default function AdminNextMatch() {
   };
 
   // ── Eliminar luchada ──
-  const handleDelete = (id: number) => {
-    useDataStore.setState((state) => ({
-      partidos: state.partidos.filter((p) => p.id !== id),
-    }));
-    setConfirmDeleteId(null);
-    mostrarFeedback('ok', 'Luchada eliminada del calendario.');
+  const handleDelete = async (id: number) => {
+    try {
+      await store.deletePartido(id);
+      mostrarFeedback('ok', 'Luchada eliminada del calendario.');
+    } catch {
+      mostrarFeedback('error', 'Error al eliminar la luchada.');
+    } finally {
+      setConfirmDeleteId(null);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -37,6 +37,7 @@ interface DataState {
   // Acciones para Partidos
   updatePartido: (id: number, data: Partial<Partido>) => Promise<void>;
   addPartido: (partido: Omit<Partido, 'id'>) => Promise<void>;
+  deletePartido: (id: number) => Promise<void>;
 
   // Acciones para Equipos Rivales
   addEquipo: (equipo: Omit<EquipoRival, 'id'>) => Promise<void>;
@@ -180,7 +181,7 @@ export const useDataStore = create<DataState>((set, get) => ({
   updatePartido: async (id, data) => {
     try {
       const res = await apiFetch<Partido>(`/partidos/${id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify(data),
       });
       set((state) => ({
@@ -203,6 +204,18 @@ export const useDataStore = create<DataState>((set, get) => ({
     } catch {
       const newId = get().partidos.length > 0 ? Math.max(...get().partidos.map((p) => p.id)) + 1 : 1;
       set((state) => ({ partidos: [...state.partidos, { ...partido, id: newId }] }));
+    }
+  },
+
+  deletePartido: async (id) => {
+    try {
+      await apiFetch(`/partidos/${id}`, { method: 'DELETE' });
+    } catch {
+      // continuar con borrado en UI
+    } finally {
+      set((state) => ({
+        partidos: state.partidos.filter((p) => p.id !== id),
+      }));
     }
   },
 
