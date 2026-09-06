@@ -14,7 +14,7 @@ const partidoVacio: Omit<Partido, 'id'> = {
 
 export default function AdminNextMatch() {
   const store = useDataStore();
-  const { partidos } = store;
+  const { partidos, equipos } = store;
 
   const [modalAbierto, setModalAbierto] = useState(false);
   const [editandoId, setEditandoId] = useState<number | null>(null);
@@ -390,15 +390,41 @@ export default function AdminNextMatch() {
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
                   Rival <span className="text-red-500">*</span>
                 </label>
-                <input
-                  id="input-rival"
-                  type="text"
-                  value={form.rival}
-                  onChange={(e) => setForm({ ...form, rival: e.target.value })}
-                  placeholder="Ej: CL Tegueste"
-                  className="w-full px-4 py-2.5 border border-gray-200 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-club-blue/50 transition"
-                  required
-                />
+                {equipos.length === 0 ? (
+                  <div className="w-full px-4 py-2.5 border border-amber-300 dark:border-amber-700 rounded-xl bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 text-sm">
+                    No hay equipos registrados. Ve a <strong>Equipos Rivales</strong> para añadirlos primero.
+                  </div>
+                ) : (
+                  <select
+                    id="input-rival"
+                    value={form.rival}
+                    onChange={(e) => {
+                      const nombreSeleccionado = e.target.value;
+                      const equipoSeleccionado = equipos.find((eq) => eq.nombre === nombreSeleccionado);
+                      setForm({
+                        ...form,
+                        rival: nombreSeleccionado,
+                        // Auto-rellenar logo si el equipo tiene uno y el campo logo estaba vacío o era del equipo anterior
+                        logoRival: equipoSeleccionado?.logo || form.logoRival,
+                      });
+                    }}
+                    className="w-full px-4 py-2.5 border border-gray-200 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-club-blue/50 transition cursor-pointer"
+                    required
+                  >
+                    <option value="">-- Selecciona el equipo rival --</option>
+                    {/* Si el rival actual no está en la lista (datos viejos), mostrarlo igual */}
+                    {form.rival && !equipos.some((eq) => eq.nombre === form.rival) && (
+                      <option value={form.rival}>{form.rival}</option>
+                    )}
+                    {[...equipos]
+                      .sort((a, b) => a.nombre.localeCompare(b.nombre))
+                      .map((eq) => (
+                        <option key={eq.id} value={eq.nombre}>
+                          {eq.nombre}
+                        </option>
+                      ))}
+                  </select>
+                )}
               </div>
 
               {/* Logo del rival */}

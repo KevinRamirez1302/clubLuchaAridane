@@ -17,7 +17,7 @@ const filaVacia = (): PosicionClasificacion => ({
 });
 
 export default function AdminStandings() {
-  const { clasificacion, updateClasificacion } = useDataStore();
+  const { clasificacion, equipos, updateClasificacion } = useDataStore();
 
   // Trabajamos sobre una copia local para edición inline
   const [filas, setFilas] = useState<PosicionClasificacion[]>(() =>
@@ -247,13 +247,30 @@ export default function AdminStandings() {
 
                   {/* Equipo */}
                   <td className="p-3">
-                    <input
-                      type="text"
-                      value={fila.equipo}
-                      onChange={(e) => updateFila(idx, 'equipo', e.target.value)}
-                      placeholder="Nombre del equipo..."
-                      className="w-full min-w-[140px] px-3 py-1.5 border border-gray-200 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-club-blue/40 transition"
-                    />
+                    {equipos.length === 0 ? (
+                      <div className="text-xs text-amber-600 dark:text-amber-400 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 rounded-lg min-w-[160px]">
+                        Sin equipos — añade en "Equipos Rivales"
+                      </div>
+                    ) : (
+                      <select
+                        value={fila.equipo}
+                        onChange={(e) => updateFila(idx, 'equipo', e.target.value)}
+                        className="w-full min-w-[160px] px-3 py-1.5 border border-gray-200 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-club-blue/40 transition cursor-pointer"
+                      >
+                        <option value="">-- Selecciona equipo --</option>
+                        {/* Si el valor actual no está en la lista, añadirlo para no perder datos */}
+                        {fila.equipo && !equipos.some((e) => e.nombre === fila.equipo) && (
+                          <option value={fila.equipo}>{fila.equipo}</option>
+                        )}
+                        {[...equipos]
+                          .sort((a, b) => a.nombre.localeCompare(b.nombre))
+                          .map((e) => (
+                            <option key={e.id} value={e.nombre}>
+                              {e.nombre}
+                            </option>
+                          ))}
+                      </select>
+                    )}
                   </td>
 
                   {/* Luchadas (auto) */}
