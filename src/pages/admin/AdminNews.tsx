@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { useDataStore } from '../../store/useDataStore';
 import type { Noticia } from '../../types';
 
@@ -25,9 +26,8 @@ export default function AdminNews() {
   const [guardando, setGuardando] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
   const [busqueda, setBusqueda] = useState('');
-  const [feedback, setFeedback] = useState<{ tipo: 'ok' | 'error'; msg: string } | null>(null);
 
-  // ── Filtrado de noticias ──
+
   const noticiasFiltradas = noticias.filter(
     (n) =>
       n.titulo.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -35,12 +35,40 @@ export default function AdminNews() {
       n.categoria.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  const mostrarFeedback = (tipo: 'ok' | 'error', msg: string) => {
-    setFeedback({ tipo, msg });
-    setTimeout(() => setFeedback(null), 3000);
+  // ── Submit del formulario ──
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.titulo.trim() || !form.resumen.trim() || !form.contenido.trim() || !form.autor.trim()) {
+      toast.error('Por favor rellena todos los campos obligatorios.');
+      return;
+    }
+
+    setGuardando(true);
+    // Simulamos una pequeña latencia (reemplazar por fetch a tu API en el futuro)
+    await new Promise((r) => setTimeout(r, 400));
+
+    try {
+      if (modoForm === 'crear') {
+        addNoticia({ ...form, fecha: new Date(form.fecha).toISOString() });
+        toast.success('¡Noticia creada correctamente!');
+      } else if (noticiaEditando) {
+        updateNoticia(noticiaEditando.id, { ...form, fecha: new Date(form.fecha).toISOString() });
+        toast.success('¡Noticia actualizada correctamente!');
+      }
+      cerrarModal();
+    } catch {
+      toast.error('Ocurrió un error. Inténtalo de nuevo.');
+    } finally {
+      setGuardando(false);
+    }
   };
 
-  // ── Abrir modal ──
+  // ── Eliminar noticia ──
+  const handleDelete = (id: number) => {
+    deleteNoticia(id);
+    setConfirmDelete(null);
+    toast.success('Noticia eliminada.');
+  };
   const abrirCrear = () => {
     setModoForm('crear');
     setForm(noticiaVacia);
@@ -69,40 +97,6 @@ export default function AdminNews() {
     setForm(noticiaVacia);
   };
 
-  // ── Submit del formulario ──
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.titulo.trim() || !form.resumen.trim() || !form.contenido.trim() || !form.autor.trim()) {
-      mostrarFeedback('error', 'Por favor rellena todos los campos obligatorios.');
-      return;
-    }
-
-    setGuardando(true);
-    // Simulamos una pequeña latencia (reemplazar por fetch a tu API en el futuro)
-    await new Promise((r) => setTimeout(r, 400));
-
-    try {
-      if (modoForm === 'crear') {
-        addNoticia({ ...form, fecha: new Date(form.fecha).toISOString() });
-        mostrarFeedback('ok', '¡Noticia creada correctamente!');
-      } else if (noticiaEditando) {
-        updateNoticia(noticiaEditando.id, { ...form, fecha: new Date(form.fecha).toISOString() });
-        mostrarFeedback('ok', '¡Noticia actualizada correctamente!');
-      }
-      cerrarModal();
-    } catch {
-      mostrarFeedback('error', 'Ocurrió un error. Inténtalo de nuevo.');
-    } finally {
-      setGuardando(false);
-    }
-  };
-
-  // ── Eliminar noticia ──
-  const handleDelete = (id: number) => {
-    deleteNoticia(id);
-    setConfirmDelete(null);
-    mostrarFeedback('ok', 'Noticia eliminada.');
-  };
 
   const categoriaColor: Record<string, string> = {
     club: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
@@ -129,28 +123,6 @@ export default function AdminNews() {
           <span className="text-lg">+</span> Nueva Noticia
         </button>
       </div>
-
-      {/* ── Toast de feedback ── */}
-      {feedback && (
-        <div
-          className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium animate-pulse ${
-            feedback.tipo === 'ok'
-              ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
-              : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
-          }`}
-        >
-          {feedback.tipo === 'ok' ? (
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          ) : (
-            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          )}
-          {feedback.msg}
-        </div>
-      )}
 
       {/* ── Buscador ── */}
       <div className="relative">

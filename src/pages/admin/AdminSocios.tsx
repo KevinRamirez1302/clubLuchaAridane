@@ -1,4 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
+import { toast } from 'sonner';
+import { Search, Pencil, AlertCircle } from 'lucide-react';
 import { useMembershipStore, type Socio } from '../../store/useMembershipStore';
 import EditSocioModal from '../../components/admin/EditSocioModal';
 
@@ -21,6 +23,7 @@ export default function AdminSocios() {
 
   const handleGuardarSocio = async (id: string | number, datos: Partial<Socio>) => {
     await updateSocio(id, datos);
+    toast.success('Perfil de socio actualizado');
   };
 
   const filteredSocios = useMemo(() => {
@@ -41,25 +44,43 @@ export default function AdminSocios() {
     setActionError(null);
     try {
       await toggleEstadoSocio(id, !currentStatus);
+      toast.success(!currentStatus ? 'Socio activado' : 'Socio suspendido');
     } catch (err: unknown) {
-      setActionError(err instanceof Error ? err.message : 'Error al cambiar el estado del socio');
+      const msg = err instanceof Error ? err.message : 'Error al cambiar el estado del socio';
+      setActionError(msg);
+      toast.error(msg);
     } finally {
       setIsProcessing(null);
     }
   };
 
-  const handleDelete = async (id: string | number) => {
-    if (window.confirm('¿Estás seguro de que deseas anular la suscripción de este socio? Esta acción lo dará de baja.')) {
-      setIsProcessing(id);
-      setActionError(null);
-      try {
-        await deleteSocio(id);
-      } catch (err: unknown) {
-        setActionError(err instanceof Error ? err.message : 'Error al dar de baja al socio');
-      } finally {
-        setIsProcessing(null);
-      }
+  const ejecutarBaja = async (id: string | number) => {
+    setIsProcessing(id);
+    setActionError(null);
+    try {
+      await deleteSocio(id);
+      toast.success('Socio dado de baja correctamente');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al dar de baja al socio';
+      setActionError(msg);
+      toast.error(msg);
+    } finally {
+      setIsProcessing(null);
     }
+  };
+
+  const handleDelete = (id: string | number) => {
+    toast('¿Estás seguro de dar de baja a este socio?', {
+      description: 'Esta acción anulará la suscripción del socio.',
+      action: {
+        label: 'Confirmar baja',
+        onClick: () => ejecutarBaja(id),
+      },
+      cancel: {
+        label: 'Cancelar',
+        onClick: () => {},
+      },
+    });
   };
 
   return (
@@ -79,9 +100,7 @@ export default function AdminSocios() {
       {/* Banner de error de carga */}
       {error && (
         <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
-          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+          <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <span className="text-sm font-medium">{error}</span>
           <button onClick={() => fetchSocios()} className="ml-auto text-sm font-semibold underline hover:no-underline">
             Reintentar
@@ -92,9 +111,7 @@ export default function AdminSocios() {
       {/* Banner de error de acción */}
       {actionError && (
         <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
-          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+          <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <span className="text-sm font-medium">{actionError}</span>
           <button onClick={() => setActionError(null)} className="ml-auto text-sm font-semibold underline hover:no-underline">
             Cerrar
@@ -112,14 +129,7 @@ export default function AdminSocios() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
           />
-          <svg
-            className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" />
         </div>
       </div>
 
@@ -200,9 +210,7 @@ export default function AdminSocios() {
                           className="p-1.5 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors inline-flex items-center gap-1"
                           title="Editar perfil de socio"
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                          </svg>
+                          <Pencil className="w-4 h-4" />
                           <span className="hidden sm:inline text-xs font-semibold">Editar</span>
                         </button>
                         <button

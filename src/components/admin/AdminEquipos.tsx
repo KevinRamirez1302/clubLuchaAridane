@@ -1,5 +1,7 @@
 // Gestión de Equipos Rivales — se usa en calendario, luchadas y clasificación
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { Search, Plus, Pencil, Trash2, MapPin } from 'lucide-react';
 import { useDataStore } from '../../store/useDataStore';
 import type { EquipoRival } from '../../types';
 
@@ -157,13 +159,7 @@ export default function AdminEquipos() {
   const [editandoId, setEditandoId] = useState<number | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
   const [cargando, setCargando] = useState(false);
-  const [feedback, setFeedback] = useState<{ tipo: 'ok' | 'error'; msg: string } | null>(null);
   const [busqueda, setBusqueda] = useState('');
-
-  const mostrarFeedback = (tipo: 'ok' | 'error', msg: string) => {
-    setFeedback({ tipo, msg });
-    setTimeout(() => setFeedback(null), 3000);
-  };
 
   const equiposFiltrados = equipos.filter((e) =>
     !busqueda.trim() ||
@@ -177,9 +173,9 @@ export default function AdminEquipos() {
     try {
       await addEquipo(data);
       setMostrarFormNuevo(false);
-      mostrarFeedback('ok', `Equipo "${data.nombre}" añadido correctamente.`);
+      toast.success(`Equipo "${data.nombre}" añadido correctamente.`);
     } catch {
-      mostrarFeedback('error', 'Error al añadir el equipo.');
+      toast.error('Error al añadir el equipo.');
     } finally {
       setCargando(false);
     }
@@ -190,9 +186,9 @@ export default function AdminEquipos() {
     try {
       await updateEquipo(id, data);
       setEditandoId(null);
-      mostrarFeedback('ok', 'Equipo actualizado correctamente.');
+      toast.success('Equipo actualizado correctamente.');
     } catch {
-      mostrarFeedback('error', 'Error al actualizar el equipo.');
+      toast.error('Error al actualizar el equipo.');
     } finally {
       setCargando(false);
     }
@@ -203,9 +199,9 @@ export default function AdminEquipos() {
     try {
       await deleteEquipo(id);
       setConfirmDeleteId(null);
-      mostrarFeedback('ok', 'Equipo eliminado.');
+      toast.success('Equipo eliminado.');
     } catch {
-      mostrarFeedback('error', 'Error al eliminar el equipo.');
+      toast.error('Error al eliminar el equipo.');
     } finally {
       setCargando(false);
     }
@@ -226,9 +222,7 @@ export default function AdminEquipos() {
         <div className="flex items-center gap-2">
           {/* Buscador */}
           <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
             <input
               type="search"
               value={busqueda}
@@ -241,28 +235,13 @@ export default function AdminEquipos() {
             onClick={() => { setMostrarFormNuevo(true); setEditandoId(null); }}
             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-club-blue hover:bg-club-blue-dark rounded-lg transition-all shadow-sm active:scale-95 cursor-pointer flex-shrink-0"
           >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-            </svg>
+            <Plus className="w-3.5 h-3.5" />
             Nuevo equipo
           </button>
         </div>
       </div>
 
       <div className="p-5 space-y-4">
-        {/* Feedback */}
-        {feedback && (
-          <div
-            className={`p-3 rounded-xl text-xs font-semibold ${
-              feedback.tipo === 'ok'
-                ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800'
-                : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
-            }`}
-          >
-            {feedback.msg}
-          </div>
-        )}
-
         {/* Formulario de nuevo equipo */}
         {mostrarFormNuevo && (
           <FormEquipo
@@ -331,10 +310,7 @@ export default function AdminEquipos() {
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-0.5">
                         {equipo.municipio && (
                           <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
+                            <MapPin className="w-3 h-3" />
                             {equipo.municipio}, {equipo.isla}
                           </span>
                         )}
@@ -354,18 +330,14 @@ export default function AdminEquipos() {
                         title="Editar equipo"
                         className="p-1.5 rounded-lg text-gray-400 hover:text-club-blue hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors cursor-pointer"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                        </svg>
+                        <Pencil className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => setConfirmDeleteId(equipo.id)}
                         title="Eliminar equipo"
                         className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>

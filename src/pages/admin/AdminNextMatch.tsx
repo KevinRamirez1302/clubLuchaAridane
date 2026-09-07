@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { useDataStore } from '../../store/useDataStore';
 import type { Partido } from '../../types';
 
@@ -21,12 +22,8 @@ export default function AdminNextMatch() {
   const [form, setForm] = useState<Omit<Partido, 'id'>>(partidoVacio);
   const [guardando, setGuardando] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
-  const [feedback, setFeedback] = useState<{ tipo: 'ok' | 'error'; msg: string } | null>(null);
 
-  const mostrarFeedback = (tipo: 'ok' | 'error', msg: string) => {
-    setFeedback({ tipo, msg });
-    setTimeout(() => setFeedback(null), 3500);
-  };
+
 
   const partidosOrdenados = [...partidos].sort(
     (a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
@@ -65,16 +62,16 @@ export default function AdminNextMatch() {
     partidos.forEach((p) => {
       store.updatePartido(p.id, { esProximo: p.id === id });
     });
-    mostrarFeedback('ok', '¡Próxima luchada actualizada!');
+    toast.success('¡Próxima luchada actualizada!');
   };
 
   // ── Eliminar luchada ──
   const handleDelete = async (id: number) => {
     try {
       await store.deletePartido(id);
-      mostrarFeedback('ok', 'Luchada eliminada del calendario.');
+      toast.success('Luchada eliminada del calendario.');
     } catch {
-      mostrarFeedback('error', 'Error al eliminar la luchada.');
+      toast.error('Error al eliminar la luchada.');
     } finally {
       setConfirmDeleteId(null);
     }
@@ -83,7 +80,7 @@ export default function AdminNextMatch() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.rival.trim() || !form.competicion.trim()) {
-      mostrarFeedback('error', 'El rival y la competición son obligatorios.');
+      toast.error('El rival y la competición son obligatorios.');
       return;
     }
 
@@ -105,14 +102,14 @@ export default function AdminNextMatch() {
 
       if (editandoId !== null) {
         store.updatePartido(editandoId, data);
-        mostrarFeedback('ok', '¡Luchada actualizada correctamente!');
+        toast.success('¡Luchada actualizada correctamente!');
       } else {
         store.addPartido(data);
-        mostrarFeedback('ok', '¡Nueva luchada añadida al calendario!');
+        toast.success('¡Nueva luchada añadida al calendario!');
       }
       cerrarModal();
     } catch {
-      mostrarFeedback('error', 'Error al guardar. Inténtalo de nuevo.');
+      toast.error('Error al guardar. Inténtalo de nuevo.');
     } finally {
       setGuardando(false);
     }
@@ -146,28 +143,6 @@ export default function AdminNextMatch() {
           <span className="text-lg">+</span> Añadir Luchada
         </button>
       </div>
-
-      {/* ── Feedback ── */}
-      {feedback && (
-        <div
-          className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${
-            feedback.tipo === 'ok'
-              ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
-              : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
-          }`}
-        >
-          {feedback.tipo === 'ok' ? (
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          ) : (
-            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          )}
-          {feedback.msg}
-        </div>
-      )}
 
       {/* ── Tarjeta Próxima Luchada Destacada ── */}
       {proximoPartido ? (

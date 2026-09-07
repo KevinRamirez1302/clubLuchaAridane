@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { toast } from 'sonner';
 import { useDataStore } from '../../store/useDataStore';
 import type { Jugador, ClasificacionLuchador, CategoriaEquipo } from '../../types';
 
@@ -59,10 +60,9 @@ export default function AdminSquad() {
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
   const [busqueda, setBusqueda] = useState('');
   const [filtroEquipo, setFiltroEquipo] = useState<FiltroEquipo>('todos');
-  const [feedback, setFeedback] = useState<{ tipo: 'ok' | 'error'; msg: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // ── Filtrado ──
+
   const jugadoresFiltrados = plantilla.filter((j) => {
     const matchBusqueda =
       j.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -71,11 +71,6 @@ export default function AdminSquad() {
     const matchEquipo = filtroEquipo === 'todos' || j.equipos.includes(filtroEquipo as CategoriaEquipo);
     return matchBusqueda && matchEquipo;
   });
-
-  const mostrarFeedback = (tipo: 'ok' | 'error', msg: string) => {
-    setFeedback({ tipo, msg });
-    setTimeout(() => setFeedback(null), 3000);
-  };
 
   // ── Modal ──
   const abrirCrear = () => {
@@ -144,15 +139,15 @@ export default function AdminSquad() {
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!form.nombre.trim()) {
-      mostrarFeedback('error', 'El nombre del jugador es obligatorio.');
+      toast.error('El nombre del jugador es obligatorio.');
       return;
     }
     if (form.clasificaciones.length === 0) {
-      mostrarFeedback('error', 'Selecciona al menos una clasificación.');
+      toast.error('Selecciona al menos una clasificación.');
       return;
     }
     if (form.equipos.length === 0) {
-      mostrarFeedback('error', 'Selecciona al menos un equipo/categoría.');
+      toast.error('Selecciona al menos un equipo/categoría.');
       return;
     }
 
@@ -162,14 +157,14 @@ export default function AdminSquad() {
     try {
       if (jugadorEditando) {
         updateJugador(jugadorEditando.id, form);
-        mostrarFeedback('ok', '¡Jugador actualizado correctamente!');
+        toast.success('¡Jugador actualizado correctamente!');
       } else {
         addJugador(form);
-        mostrarFeedback('ok', '¡Jugador añadido a la plantilla!');
+        toast.success('¡Jugador añadido a la plantilla!');
       }
       cerrarModal();
     } catch {
-      mostrarFeedback('error', 'Ocurrió un error. Inténtalo de nuevo.');
+      toast.error('Ocurrió un error. Inténtalo de nuevo.');
     } finally {
       setGuardando(false);
     }
@@ -178,7 +173,7 @@ export default function AdminSquad() {
   const handleDelete = (id: number) => {
     deleteJugador(id);
     setConfirmDelete(null);
-    mostrarFeedback('ok', 'Jugador eliminado de la plantilla.');
+    toast.success('Jugador eliminado de la plantilla.');
   };
 
   return (
@@ -199,28 +194,6 @@ export default function AdminSquad() {
           <span className="text-lg">+</span> Añadir Jugador
         </button>
       </div>
-
-      {/* ── Feedback toast ── */}
-      {feedback && (
-        <div
-          className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${
-            feedback.tipo === 'ok'
-              ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
-              : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
-          }`}
-        >
-          {feedback.tipo === 'ok' ? (
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          ) : (
-            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          )}
-          {feedback.msg}
-        </div>
-      )}
 
       {/* ── Filtros ── */}
       <div className="flex flex-col sm:flex-row gap-3">

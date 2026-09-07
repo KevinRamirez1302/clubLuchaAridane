@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { toast } from 'sonner';
 import { useDataStore } from '../../store/useDataStore';
 import type { PosicionClasificacion } from '../../types';
 
@@ -24,13 +25,9 @@ export default function AdminStandings() {
     [...clasificacion].sort((a, b) => a.posicion - b.posicion)
   );
   const [guardando, setGuardando] = useState(false);
-  const [feedback, setFeedback] = useState<{ tipo: 'ok' | 'error'; msg: string } | null>(null);
   const [confirmDeleteIdx, setConfirmDeleteIdx] = useState<number | null>(null);
 
-  const mostrarFeedback = (tipo: 'ok' | 'error', msg: string) => {
-    setFeedback({ tipo, msg });
-    setTimeout(() => setFeedback(null), 3000);
-  };
+
 
   // ── Actualizar campo de una fila ──
   const updateFila = useCallback(
@@ -87,16 +84,16 @@ export default function AdminStandings() {
   const handleGuardar = async () => {
     const validas = filas.filter((f) => f.equipo.trim() !== '');
     if (validas.length === 0) {
-      mostrarFeedback('error', 'Añade al menos un equipo antes de guardar.');
+      toast.error('Añade al menos un equipo antes de guardar.');
       return;
     }
     setGuardando(true);
     await new Promise((r) => setTimeout(r, 400));
     try {
       updateClasificacion(validas.map((f, i) => ({ ...f, posicion: i + 1 })));
-      mostrarFeedback('ok', '¡Clasificación guardada y publicada correctamente!');
+      toast.success('¡Clasificación guardada y publicada correctamente!');
     } catch {
-      mostrarFeedback('error', 'Error al guardar. Inténtalo de nuevo.');
+      toast.error('Error al guardar. Inténtalo de nuevo.');
     } finally {
       setGuardando(false);
     }
@@ -114,7 +111,7 @@ export default function AdminStandings() {
         })
         .map((f, i) => ({ ...f, posicion: i + 1 }))
     );
-    mostrarFeedback('ok', 'Tabla ordenada por puntos (mayor a menor).');
+    toast.success('Tabla ordenada por puntos (mayor a menor).');
   };
 
   // ── Columnas numéricas editables ──
@@ -173,28 +170,6 @@ export default function AdminStandings() {
           </button>
         </div>
       </div>
-
-      {/* ── Feedback ── */}
-      {feedback && (
-        <div
-          className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${
-            feedback.tipo === 'ok'
-              ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
-              : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'
-          }`}
-        >
-          {feedback.tipo === 'ok' ? (
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          ) : (
-            <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          )}
-          {feedback.msg}
-        </div>
-      )}
 
       {/* ── Info ── */}
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/40 rounded-xl px-4 py-3 text-sm text-blue-700 dark:text-blue-300 flex items-start gap-2">
