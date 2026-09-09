@@ -11,7 +11,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import type { PlanMembresia } from '../types';
 
 const BENEFICIOS_GENERALES = [
-  { icon: '', texto: 'Entrada a todas las luchadas en casa' },
+  { icon: '', texto: 'Entrada a todas las luchadas en casa excepto semifinales y finales' },
   { icon: '', texto: 'Comunidad de más de 500 socios' },
   { icon: '', texto: 'Siente nuestra lucha de cerca' },
   { icon: '', texto: 'Apoya a tu club favorito' },
@@ -76,11 +76,10 @@ export default function Membership({ initialTab }: MembershipProps) {
                 role="tab"
                 aria-selected={tabActivo === key}
                 onClick={() => setTabActivo(key as typeof tabActivo)}
-                className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors cursor-pointer ${
-                  tabActivo === key
+                className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors cursor-pointer ${tabActivo === key
                     ? 'border-club-orange text-club-orange'
                     : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-white'
-                }`}
+                  }`}
               >
                 {label}
               </button>
@@ -105,7 +104,7 @@ export default function Membership({ initialTab }: MembershipProps) {
                   {t('membresia.planesTitle')}
                 </h1>
                 <p className="text-gray-500 dark:text-gray-400 mt-3 text-lg max-w-2xl mx-auto">
-                  Elige el plan que mejor se adapte a ti y forma parte de la familia Aridane.
+                  ¿Qué esperas para ser socio del mejor club de lucha de La Palma?
                 </p>
               </div>
 
