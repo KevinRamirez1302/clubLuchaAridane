@@ -4,6 +4,8 @@ import sparLogo from '../../assets/Spar-Emblem.png';
 import cabildoLogo from '../../assets/cabildo-Emblem.png';
 import aytoLogo from '../../assets/aytoLlanos.png';
 import trocaderoLogo from '../../assets/trocadero-Emblem.png';
+import constructoraLogo from '../../assets/constructora.png';
+import agroisleLogo from '../../assets/agroisle.png';
 
 export default function Sponsors() {
   const ref = useScrollReveal<HTMLElement>();
@@ -18,7 +20,9 @@ export default function Sponsors() {
   ];
 
   const colaborador = [
-    { id: 4, nombre: 'Trocadero', logo: trocaderoLogo, url: 'https://www.cctrocadero.com/' }
+    { id: 4, nombre: 'Trocadero', logo: trocaderoLogo, url: 'https://www.cctrocadero.com/' },
+    { id: 5, nombre: 'Constructora', logo: constructoraLogo, url: '#' },
+    { id: 6, nombre: 'Agroisle', logo: agroisleLogo, url: '#' }
   ];
 
   return (
@@ -109,7 +113,11 @@ export default function Sponsors() {
                     <img
                       src={p.logo}
                       alt={p.nombre}
-                      className="h-10 md:h-12 object-contain dark:brightness-110"
+                      className={`${
+                        p.nombre.includes('Agroisle')
+                          ? 'h-14 md:h-16 scale-110'
+                          : 'h-10 md:h-12'
+                      } object-contain dark:brightness-110`}
                       loading="lazy"
                     />
                   </a>

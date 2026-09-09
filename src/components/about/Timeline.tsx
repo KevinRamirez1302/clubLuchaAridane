@@ -35,18 +35,16 @@ export default function Timeline() {
               return (
                 <div
                   key={hito.id}
-                  className={`relative flex items-center gap-8 ${
-                    isLeft ? 'sm:flex-row' : 'sm:flex-row-reverse'
-                  } flex-col sm:flex-row pl-12 sm:pl-0`}
+                  className={`relative flex items-center gap-8 ${isLeft ? 'sm:flex-row' : 'sm:flex-row-reverse'
+                    } flex-col sm:flex-row pl-12 sm:pl-0`}
                 >
                   {/* Punto en la línea */}
                   <div className="absolute left-4 sm:left-1/2 w-4 h-4 bg-club-orange rounded-full border-2 border-white dark:border-gray-950 shadow-lg -translate-x-1/2 z-10 top-6 sm:top-1/2 sm:-translate-y-1/2" />
 
                   {/* Tarjeta */}
                   <div
-                    className={`flex-1 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 sm:max-w-[calc(50%-2rem)] ${
-                      isLeft ? 'sm:mr-8' : 'sm:ml-8'
-                    }`}
+                    className={`flex-1 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 sm:max-w-[calc(50%-2rem)] ${isLeft ? 'sm:mr-8' : 'sm:ml-8'
+                      }`}
                   >
                     {hito.imagen && (
                       <div className="h-40 overflow-hidden">
