@@ -76,7 +76,7 @@ export default function Footer() {
             </Link>
             <p className="text-white/70 text-sm leading-relaxed">
               Club deportivo fundado en 1946. Pasión, esfuerzo y tradición al
-              servicio del deporte y la comunidad.
+              servicio del deporte.
             </p>
             {/* Redes sociales */}
             <div className="flex items-center gap-3 mt-5">
