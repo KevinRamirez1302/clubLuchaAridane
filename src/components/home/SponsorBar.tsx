@@ -2,6 +2,8 @@ import sparLogo from '../../assets/Spar-Emblem.png';
 import cabildoLogo from '../../assets/cabildo-Emblem.png';
 import aytoLogo from '../../assets/aytoLlanos.png';
 import trocaderoLogo from '../../assets/trocadero-Emblem.png';
+import constructoraLogo from '../../assets/constructora.png';
+import agroisleLogo from '../../assets/agroisle.png';
 
 export default function SponsorBar() {
   const sponsors = [
@@ -9,6 +11,8 @@ export default function SponsorBar() {
     { name: 'Cabildo de La Palma', logo: cabildoLogo, url: 'https://www.cabildodelapalma.es' },
     { name: 'Ayuntamiento de Los Llanos de Aridane', logo: aytoLogo, url: 'https://www.aridane.org' },
     { name: 'Trocadero', logo: trocaderoLogo, url: 'https://www.cctrocadero.com/' },
+    { name: 'Constructora', logo: constructoraLogo, url: '#' },
+    { name: 'Agroisle', logo: agroisleLogo, url: '#' },
   ];
 
   return (
@@ -36,6 +40,8 @@ export default function SponsorBar() {
                   className={`${
                     sponsor.name.includes('Ayuntamiento')
                       ? 'h-14 sm:h-16 md:h-20 scale-110'
+                      : sponsor.name.includes('Agroisle')
+                      ? 'h-14 sm:h-16 md:h-20 scale-110'
                       : 'h-10 sm:h-12 md:h-14'
                   } object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-110 dark:contrast-105 dark:group-hover:brightness-100 transition-all duration-300`}
                 />
@@ -55,6 +61,8 @@ export default function SponsorBar() {
                   alt={`Logo de ${sponsor.name}`}
                   className={`${
                     sponsor.name.includes('Ayuntamiento')
+                      ? 'h-14 sm:h-16 md:h-20 scale-110'
+                      : sponsor.name.includes('Agroisle')
                       ? 'h-14 sm:h-16 md:h-20 scale-110'
                       : 'h-10 sm:h-12 md:h-14'
                   } object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-110 dark:contrast-105 dark:group-hover:brightness-100 transition-all duration-300`}
