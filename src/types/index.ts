@@ -85,7 +85,7 @@ export interface FAQ {
 }
 
 export interface PlanMembresia {
-  id: 'socio' | 'socio_premium';
+  id: string;
   nombre: string;
   precio: number; // €/año
   beneficios: string[];

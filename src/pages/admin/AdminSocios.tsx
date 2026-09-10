@@ -190,7 +190,7 @@ export default function AdminSocios() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
-                        {socio.plan === 'socio_premium' ? 'Premium' : socio.plan === 'socio' ? 'Normal' : socio.plan}
+                        {socio.plan || 'Socio Abonado'}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
