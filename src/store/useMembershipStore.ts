@@ -198,6 +198,42 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
     } catch {
       // Fallback local simulado
       const state = get();
+      
+      // Credenciales de prueba (mock) para ver los carnés
+      if (dni.toUpperCase() === '11111111A' && password === '123456') {
+        set({
+          socioAutenticado: {
+            id: 'mock-1',
+            nombre: 'MARC',
+            apellidos: 'GRAU SOLINYÀ',
+            email: 'marc@example.com',
+            dni: '11111111A',
+            plan: 'socio_premium',
+            vencimiento: '2027-06-30T00:00:00.000Z',
+            numeroSocio: '50786',
+            foto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+          }
+        });
+        return true;
+      }
+      
+      if (dni.toUpperCase() === '22222222B' && password === '123456') {
+        set({
+          socioAutenticado: {
+            id: 'mock-2',
+            nombre: 'JUAN',
+            apellidos: 'PÉREZ',
+            email: 'juan@example.com',
+            dni: '22222222B',
+            plan: 'socio',
+            vencimiento: '2027-06-30T00:00:00.000Z',
+            numeroSocio: '50787',
+            foto: undefined, // Sin foto
+          }
+        });
+        return true;
+      }
+
       const socio = state.socios.find(
         (s) => s.dni?.toUpperCase() === dni.toUpperCase() && s.password === password
       );

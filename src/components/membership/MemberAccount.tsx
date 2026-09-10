@@ -4,11 +4,14 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMembershipStore } from '../../store/useMembershipStore';
+import DigitalCardModal from './DigitalCardModal';
+
 
 export default function MemberAccount() {
   const { t } = useTranslation();
   const [cargando, setCargando] = useState(false);
   const [loginError, setLoginError] = useState('');
+  const [showCardModal, setShowCardModal] = useState(false);
   
   const { socioAutenticado, loginSocio, logoutSocio } = useMembershipStore();
 
@@ -133,8 +136,19 @@ export default function MemberAccount() {
           </button>
         </div>
 
-        {/* Botón Descargar Carné */}
-        <div className="mb-6">
+        {/* Botones Carné */}
+        <div className="mb-6 flex flex-col gap-3">
+          <button
+            onClick={() => setShowCardModal(true)}
+            className="w-full bg-club-orange hover:bg-club-orange/90 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            Ver mi carné digital
+          </button>
+
           <button
             onClick={() => alert('Generando PDF del carné de socio...')}
             className="w-full bg-club-blue hover:bg-club-blue-dark text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
@@ -152,6 +166,12 @@ export default function MemberAccount() {
         >
           Cerrar sesión
         </button>
+
+        <DigitalCardModal 
+          isOpen={showCardModal} 
+          onClose={() => setShowCardModal(false)} 
+          socio={socioAutenticado} 
+        />
       </div>
     );
   }
