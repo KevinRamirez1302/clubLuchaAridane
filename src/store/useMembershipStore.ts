@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { apiFetch } from '../services/api';
+import { apiFetch, setAccessToken } from '../services/api';
 
 export interface Solicitud {
   id: string;
@@ -19,15 +19,14 @@ export interface Socio {
   nombre: string;
   apellidos?: string;
   email: string;
-  dni?: string; // Se usará como usuario
-  password?: string; // Por defecto '123456'
-  plan: string;
-  vencimiento?: string;
+  dni?: string;
+  telefono?: string;
   numeroSocio?: string;
   numSocio?: string;
+  plan: string;
+  vencimiento?: string;
   activo?: boolean;
-  creadoEn?: string;
-  foto?: string;
+  password?: string; // Por defecto '123456'
 }
 
 interface MembershipState {
@@ -49,7 +48,7 @@ interface MembershipState {
   logoutSocio: () => void;
 }
 
-export const useMembershipStore = create<MembershipState>()((set, get) => ({
+export const useMembershipStore = create<MembershipState>((set, get) => ({
   solicitudes: [],
   socios: [],
   socioAutenticado: null,
@@ -86,13 +85,13 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
         body: JSON.stringify(datos),
       });
       set((state) => ({
-        socios: state.socios.map((s) => (s.id === id ? { ...s, ...res.data } : s)),
+        socios: state.socios.map((s) => (s.id === id ? { ...s, ...res.data, ...(datos.password ? { password: datos.password } : {}) } : s)),
         socioAutenticado:
           state.socioAutenticado?.id === id
-            ? { ...state.socioAutenticado, ...res.data }
+            ? { ...state.socioAutenticado, ...res.data, ...(datos.password ? { password: datos.password } : {}) }
             : state.socioAutenticado,
       }));
-    } catch {
+    } catch (err) {
       // Fallback local visual
       set((state) => ({
         socios: state.socios.map((s) => (s.id === id ? { ...s, ...datos } : s)),
@@ -101,6 +100,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
             ? { ...state.socioAutenticado, ...datos }
             : state.socioAutenticado,
       }));
+      throw err;
     }
   },
 
@@ -139,11 +139,12 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
       const res = await apiFetch<{ solicitud: Solicitud; socio: Socio }>(`/solicitudes/${id}/accept`, {
         method: 'PUT',
       });
+      const socioConPassword: Socio = { ...res.data.socio, password: '123456' };
       set((state) => ({
         solicitudes: state.solicitudes.map((s) => (s.id === id ? res.data.solicitud : s)),
-        socios: [...state.socios, res.data.socio],
+        socios: [...state.socios, socioConPassword],
       }));
-      return res.data.socio;
+      return socioConPassword;
     } catch {
       // Fallback local: actualiza visualmente el estado de la solicitud
       const state = get();
@@ -157,6 +158,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
           email: solicitud.email,
           dni: solicitud.dni,
           plan: solicitud.plan, // string: 'socio' | 'socio_premium'
+          password: '123456',
           vencimiento: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
           numeroSocio: `ARD-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(4, '0')}`,
         };
@@ -188,11 +190,16 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
   },
 
   loginSocio: async (dni, password) => {
+    const cleanDni = dni.trim();
     try {
       const res = await apiFetch<{ accessToken: string; token: string; socio: Socio }>('/auth/socio-login', {
         method: 'POST',
-        body: JSON.stringify({ dni, password }),
+        body: JSON.stringify({ dni: cleanDni, password }),
       });
+      const token = res.data.accessToken || res.data.token;
+      if (token) {
+        setAccessToken(token);
+      }
       set({ socioAutenticado: res.data.socio });
       return true;
     } catch {
@@ -235,7 +242,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
       }
 
       const socio = state.socios.find(
-        (s) => s.dni?.toUpperCase() === dni.toUpperCase() && s.password === password
+        (s) => s.dni?.trim().toUpperCase() === cleanDni.toUpperCase() && s.password === password
       );
       if (socio) {
         set({ socioAutenticado: socio });
@@ -246,7 +253,7 @@ export const useMembershipStore = create<MembershipState>()((set, get) => ({
   },
 
   logoutSocio: () => {
-    // Si hubiese token, lo borraríamos aquí o llamando a api.ts: setAccessToken(null)
+    setAccessToken(null);
     set({ socioAutenticado: null });
   },
 }));

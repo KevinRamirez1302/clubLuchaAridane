@@ -34,9 +34,9 @@ export default function EditSocioModal({
       setEmail(socio.email || '');
       setDni(socio.dni || '');
       setNumeroSocio(socio.numeroSocio || socio.numSocio || '');
-      setPlan(socio.plan || 'Socio');
+      setPlan('socio');
       setActivo(socio.activo ?? true);
-      setPassword(socio.password || '');
+      setPassword('');
       setVencimiento(
         socio.vencimiento
           ? socio.vencimiento.slice(0, 10)
@@ -59,18 +59,23 @@ export default function EditSocioModal({
       setGuardando(true);
       setError('');
 
-      await onSave(socio.id, {
+      const datosAEnviar: Partial<Socio> = {
         nombre: nombre.trim(),
         apellidos: apellidos.trim(),
         email: email.trim(),
-        dni: dni.trim(),
+        dni: dni.trim().toUpperCase(),
         numeroSocio: numeroSocio.trim(),
         numSocio: numeroSocio.trim(),
         plan,
         activo,
-        password: password.trim() || '123456',
         vencimiento: vencimiento ? new Date(vencimiento).toISOString() : socio.vencimiento,
-      });
+      };
+
+      if (password.trim()) {
+        datosAEnviar.password = password.trim();
+      }
+
+      await onSave(socio.id, datosAEnviar);
 
       onClose();
     } catch (err: unknown) {
@@ -202,11 +207,7 @@ export default function EditSocioModal({
               onChange={(e) => setPlan(e.target.value)}
               className="w-full px-3.5 py-2.5 border border-gray-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-club-blue transition-colors"
             >
-              <option value="Socio">Socio (Normal - 60€/año)</option>
-              <option value="Socio Premium">Socio Premium (120€/año)</option>
-              <option value="socio">socio</option>
-              <option value="socio_premium">socio_premium</option>
-              <option value="Honorífico">Honorífico</option>
+              <option value="socio">Socio Abonado (100€/temporada)</option>
             </select>
           </div>
 
@@ -248,10 +249,16 @@ export default function EditSocioModal({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3.5 py-2.5 border border-gray-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-club-blue transition-colors font-mono"
-              placeholder="Contraseña del socio (ej: 123456)"
+              placeholder="Nueva contraseña (dejar en blanco para mantener la actual)"
             />
-            <p className="text-xs text-gray-400 mt-1">
-              El socio usa su DNI y esta contraseña para ingresar al panel de socio.
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              {password.trim() ? (
+                <span className="text-amber-600 dark:text-amber-400 font-semibold">
+                  ⚠️ Se cambiará la contraseña del socio a: <span className="font-mono underline">{password.trim()}</span>
+                </span>
+              ) : (
+                'El socio usa su DNI y esta contraseña para ingresar al panel. Déjalo en blanco si no deseas cambiarla.'
+              )}
             </p>
           </div>
         </div>
