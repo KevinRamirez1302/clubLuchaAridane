@@ -28,6 +28,7 @@ export interface Socio {
   vencimiento?: string;
   activo?: boolean;
   password?: string; // Por defecto '123456'
+  foto?: string;
 }
 
 interface MembershipState {
