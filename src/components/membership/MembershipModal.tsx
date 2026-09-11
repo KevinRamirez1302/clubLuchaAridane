@@ -1,7 +1,10 @@
 // Modal de suscripción — formulario de datos + selección de plan
-// Adaptado para diseño 100% responsivo y aviso de confirmación con instrucciones de transferencia bancaria
+// Adaptado para diseño 100% responsivo, alta accesibilidad WCAG AAA y aviso de confirmación
 import { useState } from 'react';
+import { ArrowRight, Loader2, Lock } from 'lucide-react';
 import Modal from '../common/Modal';
+import InputText from '../common/InputText';
+import PlanSummaryCard from './PlanSummaryCard';
 import { useMembershipStore } from '../../store/useMembershipStore';
 import type { PlanMembresia } from '../../types';
 
@@ -41,19 +44,48 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
 
   const validar = (): boolean => {
     const nuevosErrores: Partial<FormData> = {};
-    if (!form.nombre.trim()) nuevosErrores.nombre = 'Campo obligatorio';
-    if (!form.apellidos.trim()) nuevosErrores.apellidos = 'Campo obligatorio';
-    if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) nuevosErrores.email = 'Email inválido';
-    if (!form.telefono.trim()) nuevosErrores.telefono = 'Campo obligatorio';
-    if (!form.dni.trim()) nuevosErrores.dni = 'Campo obligatorio';
+    if (!form.nombre.trim()) nuevosErrores.nombre = 'El nombre es obligatorio';
+    if (!form.apellidos.trim()) nuevosErrores.apellidos = 'Los apellidos son obligatorios';
+    if (!form.email.trim()) {
+      nuevosErrores.email = 'El correo electrónico es obligatorio';
+    } else if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      nuevosErrores.email = 'Introduce un email válido (ej: usuario@correo.com)';
+    }
+    if (!form.telefono.trim()) {
+      nuevosErrores.telefono = 'El teléfono de contacto es obligatorio';
+    } else if (form.telefono.replace(/\s+/g, '').length < 9) {
+      nuevosErrores.telefono = 'Introduce un número de teléfono válido (mín. 9 dígitos)';
+    }
+    if (!form.dni.trim()) {
+      nuevosErrores.dni = 'El DNI o NIE es obligatorio';
+    } else if (form.dni.trim().length < 9) {
+      nuevosErrores.dni = 'Introduce un DNI/NIE completo (8 números y letra o letra, 7 números y letra)';
+    }
     setErrores(nuevosErrores);
     return Object.keys(nuevosErrores).length === 0;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-    setErrores((err) => ({ ...err, [name]: undefined }));
+    let val = value;
+    if (name === 'dni') {
+      val = val.toUpperCase().trim();
+    }
+    setForm((f) => ({ ...f, [name]: val }));
+    if (errores[name as keyof FormData]) {
+      setErrores((err) => ({ ...err, [name]: undefined }));
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email' && value.trim() && !value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setErrores((err) => ({ ...err, email: 'Introduce un email válido (ejemplo: usuario@correo.com)' }));
+    } else if (name === 'dni' && value.trim() && value.length < 9) {
+      setErrores((err) => ({ ...err, dni: 'Formato de DNI/NIE incompleto' }));
+    } else if (name === 'telefono' && value.trim() && value.replace(/\s+/g, '').length < 9) {
+      setErrores((err) => ({ ...err, telefono: 'Teléfono incompleto (mínimo 9 dígitos)' }));
+    }
   };
 
   const handleSubmitDatos = async (e: React.FormEvent) => {
@@ -88,13 +120,6 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
       setPaso('datos');
     }, 300);
   };
-
-  const inputClass = (campo: keyof FormData) =>
-    `w-full px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm rounded-xl border-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors focus:outline-none focus:border-club-blue dark:focus:border-club-blue-light ${
-      errores[campo]
-        ? 'border-red-400'
-        : 'border-gray-200 dark:border-gray-600'
-    }`;
 
   return (
     <Modal
@@ -177,75 +202,97 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
           </div>
         </div>
       ) : (
-        /* Formulario de datos */
+        /* Formulario de datos con arquitectura UX/UI optimizada */
         <form onSubmit={handleSubmitDatos} noValidate className="space-y-4 sm:space-y-5">
-          {/* Resumen del plan */}
-          <div
-            className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl ${
-              plan.destacado
-                ? 'bg-club-orange/10 border border-club-orange/30'
-                : 'bg-club-blue/10 border border-club-blue/20'
-            }`}
-          >
-            <div className="min-w-0 pr-2">
-              <p className="font-bold text-gray-900 dark:text-white text-sm sm:text-base truncate">
-                {plan.nombre}
-              </p>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                {plan.beneficios.length} beneficios incluidos
-              </p>
-            </div>
-            <div className="text-right flex-shrink-0">
-              <p className={`text-xl sm:text-2xl font-black ${plan.destacado ? 'text-club-orange' : 'text-club-blue'}`}>
-                {plan.precio}€
-              </p>
-              <p className="text-[11px] sm:text-xs text-gray-400">/año</p>
-            </div>
-          </div>
+          {/* Tarjeta de resumen de suscripción con alto contraste y beneficios inmediatos */}
+          <PlanSummaryCard plan={plan} />
 
-          {/* Campos del formulario */}
+          {/* Campos del formulario: sin asteriscos ruidosos y con autocompletado */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            {[
-              { name: 'nombre', label: 'Nombre', type: 'text', placeholder: 'Juan' },
-              { name: 'apellidos', label: 'Apellidos', type: 'text', placeholder: 'García López' },
-              { name: 'email', label: 'Correo electrónico', type: 'email', placeholder: 'tu@email.com' },
-              { name: 'telefono', label: 'Teléfono', type: 'tel', placeholder: '+34 600 000 000' },
-              { name: 'dni', label: 'DNI / NIE', type: 'text', placeholder: '12345678A' },
-              { name: 'fechaNacimiento', label: 'Fecha de nacimiento', type: 'date', placeholder: '' },
-            ].map(({ name, label, type, placeholder }) => (
-              <div key={name}>
-                <label
-                  htmlFor={`ms-${name}`}
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1"
-                >
-                  {label}
-                  {name !== 'fechaNacimiento' && <span className="text-red-500 ml-1">*</span>}
-                </label>
-                <input
-                  id={`ms-${name}`}
-                  type={type}
-                  name={name}
-                  value={form[name as keyof FormData]}
-                  onChange={handleChange}
-                  placeholder={placeholder}
-                  className={`${inputClass(name as keyof FormData)} ${
-                    type === 'date' ? 'dark:[color-scheme:dark]' : ''
-                  }`}
-                  aria-describedby={errores[name as keyof FormData] ? `error-${name}` : undefined}
-                  aria-invalid={!!errores[name as keyof FormData]}
-                />
-                {errores[name as keyof FormData] && (
-                  <p id={`error-${name}`} role="alert" className="text-red-500 text-xs mt-1">
-                    {errores[name as keyof FormData]}
-                  </p>
-                )}
-              </div>
-            ))}
+            <InputText
+              label="Nombre"
+              name="nombre"
+              type="text"
+              autoComplete="given-name"
+              value={form.nombre}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errores.nombre}
+              disabled={cargando}
+            />
+
+            <InputText
+              label="Apellidos"
+              name="apellidos"
+              type="text"
+              autoComplete="family-name"
+              value={form.apellidos}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errores.apellidos}
+              disabled={cargando}
+            />
+
+            <InputText
+              label="Correo electrónico"
+              name="email"
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              value={form.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errores.email}
+              disabled={cargando}
+            />
+
+            <InputText
+              label="Teléfono de contacto"
+              name="telefono"
+              type="tel"
+              autoComplete="tel"
+              inputMode="tel"
+              value={form.telefono}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errores.telefono}
+              disabled={cargando}
+            />
+
+            <InputText
+              label="DNI / NIE"
+              name="dni"
+              type="text"
+              autoCapitalize="characters"
+              autoComplete="off"
+              maxLength={12}
+              value={form.dni}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errores.dni}
+              disabled={cargando}
+            />
+
+            <InputText
+              label="Fecha de nacimiento"
+              name="fechaNacimiento"
+              type="date"
+              optional={true}
+              helperText="Para asignación de categoría de socio"
+              value={form.fechaNacimiento}
+              onChange={handleChange}
+              disabled={cargando}
+              className="dark:[color-scheme:dark]"
+            />
           </div>
 
           {/* Banner de error de API */}
           {apiError && (
-            <div className="flex items-start gap-3 p-3.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400">
+            <div
+              role="alert"
+              aria-live="assertive"
+              className="flex items-start gap-3 p-3.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400"
+            >
               <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -253,29 +300,50 @@ export default function MembershipModal({ plan, onClose }: MembershipModalProps)
             </div>
           )}
 
-          {/* Botones de acción */}
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5 sm:gap-3 pt-2 sm:pt-4">
-            <button
-              type="button"
-              onClick={handleCerrarModal}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border-2 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-center text-sm cursor-pointer"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={cargando}
-              className={`w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-white transition-all active:scale-95 text-center text-sm shadow-md cursor-pointer flex items-center justify-center gap-2 disabled:opacity-70 ${
-                plan.destacado
-                  ? 'bg-club-orange hover:bg-club-orange-dark shadow-club-orange/20'
-                  : 'bg-club-blue hover:bg-club-blue-dark shadow-club-blue/20'
-              }`}
-            >
-              {cargando && (
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              )}
-              <span>{cargando ? 'Enviando...' : 'Continuar →'}</span>
-            </button>
+          {/* Botones de acción y garantías de confianza */}
+          <div className="pt-2 sm:pt-4 space-y-3">
+            <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2.5 sm:gap-3">
+              {/* Botón Cancelar estilo Ghost / Secundario */}
+              <button
+                type="button"
+                onClick={handleCerrarModal}
+                disabled={cargando}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 transition-colors text-center text-sm cursor-pointer disabled:opacity-50"
+              >
+                Cancelar
+              </button>
+
+              {/* Botón Principal con Loader2 accesible */}
+              <button
+                type="submit"
+                disabled={cargando}
+                aria-live="polite"
+                aria-busy={cargando}
+                className={`w-full sm:w-auto px-8 py-3 rounded-xl font-bold text-white transition-all active:scale-[0.98] text-center text-sm shadow-lg cursor-pointer inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed ${
+                  plan.destacado
+                    ? 'bg-[#E67E22] hover:bg-[#D35400] shadow-[#E67E22]/25 focus-visible:ring-[#D35400]'
+                    : 'bg-club-blue hover:bg-club-blue-dark shadow-club-blue/25 focus-visible:ring-club-blue'
+                }`}
+              >
+                {cargando ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                    <span>Enviando solicitud...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Solicitar alta de socio</span>
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Micro-copy de certidumbre: elimina el miedo a cobro inesperado */}
+            <p className="flex items-center justify-center sm:justify-end gap-1.5 text-xs text-gray-500 dark:text-gray-400 text-center">
+              <Lock className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 flex-shrink-0" aria-hidden="true" />
+              <span>Sin cobro inmediato · Pago por transferencia tras confirmación</span>
+            </p>
           </div>
 
         </form>
