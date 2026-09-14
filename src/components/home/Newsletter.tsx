@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { apiFetch } from '../../services/api';
 
 export default function Newsletter() {
   const { t } = useTranslation();
@@ -23,12 +24,18 @@ export default function Newsletter() {
 
     setCargando(true);
 
-    // ── INTEGRACIÓN BACKEND: enviar email a la API ──
-    // Ejemplo: await fetch('/api/newsletter/suscribir', { method: 'POST', body: JSON.stringify({ email }) })
-    await new Promise((r) => setTimeout(r, 800));
-
-    setCargando(false);
-    setEnviado(true);
+    try {
+      // Llamada al backend real: POST /api/newsletter/suscribir
+      await apiFetch('/newsletter/suscribir', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      });
+      setEnviado(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al suscribirse. Inténtalo de nuevo.');
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
