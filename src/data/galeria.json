@@ -2,65 +2,121 @@
   {
     "id": 1,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&auto=format&fit=crop",
-    "titulo": "Final Copa Regional 2025",
-    "descripcion": "El equipo celebra la victoria en la Copa Regional 2024/25.",
-    "fecha": "2025-06-15"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300455/HISTORIA_ARIDANE_1.jpg",
+    "titulo": "Los inicios del Club Aridane",
+    "descripcion": "Primeros años del club, cuando la lucha canaria era el alma de la comunidad de Los Llanos de Aridane.",
+    "fecha": "1946-01-01"
   },
   {
     "id": 2,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&auto=format&fit=crop",
-    "titulo": "Presentación de fichajes",
-    "descripcion": "Los nuevos jugadores en su presentación oficial en el estadio.",
-    "fecha": "2025-07-02"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300452/HISTORIA_ARIDANE_2.jpg",
+    "titulo": "Equipo histórico del Club Aridane",
+    "descripcion": "Una de las primeras plantillas del club posando orgullosos con los colores que los representan.",
+    "fecha": "1950-01-01"
   },
   {
     "id": 3,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&auto=format&fit=crop",
-    "titulo": "Entrenamiento de pretemporada",
-    "descripcion": "Sesión de entrenamiento durante la concentración de verano.",
-    "fecha": "2025-07-25"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300448/HISTORIA_ARIDANE_3.jpg",
+    "titulo": "Competición en el terrero",
+    "descripcion": "Lucha canaria en su esencia: dos luchadores midiendo fuerzas en el terrero de arena bajo el cielo palmero.",
+    "fecha": "1960-01-01"
   },
   {
     "id": 4,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1200&auto=format&fit=crop",
-    "titulo": "Inauguración de la escuela de fútbol",
-    "descripcion": "Acto de inauguración de las nuevas instalaciones de fútbol base.",
-    "fecha": "2025-07-20"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300380/HISTORIA_ARIDANE_5.jpg",
+    "titulo": "Afición fiel en las gradas",
+    "descripcion": "El público de Los Llanos apoyando a su equipo en cada encuentro, generación tras generación.",
+    "fecha": "1970-01-01"
   },
   {
     "id": 5,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1622561498916-0e7659fb4f01?w=1200&auto=format&fit=crop",
-    "titulo": "Equipo femenino, campeonas",
-    "descripcion": "El equipo femenino celebra su histórico ascenso a Primera Autonómica.",
-    "fecha": "2025-05-30"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300377/HISTORIA_ARIDANE_6.jpg",
+    "titulo": "Luchadores en acción",
+    "descripcion": "Momento de alto nivel técnico en uno de los enfrentamientos más recordados de la historia del club.",
+    "fecha": "1975-01-01"
   },
   {
     "id": 6,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1529500009329-7f48db789e96?w=1200&auto=format&fit=crop",
-    "titulo": "Partido de liga en casa",
-    "descripcion": "Derbi regional en el estadio municipal ante una gran entrada.",
-    "fecha": "2025-04-12"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300373/HISTORIA_ARIDANE_7.jpg",
+    "titulo": "Celebración de título",
+    "descripcion": "La alegría del vestuario tras conquistar uno de los primeros títulos regionales de la historia del club.",
+    "fecha": "1978-01-01"
   },
   {
     "id": 7,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1200&auto=format&fit=crop",
-    "titulo": "Estadio Municipal",
-    "descripcion": "Vista general del estadio municipal en día de partido.",
-    "fecha": "2025-03-08"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300357/HISTORIA_ARIDANE_12.jpg",
+    "titulo": "Terrero tradicional",
+    "descripcion": "El terrero de arena, escenario de innumerables batallas deportivas y momentos épicos del club.",
+    "fecha": "1985-01-01"
   },
   {
     "id": 8,
     "tipo": "foto",
-    "url": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&auto=format&fit=crop",
-    "titulo": "Acto de patrocinadores",
-    "descripcion": "Renovación del acuerdo de patrocinio con Grupo Atlántico.",
-    "fecha": "2025-06-05"
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300292/HISTORIA_ARIDANE_13.jpg",
+    "titulo": "Campeones insulares",
+    "descripcion": "La plantilla posa con el trofeo insular tras una temporada de dominio absoluto en la competición.",
+    "fecha": "1990-01-01"
+  },
+  {
+    "id": 9,
+    "tipo": "foto",
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300288/HISTORIA_ARIDANE_14.jpg",
+    "titulo": "Exhibición de técnica",
+    "descripcion": "La destreza y el arte de la lucha canaria quedan reflejados en este instante de pura competición.",
+    "fecha": "1995-01-01"
+  },
+  {
+    "id": 10,
+    "tipo": "foto",
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300285/HISTORIA_ARIDANE_15.jpg",
+    "titulo": "Nueva era del club",
+    "descripcion": "Con la inauguración del nuevo terrero en 1998, el Club Aridane daba un salto de calidad en infraestructura.",
+    "fecha": "1998-01-01"
+  },
+  {
+    "id": 11,
+    "tipo": "foto",
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300282/HISTORIA_ARIDANE_16.jpg",
+    "titulo": "Formación de jóvenes luchadores",
+    "descripcion": "La cantera del Club Aridane, semilla del futuro, entrenando bajo la supervisión de los veteranos.",
+    "fecha": "2000-01-01"
+  },
+  {
+    "id": 12,
+    "tipo": "foto",
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300278/HISTORIA_ARIDANE_17.jpg",
+    "titulo": "Rivalidad histórica",
+    "descripcion": "Uno de los derbis más apasionantes de la historia insular, con el pabellón lleno de aficionados entregados.",
+    "fecha": "2005-01-01"
+  },
+  {
+    "id": 13,
+    "tipo": "foto",
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300275/HISTORIA_ARIDANE_18.jpg",
+    "titulo": "Sección femenina en competición",
+    "descripcion": "Las luchadoras del Club Aridane demostrando su nivel en el campeonato autonómico femenino.",
+    "fecha": "2010-01-01"
+  },
+  {
+    "id": 14,
+    "tipo": "foto",
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300272/HISTORIA_ARIDANE_19.jpg",
+    "titulo": "Homenaje a los veteranos",
+    "descripcion": "El club rinde tributo a las leyendas que construyeron la identidad y el legado del Club Aridane.",
+    "fecha": "2015-01-01"
+  },
+  {
+    "id": 15,
+    "tipo": "foto",
+    "url": "https://res.cloudinary.com/qqnug0mk/image/upload/v1788300269/HISTORIA_ARIDANE_20.jpg",
+    "titulo": "El doblete histórico 2023",
+    "descripcion": "Temporada perfecta: Liga Insular y Copa Cabildo conquistadas, sellando el mejor año de la historia del club.",
+    "fecha": "2023-06-01"
   }
 ]
